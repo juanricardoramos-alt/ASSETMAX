@@ -4,6 +4,7 @@ import type { Dictionary, Locale } from "@/lib/i18n";
 import { Logo } from "@/components/layout/Logo";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { NotificationBell } from "@/components/NotificationBell";
 import { ButtonLink } from "@/components/ui";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 
@@ -18,10 +19,10 @@ export async function SiteHeader({
 
   const links = [
     { href: `/${lang}/projects`, label: dict.nav.explore },
+    { href: `/${lang}/mandates`, label: dict.mandates.navLabel },
     { href: `/${lang}/for-sellers`, label: dict.nav.forSellers },
     { href: `/${lang}/for-investors`, label: dict.nav.forInvestors },
     { href: `/${lang}/about`, label: dict.nav.about },
-    { href: `/${lang}/contact`, label: dict.nav.contact },
   ];
 
   const authLinks = session
@@ -50,6 +51,7 @@ export async function SiteHeader({
 
         <div className="flex items-center gap-3">
           <LangSwitcher current={lang} />
+          {session && <NotificationBell userId={session.user.id} lang={lang} />}
           <div className="hidden items-center gap-2 lg:flex">
             {session ? (
               <>

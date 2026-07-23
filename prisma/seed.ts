@@ -1004,6 +1004,145 @@ async function main() {
     }
   }
 
+  // --- Buy-side mandates + matching ------------------------------------------
+  const investor2 = await prisma.user.upsert({
+    where: { email: "fund@assetmax.global" },
+    update: {},
+    create: {
+      name: "Henrik Osterberg",
+      email: "fund@assetmax.global",
+      passwordHash,
+      role: "INVESTOR",
+      company: "Baltica Infrastructure Partners",
+      country: "ES",
+    },
+  });
+  const investor3 = await prisma.user.upsert({
+    where: { email: "strategics@assetmax.global" },
+    update: {},
+    create: {
+      name: "Mei-Ling Chen",
+      email: "strategics@assetmax.global",
+      passwordHash,
+      role: "INVESTOR",
+      company: "Pacific Rim Strategic Holdings",
+      country: "AU",
+    },
+  });
+
+  const mandates = [
+    {
+      slug: "latam-water-infrastructure-mandate",
+      title: "LatAm Water & Desalination Platform Build-up",
+      description:
+        "Northbridge Infrastructure Fund is deploying its third fund into water infrastructure across Latin America. We target operating desalination plants, water transmission and industrial water-supply assets with contracted, USD-denominated revenues. Preference for majority stakes alongside proven local operators; single-asset tickets of USD 80–250M with capacity to fund expansions.",
+      investorId: investor.id,
+      categories: ["water"],
+      countries: ["CL", "PE", "MX"],
+      stages: ["operating", "expansion"],
+      dealTypes: ["partial_sale", "full_sale"],
+      ticketMin: 80_000_000,
+      ticketMax: 250_000_000,
+      isPublic: true,
+    },
+    {
+      slug: "copper-battery-metals-mandate",
+      title: "Copper & Battery Metals — Development Capital",
+      description:
+        "Pacific Rim Strategic Holdings seeks copper and lithium exposure across the Americas and Australia, from advanced exploration through construction. We provide staged development capital, streaming structures or outright acquisition, with technical teams able to move to binding terms within 90 days. Ticket range USD 100–500M.",
+      investorId: investor3.id,
+      categories: ["mining"],
+      countries: ["CL", "PE", "AU", "US"],
+      stages: ["greenfield", "construction", "operating"],
+      dealTypes: ["capital_raise", "full_sale", "partial_sale"],
+      ticketMin: 100_000_000,
+      ticketMax: 500_000_000,
+      isPublic: true,
+    },
+    {
+      slug: "iberia-latam-renewables-yield-mandate",
+      title: "Operating Renewables — Iberia & Mexico Yield Portfolio",
+      description:
+        "Baltica Infrastructure Partners is acquiring operating solar and wind assets in Spain and Mexico for a yield-focused permanent-capital vehicle. Contracted or partially contracted revenue profiles preferred; tickets of USD 100–300M per transaction, with appetite for portfolios up to USD 600M.",
+      investorId: investor2.id,
+      categories: ["energy"],
+      countries: ["ES", "MX"],
+      stages: ["operating"],
+      dealTypes: ["full_sale", "partial_sale"],
+      ticketMin: 100_000_000,
+      ticketMax: 300_000_000,
+      isPublic: true,
+    },
+    {
+      slug: "green-hydrogen-jv-mandate",
+      title: "Green Hydrogen & Ammonia — Strategic JV Partner",
+      description:
+        "Industrial group with committed offtake in Northern Europe seeks joint-venture positions in utility-scale green hydrogen and ammonia projects with world-class renewable resources. We contribute FEED funding, offtake and engineering capacity for projects targeting FID within 4 years. Investment capacity of USD 500M–1.5B per platform.",
+      investorId: investor2.id,
+      categories: ["energy"],
+      countries: ["CL", "MA", "AU"],
+      stages: ["greenfield", "construction"],
+      dealTypes: ["joint_venture", "capital_raise"],
+      ticketMin: 500_000_000,
+      ticketMax: 1_500_000_000,
+      isPublic: true,
+    },
+    {
+      slug: "agro-export-platforms-mandate",
+      title: "Export Agriculture Platforms — Growth Equity",
+      description:
+        "Pacific Rim Strategic Holdings allocates growth equity to vertically integrated agro-export platforms with secured water rights and retail programs in premium markets. Berries, avocado, nuts and permanent crops preferred; tickets USD 30–250M for minority or control positions.",
+      investorId: investor3.id,
+      categories: ["agro"],
+      countries: ["PE", "CL", "MX", "AU"],
+      stages: ["operating", "expansion"],
+      dealTypes: ["capital_raise", "partial_sale", "full_sale"],
+      ticketMin: 30_000_000,
+      ticketMax: 250_000_000,
+      isPublic: true,
+    },
+    {
+      slug: "core-ports-logistics-confidential",
+      title: "Core+ Ports & Terminals — Confidential Search",
+      description:
+        "On behalf of a sovereign-adjacent investor, Northbridge is conducting a confidential search for operating port terminals and cold-chain logistics assets in Southern Europe and the Gulf. Take-or-pay or contracted revenue required; tickets USD 50–250M. This mandate is not publicly listed.",
+      investorId: investor.id,
+      categories: ["ports"],
+      countries: ["ES", "AE"],
+      stages: ["operating"],
+      dealTypes: ["partial_sale", "full_sale"],
+      ticketMin: 50_000_000,
+      ticketMax: 250_000_000,
+      isPublic: false,
+    },
+  ];
+
+  for (const m of mandates) {
+    const { categories, countries, stages, dealTypes, ...rest } = m;
+    await prisma.mandate.upsert({
+      where: { slug: m.slug },
+      update: {},
+      create: {
+        ...rest,
+        categories: JSON.stringify(categories),
+        countries: JSON.stringify(countries),
+        stages: JSON.stringify(stages),
+        dealTypes: JSON.stringify(dealTypes),
+        status: "PUBLISHED",
+      },
+    });
+    console.log(`  ✔ Mandate: ${m.title}`);
+  }
+
+  // Run the matching engine over the seeded mandates.
+  const { runMatchingForMandate } = await import("../lib/matching");
+  const allMandates = await prisma.mandate.findMany({ where: { status: "PUBLISHED" } });
+  let totalMatches = 0;
+  for (const m of allMandates) {
+    totalMatches += await runMatchingForMandate(m.id);
+  }
+  console.log(`  ✔ Matching engine: ${totalMatches} new project–mandate matches`);
+
   console.log("Seed complete.");
   console.log(`Demo password for all accounts: ${PASSWORD}`);
 }

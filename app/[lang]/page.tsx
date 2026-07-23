@@ -345,6 +345,13 @@ export default async function HomePage({
             <ButtonLink href={`/${lang}/projects`} variant="outline-light" size="lg">
               {dict.home.ctaInvestors}
             </ButtonLink>
+            <ButtonLink
+              href={`/${lang}/dashboard/mandates/new`}
+              variant="outline-light"
+              size="lg"
+            >
+              {dict.mandates.postCta}
+            </ButtonLink>
           </div>
         </div>
       </section>

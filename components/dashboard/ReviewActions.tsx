@@ -6,9 +6,11 @@ import { Button, Textarea } from "@/components/ui";
 
 export function ReviewActions({
   projectId,
+  entity = "projects",
   labels,
 }: {
   projectId: string;
+  entity?: "projects" | "mandates" | "commodities";
   labels: { approve: string; reject: string; reason: string; confirm: string; cancel: string };
 }) {
   const router = useRouter();
@@ -18,7 +20,7 @@ export function ReviewActions({
 
   async function decide(decision: "approve" | "reject") {
     setBusy(true);
-    const res = await fetch(`/api/admin/projects/${projectId}/review`, {
+    const res = await fetch(`/api/admin/${entity}/${projectId}/review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ decision, reason }),

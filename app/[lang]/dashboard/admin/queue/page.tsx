@@ -18,11 +18,18 @@ export default async function AdminQueuePage({
   if (!session) redirect(`/${lang}/auth/signin`);
   if (session.user.role !== "ADMIN") redirect(`/${lang}/dashboard`);
 
-  const queue = await prisma.project.findMany({
-    where: { status: "IN_REVIEW" },
-    include: { owner: { select: { name: true, company: true, email: true } } },
-    orderBy: { updatedAt: "asc" },
-  });
+  const [queue, mandateQueue] = await Promise.all([
+    prisma.project.findMany({
+      where: { status: "IN_REVIEW" },
+      include: { owner: { select: { name: true, company: true, email: true } } },
+      orderBy: { updatedAt: "asc" },
+    }),
+    prisma.mandate.findMany({
+      where: { status: "IN_REVIEW" },
+      include: { investor: { select: { name: true, company: true, email: true } } },
+      orderBy: { updatedAt: "asc" },
+    }),
+  ]);
 
   const t = dict.dashboard.admin;
 
@@ -30,7 +37,7 @@ export default async function AdminQueuePage({
     <div className="space-y-6">
       <h1 className="text-2xl font-extrabold text-navy-950">{t.queueTitle}</h1>
 
-      {queue.length === 0 ? (
+      {queue.length === 0 && mandateQueue.length === 0 ? (
         <Card className="p-12 text-center text-navy-500">{t.queueEmpty}</Card>
       ) : (
         <div className="space-y-4">
@@ -58,6 +65,44 @@ export default async function AdminQueuePage({
                 </div>
                 <ReviewActions
                   projectId={p.id}
+                  labels={{
+                    approve: t.approve,
+                    reject: t.reject,
+                    reason: t.rejectReason,
+                    confirm: t.rejectConfirm,
+                    cancel: dict.common.cancel,
+                  }}
+                />
+              </div>
+            </Card>
+          ))}
+          {mandateQueue.map((m) => (
+            <Card key={m.id} className="p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="font-bold text-navy-950">{m.title}</h2>
+                    <Badge className="bg-gold-100 text-gold-800 ring-1 ring-gold-300">
+                      {dict.mandates.navLabel}
+                    </Badge>
+                    <Badge className="bg-navy-100 text-navy-600">
+                      {m.isPublic
+                        ? dict.mandates.publicLabel
+                        : dict.mandates.confidentialLabel}
+                    </Badge>
+                  </div>
+                  <p className="mt-1 text-xs text-navy-400">
+                    {m.investor.company ?? m.investor.name} · {m.investor.email} ·{" "}
+                    {formatDate(m.updatedAt, lang)} ·{" "}
+                    {formatInvestmentRange(m.ticketMin, m.ticketMax)}
+                  </p>
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-navy-600">
+                    {m.description}
+                  </p>
+                </div>
+                <ReviewActions
+                  projectId={m.id}
+                  entity="mandates"
                   labels={{
                     approve: t.approve,
                     reject: t.reject,

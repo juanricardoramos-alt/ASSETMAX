@@ -27,9 +27,11 @@ export default async function DashboardLayout({
   }
   if (role === "INVESTOR") {
     items.push({ href: `${base}/favorites`, label: dict.dashboard.favorites });
+    items.push({ href: `${base}/mandates`, label: dict.mandates.myMandates });
     items.push({ href: `${base}/offers`, label: dict.dashboard.offersSent });
     items.push({ href: `${base}/alerts`, label: dict.dashboard.alerts });
   }
+  items.push({ href: `${base}/matches`, label: dict.matches.title });
   items.push({ href: `${base}/messages`, label: dict.dashboard.messages });
   if (role === "PARTNER" || role === "ADMIN") {
     items.push({ href: `${base}/partner`, label: dict.dashboard.partnerPanel });
