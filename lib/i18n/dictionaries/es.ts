@@ -50,6 +50,7 @@ const es: Dictionary = {
     undisclosed: "No divulgado",
     usd: "USD",
     projects: "proyectos",
+    projectSingular: "proyecto",
     views: "visitas",
     date: "Fecha",
     name: "Nombre",
@@ -111,6 +112,13 @@ const es: Dictionary = {
     ADMIN: "Administrador",
   },
   home: {
+    kickers: {
+      categories: "Sectores",
+      featured: "Portafolio",
+      map: "Alcance Global",
+      how: "Proceso",
+      testimonials: "Confianza",
+    },
     heroKicker: "M&A Industrial · Financiamiento de Proyectos · Alcance Global",
     heroTitle: "Donde los activos industriales del mundo cambian de manos",
     heroSubtitle:

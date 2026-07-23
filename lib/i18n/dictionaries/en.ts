@@ -48,6 +48,7 @@ const en = {
     undisclosed: "Undisclosed",
     usd: "USD",
     projects: "projects",
+    projectSingular: "project",
     views: "views",
     date: "Date",
     name: "Name",
@@ -109,6 +110,13 @@ const en = {
     ADMIN: "Administrator",
   },
   home: {
+    kickers: {
+      categories: "Sectors",
+      featured: "Portfolio",
+      map: "Global Reach",
+      how: "Process",
+      testimonials: "Trust",
+    },
     heroKicker: "Industrial M&A · Project Finance · Global Reach",
     heroTitle: "Where the world's industrial assets change hands",
     heroSubtitle:

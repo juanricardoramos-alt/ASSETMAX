@@ -170,7 +170,7 @@ export default async function HomePage({
       <section className="bg-navy-50/60 py-20">
         <div className="container-site">
           <SectionHeading
-            kicker={dict.home.categoriesTitle}
+            kicker={dict.home.kickers.categories}
             title={dict.home.categoriesTitle}
             subtitle={dict.home.categoriesSubtitle}
           />
@@ -190,7 +190,10 @@ export default async function HomePage({
                     {dict.categories[cat]}
                   </h3>
                   <p className="mt-1 text-xs font-medium text-navy-400">
-                    {countByCategory[cat] ?? 0} {dict.common.projects}
+                    {countByCategory[cat] ?? 0}{" "}
+                    {(countByCategory[cat] ?? 0) === 1
+                      ? dict.common.projectSingular
+                      : dict.common.projects}
                   </p>
                 </Link>
               );
@@ -203,7 +206,7 @@ export default async function HomePage({
       <section className="py-20">
         <div className="container-site">
           <SectionHeading
-            kicker="Portfolio"
+            kicker={dict.home.kickers.featured}
             title={dict.home.featuredTitle}
             subtitle={dict.home.featuredSubtitle}
           />
@@ -225,7 +228,7 @@ export default async function HomePage({
       <section className="bg-navy-950 py-20">
         <div className="container-site">
           <SectionHeading
-            kicker="Global"
+            kicker={dict.home.kickers.map}
             title={dict.home.mapTitle}
             subtitle={dict.home.mapSubtitle}
             dark
@@ -264,7 +267,7 @@ export default async function HomePage({
       <section className="py-20">
         <div className="container-site">
           <SectionHeading
-            kicker="Process"
+            kicker={dict.home.kickers.how}
             title={dict.home.howTitle}
             subtitle={dict.home.howSubtitle}
           />
@@ -306,7 +309,10 @@ export default async function HomePage({
       {/* ---------------------------------------------------- Testimonials */}
       <section className="bg-navy-50/60 py-20">
         <div className="container-site">
-          <SectionHeading kicker="Trust" title={dict.home.testimonialsTitle} />
+          <SectionHeading
+            kicker={dict.home.kickers.testimonials}
+            title={dict.home.testimonialsTitle}
+          />
           <div className="grid gap-6 md:grid-cols-3">
             {dict.home.testimonials.map((t) => (
               <Card key={t.author} className="flex flex-col p-7">
