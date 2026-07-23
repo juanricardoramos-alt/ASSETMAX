@@ -1,0 +1,347 @@
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { CATEGORIES, countryName } from "@/lib/constants";
+import { formatUsdCompact } from "@/lib/utils";
+import { ProjectCard } from "@/components/projects/ProjectCard";
+import { WorldMap } from "@/components/home/WorldMap";
+import { ButtonLink, SectionHeading, Card } from "@/components/ui";
+import {
+  CATEGORY_ICONS,
+  IconSearch,
+  IconShield,
+  IconLock,
+  IconGlobe,
+  IconArrowRight,
+} from "@/components/icons";
+
+export const dynamic = "force-dynamic";
+
+export default async function HomePage({
+  params,
+}: {
+  params: { lang: string };
+}) {
+  const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
+  const dict = await getDictionary(lang);
+
+  const [featured, published, categoryCounts] = await Promise.all([
+    prisma.project.findMany({
+      where: { status: "PUBLISHED", featured: true },
+      include: { images: { orderBy: { order: "asc" } }, owner: { select: { role: true } } },
+      orderBy: { views: "desc" },
+      take: 6,
+    }),
+    prisma.project.findMany({
+      where: { status: "PUBLISHED" },
+      select: {
+        slug: true,
+        title: true,
+        countryCode: true,
+        category: true,
+        lat: true,
+        lng: true,
+        investmentMax: true,
+        investmentMin: true,
+      },
+    }),
+    prisma.project.groupBy({
+      by: ["category"],
+      where: { status: "PUBLISHED" },
+      _count: true,
+    }),
+  ]);
+
+  const countByCategory = Object.fromEntries(
+    categoryCounts.map((c) => [c.category, c._count])
+  );
+  const countries = new Set(published.map((p) => p.countryCode));
+  const pipeline = published.reduce(
+    (sum, p) => sum + (p.investmentMax ?? p.investmentMin ?? 0),
+    0
+  );
+  const pins = published
+    .filter((p) => p.lat != null && p.lng != null)
+    .map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      country: countryName(p.countryCode, lang),
+      category: p.category,
+      lat: p.lat as number,
+      lng: p.lng as number,
+    }));
+
+  const trustBadges = [
+    { icon: IconShield, label: dict.home.trustBadge1 },
+    { icon: IconLock, label: dict.home.trustBadge2 },
+    { icon: IconGlobe, label: dict.home.trustBadge3 },
+  ];
+
+  const partnerLogos = [
+    "NORTHBRIDGE",
+    "MERIDIAN PARTNERS",
+    "ALDRIDGE HOLDINGS",
+    "ANDES CAPITAL",
+    "KESTREL INFRA",
+    "SOLARIA GROUP",
+  ];
+
+  return (
+    <>
+      {/* ------------------------------------------------------------ Hero */}
+      <section className="relative overflow-hidden bg-navy-950">
+        <div className="absolute inset-0 bg-grid-dots opacity-60" />
+        <div className="absolute -top-40 left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-navy-700/40 blur-3xl" />
+        <div className="container-site relative py-20 sm:py-28">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="animate-fade-up text-xs font-bold uppercase tracking-[0.25em] text-gold-400">
+              {dict.home.heroKicker}
+            </p>
+            <h1 className="mt-5 animate-fade-up text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+              {dict.home.heroTitle}
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-base leading-relaxed text-navy-200 sm:text-lg">
+              {dict.home.heroSubtitle}
+            </p>
+
+            <form
+              action={`/${lang}/projects`}
+              className="mx-auto mt-9 flex max-w-2xl overflow-hidden rounded-lg bg-white shadow-card-hover"
+            >
+              <div className="flex flex-1 items-center gap-2 pl-4">
+                <IconSearch className="h-5 w-5 shrink-0 text-navy-400" />
+                <input
+                  type="text"
+                  name="q"
+                  placeholder={dict.home.searchPlaceholder}
+                  className="w-full border-0 py-4 text-sm text-navy-900 placeholder:text-navy-400 focus:outline-none focus:ring-0"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-gold-500 px-6 text-sm font-bold text-navy-950 transition hover:bg-gold-400"
+              >
+                {dict.home.searchCta}
+              </button>
+            </form>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <ButtonLink href={`/${lang}/auth/register`} variant="gold" size="lg">
+                {dict.home.heroCtaSellers}
+              </ButtonLink>
+              <ButtonLink href={`/${lang}/projects`} variant="outline-light" size="lg">
+                {dict.home.heroCtaInvestors}
+                <IconArrowRight className="h-4 w-4" />
+              </ButtonLink>
+            </div>
+
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+              {trustBadges.map((b) => (
+                <div key={b.label} className="flex items-center gap-2 text-sm text-navy-300">
+                  <b.icon className="h-4 w-4 text-gold-400" />
+                  {b.label}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------- Partner logos */}
+      <section className="border-b border-navy-100 bg-white">
+        <div className="container-site py-8">
+          <p className="mb-5 text-center text-[11px] font-bold uppercase tracking-[0.22em] text-navy-400">
+            {dict.home.partnersTitle}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {partnerLogos.map((logo) => (
+              <span
+                key={logo}
+                className="text-sm font-extrabold tracking-widest text-navy-300"
+              >
+                {logo}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------ Categories */}
+      <section className="bg-navy-50/60 py-20">
+        <div className="container-site">
+          <SectionHeading
+            kicker={dict.home.categoriesTitle}
+            title={dict.home.categoriesTitle}
+            subtitle={dict.home.categoriesSubtitle}
+          />
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {CATEGORIES.map((cat) => {
+              const Icon = CATEGORY_ICONS[cat];
+              return (
+                <Link
+                  key={cat}
+                  href={`/${lang}/projects?category=${cat}`}
+                  className="group rounded-xl border border-navy-100 bg-white p-6 shadow-card transition hover:-translate-y-0.5 hover:border-gold-300 hover:shadow-card-hover"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-900 text-gold-400 transition group-hover:bg-navy-800">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-4 font-bold text-navy-950">
+                    {dict.categories[cat]}
+                  </h3>
+                  <p className="mt-1 text-xs font-medium text-navy-400">
+                    {countByCategory[cat] ?? 0} {dict.common.projects}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------- Featured */}
+      <section className="py-20">
+        <div className="container-site">
+          <SectionHeading
+            kicker="Portfolio"
+            title={dict.home.featuredTitle}
+            subtitle={dict.home.featuredSubtitle}
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((p, i) => (
+              <ProjectCard key={p.id} project={p} lang={lang} dict={dict} priority={i < 3} />
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <ButtonLink href={`/${lang}/projects`} variant="outline" size="lg">
+              {dict.common.viewAll}
+              <IconArrowRight className="h-4 w-4" />
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------- World map */}
+      <section className="bg-navy-950 py-20">
+        <div className="container-site">
+          <SectionHeading
+            kicker="Global"
+            title={dict.home.mapTitle}
+            subtitle={dict.home.mapSubtitle}
+            dark
+          />
+          <WorldMap
+            pins={pins}
+            lang={lang}
+            categoryLabels={dict.categories as unknown as Record<string, string>}
+          />
+
+          {/* Stats band */}
+          <div className="mt-12 grid grid-cols-2 gap-6 lg:grid-cols-4">
+            {[
+              { value: String(published.length), label: dict.home.statProjects },
+              { value: String(countries.size), label: dict.home.statCountries },
+              { value: formatUsdCompact(pipeline), label: dict.home.statPipeline },
+              { value: String(CATEGORIES.length), label: dict.home.statCategories },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl border border-white/10 bg-white/5 p-6 text-center"
+              >
+                <p className="text-3xl font-extrabold text-gold-400 sm:text-4xl">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-navy-300">
+                  {s.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------- How it works */}
+      <section className="py-20">
+        <div className="container-site">
+          <SectionHeading
+            kicker="Process"
+            title={dict.home.howTitle}
+            subtitle={dict.home.howSubtitle}
+          />
+          <div className="grid gap-10 lg:grid-cols-2">
+            {[
+              { title: dict.home.sellersTitle, steps: dict.home.sellerSteps, cta: { href: `/${lang}/for-sellers`, label: dict.nav.forSellers } },
+              { title: dict.home.investorsTitle, steps: dict.home.investorSteps, cta: { href: `/${lang}/for-investors`, label: dict.nav.forInvestors } },
+            ].map((col) => (
+              <Card key={col.title} className="p-8">
+                <h3 className="text-xl font-bold text-navy-950">{col.title}</h3>
+                <ol className="mt-6 space-y-6">
+                  {col.steps.map((step, i) => (
+                    <li key={step.title} className="flex gap-4">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy-900 text-sm font-bold text-gold-400">
+                        {i + 1}
+                      </span>
+                      <div>
+                        <h4 className="font-bold text-navy-900">{step.title}</h4>
+                        <p className="mt-1 text-sm leading-relaxed text-navy-500">
+                          {step.text}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <Link
+                  href={col.cta.href}
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-navy-700 hover:text-gold-600"
+                >
+                  {dict.common.learnMore}
+                  <IconArrowRight className="h-4 w-4" />
+                </Link>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------- Testimonials */}
+      <section className="bg-navy-50/60 py-20">
+        <div className="container-site">
+          <SectionHeading kicker="Trust" title={dict.home.testimonialsTitle} />
+          <div className="grid gap-6 md:grid-cols-3">
+            {dict.home.testimonials.map((t) => (
+              <Card key={t.author} className="flex flex-col p-7">
+                <p className="text-gold-500">★★★★★</p>
+                <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-navy-700">
+                  “{t.quote}”
+                </blockquote>
+                <footer className="mt-5 border-t border-navy-100 pt-4">
+                  <p className="text-sm font-bold text-navy-900">{t.author}</p>
+                  <p className="text-xs text-navy-400">{t.location}</p>
+                </footer>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------- CTA */}
+      <section className="relative overflow-hidden bg-navy-950 py-20">
+        <div className="absolute inset-0 bg-grid-dots opacity-40" />
+        <div className="container-site relative text-center">
+          <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            {dict.home.ctaTitle}
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-navy-200">{dict.home.ctaSubtitle}</p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <ButtonLink href={`/${lang}/auth/register`} variant="gold" size="lg">
+              {dict.home.ctaSellers}
+            </ButtonLink>
+            <ButtonLink href={`/${lang}/projects`} variant="outline-light" size="lg">
+              {dict.home.ctaInvestors}
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

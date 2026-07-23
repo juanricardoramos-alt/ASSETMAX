@@ -1,0 +1,257 @@
+// ASSETMAX Global — data model
+//
+// NOTE ON PORTABILITY: the schema uses String columns (with typed constants in
+// lib/constants.ts) instead of Prisma enums so the exact same schema runs on
+// SQLite in development and PostgreSQL in production. To migrate, switch the
+// datasource provider to "postgresql" and set DATABASE_URL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Users & auth
+// ---------------------------------------------------------------------------
+
+// role: SELLER | INVESTOR | PARTNER | ADMIN
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  emailVerified  DateTime?
+  image          String?
+  passwordHash   String?
+  role           String    @default("INVESTOR")
+  company        String?
+  country        String?
+  phone          String?
+  verifiedSeller Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  accounts       Account[]
+  sessions       Session[]
+  projects       Project[]
+  favorites      Favorite[]
+  offers         Offer[]
+  ndaAcceptances NdaAcceptance[]
+  alerts         Alert[]
+  investorThreads Thread[] @relation("InvestorThreads")
+  sellerThreads   Thread[] @relation("SellerThreads")
+  messages       Message[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------------------------------------------------------------------------
+// Projects
+// ---------------------------------------------------------------------------
+
+// category: mining | energy | water | agro | manufacturing | infrastructure | ports | realestate
+// stage: greenfield | construction | operating | expansion
+// dealType: full_sale | partial_sale | capital_raise | joint_venture
+// status: DRAFT | IN_REVIEW | PUBLISHED | REJECTED
+model Project {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  summary         String
+  description     String
+  category        String
+  country         String
+  countryCode     String
+  city            String?
+  region          String?
+  lat             Float?
+  lng             Float?
+  stage           String
+  dealType        String
+  status          String    @default("DRAFT")
+  verified        Boolean   @default(false)
+  featured        Boolean   @default(false)
+  investmentMin   Float?
+  investmentMax   Float?
+  revenue         Float?
+  ebitda          Float?
+  capacity        String?
+  production      String?
+  permits         String?
+  workforce       Int?
+  areaHectares    Float?
+  // JSON-encoded string arrays / objects (portable across SQLite & Postgres)
+  highlights      String    @default("[]")
+  specs           String    @default("[]")
+  views           Int       @default(0)
+  rejectionReason String?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  images         ProjectImage[]
+  documents      ProjectDocument[]
+  favorites      Favorite[]
+  offers         Offer[]
+  ndaAcceptances NdaAcceptance[]
+  threads        Thread[]
+}
+
+model ProjectImage {
+  id        String @id @default(cuid())
+  projectId String
+  url       String
+  alt       String @default("")
+  order     Int    @default(0)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectDocument {
+  id             String  @id @default(cuid())
+  projectId      String
+  name           String
+  url            String
+  isConfidential Boolean @default(false)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Investor interactions
+// ---------------------------------------------------------------------------
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+}
+
+// type: full_acquisition | equity_stake | debt | joint_venture
+// status: PENDING | IN_DISCUSSION | ACCEPTED | DECLINED | WITHDRAWN
+model Offer {
+  id         String   @id @default(cuid())
+  projectId  String
+  investorId String
+  amount     Float
+  type       String
+  equityPct  Float?
+  message    String
+  status     String   @default("PENDING")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  project  Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  investor User    @relation(fields: [investorId], references: [id], onDelete: Cascade)
+}
+
+// Digital NDA acceptance — grants access to the project's data room.
+model NdaAcceptance {
+  id         String   @id @default(cuid())
+  projectId  String
+  userId     String
+  fullName   String
+  company    String?
+  acceptedAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+// ---------------------------------------------------------------------------
+// Messaging
+// ---------------------------------------------------------------------------
+
+model Thread {
+  id            String   @id @default(cuid())
+  projectId     String
+  investorId    String
+  sellerId      String
+  subject       String
+  lastMessageAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  investor User      @relation("InvestorThreads", fields: [investorId], references: [id], onDelete: Cascade)
+  seller   User      @relation("SellerThreads", fields: [sellerId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([projectId, investorId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  threadId  String
+  senderId  String
+  body      String
+  createdAt DateTime @default(now())
+
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  sender User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Saved search alerts
+// ---------------------------------------------------------------------------
+
+model Alert {
+  id            String   @id @default(cuid())
+  userId        String
+  name          String
+  category      String?
+  country       String?
+  stage         String?
+  dealType      String?
+  minInvestment Float?
+  maxInvestment Float?
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
