@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { aiEnabled } from "@/lib/ai";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
 import { ProjectWizard } from "@/components/dashboard/ProjectWizard";
 
@@ -16,5 +17,5 @@ export default async function NewProjectPage({
     redirect(`/${lang}/dashboard`);
   }
 
-  return <ProjectWizard lang={lang} dict={dict} />;
+  return <ProjectWizard lang={lang} dict={dict} aiIngestEnabled={aiEnabled()} />;
 }

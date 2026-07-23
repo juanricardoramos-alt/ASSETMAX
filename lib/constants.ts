@@ -78,6 +78,54 @@ export function countryName(code: string, lang: "en" | "es"): string {
   return c ? c[lang] : code;
 }
 
+// ---------------------------------------------------------------------------
+// Commodities marketplace
+// ---------------------------------------------------------------------------
+
+export const COMMODITIES = [
+  "copper_cathodes",
+  "copper_concentrate",
+  "lithium_carbonate",
+  "spodumene",
+  "iron_ore",
+  "gold_dore",
+  "silver",
+  "molybdenum_oxide",
+  "zinc_concentrate",
+  "potash",
+  "urea",
+  "wheat",
+  "corn",
+  "soybeans",
+  "fishmeal",
+  "wood_pulp",
+] as const;
+export type CommodityKey = (typeof COMMODITIES)[number];
+
+export const INCOTERMS = ["EXW", "FCA", "FOB", "CFR", "CIF", "DAP", "DDP"] as const;
+export type Incoterm = (typeof INCOTERMS)[number];
+
+export const PERIODICITIES = ["spot", "contract"] as const;
+export const PRICE_TYPES = ["fixed", "indexed"] as const;
+export const LISTING_SIDES = ["SELL", "BUY"] as const;
+export type ListingSide = (typeof LISTING_SIDES)[number];
+
+export const CONTRACT_KINDS = ["NDA", "LOI", "MOU", "SPA", "COMMODITY_SPA"] as const;
+export type ContractKind = (typeof CONTRACT_KINDS)[number];
+
+export const MATCH_STATUSES = ["NEW", "CONTACTED", "DISMISSED"] as const;
+
+// Static market reference prices for the indicators widget (seed data,
+// presented in the UI as "market reference", not live quotes).
+export const MARKET_REFERENCES = [
+  { key: "copper", label: "Copper (LME)", value: "USD 4.31/lb", trend: 1.2 },
+  { key: "gold", label: "Gold", value: "USD 2,640/oz", trend: 0.4 },
+  { key: "lithium", label: "Li₂CO₃ (battery grade)", value: "USD 12,850/t", trend: -0.8 },
+  { key: "silver", label: "Silver", value: "USD 31.2/oz", trend: 0.6 },
+  { key: "iron", label: "Iron Ore 62% Fe", value: "USD 104/t", trend: -0.3 },
+  { key: "moly", label: "Molybdenum Oxide", value: "USD 21.4/lb", trend: 0.9 },
+] as const;
+
 // Investment range buckets used by the explorer filter (USD).
 export const INVESTMENT_RANGES = [
   { key: "u10", min: 0, max: 10_000_000 },

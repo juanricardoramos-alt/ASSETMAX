@@ -22,6 +22,7 @@ export default async function ThreadPage({
     where: { id: params.id },
     include: {
       project: { select: { title: true, slug: true } },
+      commodityListing: { select: { title: true, slug: true } },
       investor: { select: { id: true, name: true, company: true } },
       seller: { select: { id: true, name: true, company: true } },
       messages: {
@@ -31,6 +32,12 @@ export default async function ThreadPage({
     },
   });
   if (!thread) notFound();
+
+  const subjectHref = thread.project
+    ? `/${lang}/projects/${thread.project.slug}`
+    : thread.commodityListing
+      ? `/${lang}/commodities/${thread.commodityListing.slug}`
+      : null;
 
   const userId = session.user.id;
   const isParticipant =
@@ -51,12 +58,14 @@ export default async function ThreadPage({
         <h1 className="mt-2 text-2xl font-extrabold text-navy-950">
           {thread.subject}
         </h1>
-        <Link
-          href={`/${lang}/projects/${thread.project.slug}`}
-          className="text-sm font-semibold text-gold-600 hover:text-gold-500"
-        >
-          {dict.common.viewProject} →
-        </Link>
+        {subjectHref && (
+          <Link
+            href={subjectHref}
+            className="text-sm font-semibold text-gold-600 hover:text-gold-500"
+          >
+            {dict.common.viewProject} →
+          </Link>
+        )}
       </div>
 
       <Card className="p-6">

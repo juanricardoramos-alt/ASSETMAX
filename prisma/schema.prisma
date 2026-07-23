@@ -44,6 +44,12 @@ model User {
   investorThreads Thread[] @relation("InvestorThreads")
   sellerThreads   Thread[] @relation("SellerThreads")
   messages       Message[]
+  mandates          Mandate[]
+  commodityListings CommodityListing[]
+  commodityNdas     CommodityNda[]
+  contractsAsSeller Contract[] @relation("ContractSeller")
+  contractsAsBuyer  Contract[] @relation("ContractBuyer")
+  notifications     Notification[]
 }
 
 model Account {
@@ -134,6 +140,8 @@ model Project {
   offers         Offer[]
   ndaAcceptances NdaAcceptance[]
   threads        Thread[]
+  matches        ProjectMatch[]
+  contracts      Contract[]
 }
 
 model ProjectImage {
@@ -188,6 +196,8 @@ model Offer {
 
   project  Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   investor User    @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  contracts Contract[]
 }
 
 // Digital NDA acceptance — grants access to the project's data room.
@@ -209,21 +219,25 @@ model NdaAcceptance {
 // Messaging
 // ---------------------------------------------------------------------------
 
+// A thread belongs to either a project or a commodity listing (one of the two FKs set).
 model Thread {
-  id            String   @id @default(cuid())
-  projectId     String
-  investorId    String
-  sellerId      String
-  subject       String
-  lastMessageAt DateTime @default(now())
-  createdAt     DateTime @default(now())
+  id                 String   @id @default(cuid())
+  projectId          String?
+  commodityListingId String?
+  investorId         String
+  sellerId           String
+  subject            String
+  lastMessageAt      DateTime @default(now())
+  createdAt          DateTime @default(now())
 
-  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  investor User      @relation("InvestorThreads", fields: [investorId], references: [id], onDelete: Cascade)
-  seller   User      @relation("SellerThreads", fields: [sellerId], references: [id], onDelete: Cascade)
-  messages Message[]
+  project          Project?          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  commodityListing CommodityListing? @relation(fields: [commodityListingId], references: [id], onDelete: Cascade)
+  investor         User              @relation("InvestorThreads", fields: [investorId], references: [id], onDelete: Cascade)
+  seller           User              @relation("SellerThreads", fields: [sellerId], references: [id], onDelete: Cascade)
+  messages         Message[]
 
   @@unique([projectId, investorId])
+  @@unique([commodityListingId, investorId])
 }
 
 model Message {
@@ -235,6 +249,168 @@ model Message {
 
   thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
   sender User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Buy-side investment mandates & AI matching
+// ---------------------------------------------------------------------------
+
+// status reuses: DRAFT | IN_REVIEW | PUBLISHED | REJECTED
+model Mandate {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  description     String
+  investorId      String
+  // JSON-encoded string arrays of criteria keys (portable across SQLite & Postgres)
+  categories      String   @default("[]")
+  countries       String   @default("[]")
+  stages          String   @default("[]")
+  dealTypes       String   @default("[]")
+  ticketMin       Float?
+  ticketMax       Float?
+  equityMin       Float?
+  equityMax       Float?
+  conditions      String?
+  isPublic        Boolean  @default(true)
+  status          String   @default("IN_REVIEW")
+  rejectionReason String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  investor User           @relation(fields: [investorId], references: [id], onDelete: Cascade)
+  matches  ProjectMatch[]
+}
+
+// status: NEW | CONTACTED | DISMISSED
+model ProjectMatch {
+  id        String   @id @default(cuid())
+  projectId String
+  mandateId String
+  score     Int
+  rationale String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mandate Mandate @relation(fields: [mandateId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, mandateId])
+}
+
+// ---------------------------------------------------------------------------
+// Physical commodities marketplace (connect, not transact)
+// ---------------------------------------------------------------------------
+
+// side: SELL | BUY · periodicity: spot | contract · priceType: fixed | indexed
+model CommodityListing {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  side             String
+  commodity        String
+  title            String
+  description      String
+  specs            String    @default("[]")
+  volume           String
+  periodicity      String
+  originCode       String?
+  destinationCode  String?
+  incoterm         String
+  deliveryLocation String?
+  priceType        String
+  priceDetails     String?
+  validUntil       DateTime?
+  documents        String    @default("[]")
+  status           String    @default("IN_REVIEW")
+  verified         Boolean   @default(false)
+  rejectionReason  String?
+  views            Int       @default(0)
+  ownerId          String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  owner         User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ndaAcceptances CommodityNda[]
+  threads       Thread[]
+  contracts     Contract[]
+  matchesAsSell CommodityMatch[] @relation("SellSide")
+  matchesAsBuy  CommodityMatch[] @relation("BuySide")
+}
+
+model CommodityNda {
+  id         String   @id @default(cuid())
+  listingId  String
+  userId     String
+  fullName   String
+  company    String?
+  acceptedAt DateTime @default(now())
+
+  listing CommodityListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([listingId, userId])
+}
+
+// status: NEW | CONTACTED | DISMISSED
+model CommodityMatch {
+  id        String   @id @default(cuid())
+  sellId    String
+  buyId     String
+  score     Int
+  rationale String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+
+  sell CommodityListing @relation("SellSide", fields: [sellId], references: [id], onDelete: Cascade)
+  buy  CommodityListing @relation("BuySide", fields: [buyId], references: [id], onDelete: Cascade)
+
+  @@unique([sellId, buyId])
+}
+
+// ---------------------------------------------------------------------------
+// AI-drafted contracts
+// ---------------------------------------------------------------------------
+
+// kind: NDA | LOI | MOU | SPA | COMMODITY_SPA
+// Draft lifecycle: both parties must mark reviewed before download for signature.
+model Contract {
+  id                 String    @id @default(cuid())
+  kind               String
+  title              String
+  content            String
+  projectId          String?
+  offerId            String?
+  commodityListingId String?
+  sellerId           String
+  buyerId            String
+  sellerReviewedAt   DateTime?
+  buyerReviewedAt    DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  project          Project?          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  offer            Offer?            @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  commodityListing CommodityListing? @relation(fields: [commodityListingId], references: [id], onDelete: Cascade)
+  seller           User              @relation("ContractSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  buyer            User              @relation("ContractBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// In-app notifications
+// ---------------------------------------------------------------------------
+
+// type: MATCH | OFFER | MESSAGE | CONTRACT | REVIEW
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  type      String
+  title     String
+  body      String?
+  href      String?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // ---------------------------------------------------------------------------

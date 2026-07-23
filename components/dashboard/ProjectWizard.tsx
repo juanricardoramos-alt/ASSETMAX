@@ -4,9 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Dictionary } from "@/lib/i18n";
 import { CATEGORIES, STAGES, DEAL_TYPES, COUNTRIES } from "@/lib/constants";
+import type { IngestResult } from "@/app/api/ai/ingest/route";
 import { Button, Input, Label, Select, Textarea, Card } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { IconCheck } from "@/components/icons";
+import { IconCheck, IconDoc, IconClose } from "@/components/icons";
 
 export type WizardData = {
   title: string;
@@ -105,25 +106,108 @@ function toPayload(d: WizardData, action: "draft" | "submit") {
   };
 }
 
+type AiNotes = {
+  missing: string[];
+  publicDocs: string[];
+  confidentialDocs: string[];
+};
+
+function pick<T extends string>(value: string | null | undefined, allowed: readonly T[], fallback: T): T {
+  return value && (allowed as readonly string[]).includes(value) ? (value as T) : fallback;
+}
+
+function fromIngest(r: IngestResult): WizardData {
+  const description = [
+    r.description_en,
+    r.description_es ? `— Versión en español —\n\n${r.description_es}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+  return {
+    ...emptyWizardData,
+    title: r.title ?? "",
+    summary: r.summary ?? "",
+    description,
+    category: pick(r.category, CATEGORIES, emptyWizardData.category as (typeof CATEGORIES)[number]),
+    countryCode: pick(
+      r.countryCode,
+      COUNTRIES.map((c) => c.code),
+      emptyWizardData.countryCode
+    ),
+    region: r.region ?? "",
+    city: r.city ?? "",
+    lat: r.lat != null ? String(r.lat) : "",
+    lng: r.lng != null ? String(r.lng) : "",
+    stage: pick(r.stage, STAGES, emptyWizardData.stage as (typeof STAGES)[number]),
+    dealType: pick(r.dealType, DEAL_TYPES, emptyWizardData.dealType as (typeof DEAL_TYPES)[number]),
+    investmentMin: r.investmentMin != null ? String(r.investmentMin) : "",
+    investmentMax: r.investmentMax != null ? String(r.investmentMax) : "",
+    revenue: r.revenue != null ? String(r.revenue) : "",
+    ebitda: r.ebitda != null ? String(r.ebitda) : "",
+    capacity: r.capacity ?? "",
+    production: r.production ?? "",
+    permits: r.permits ?? "",
+    workforce: r.workforce != null ? String(r.workforce) : "",
+    areaHectares: r.areaHectares != null ? String(r.areaHectares) : "",
+    highlights: (r.highlights ?? []).join("\n"),
+    specs: r.specs ?? [],
+  };
+}
+
 export function ProjectWizard({
   lang,
   dict,
   projectId,
   initialData,
+  aiIngestEnabled = false,
 }: {
   lang: string;
   dict: Dictionary;
   projectId?: string;
   initialData?: WizardData;
+  aiIngestEnabled?: boolean;
 }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState<WizardData>(initialData ?? emptyWizardData);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [mode, setMode] = useState<"choose" | "form">(
+    projectId || initialData ? "form" : "choose"
+  );
+  const [aiNotes, setAiNotes] = useState<AiNotes | null>(null);
+  const [ingesting, setIngesting] = useState(false);
+  const [ingestError, setIngestError] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
   const w = dict.wizard;
   const steps = w.steps;
+
+  async function runIngest() {
+    if (!file) return;
+    setIngesting(true);
+    setIngestError(false);
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("mode", "project");
+    try {
+      const res = await fetch("/api/ai/ingest", { method: "POST", body: fd });
+      if (!res.ok) throw new Error("ingest failed");
+      const { result } = (await res.json()) as { result: IngestResult };
+      setData(fromIngest(result));
+      setAiNotes({
+        missing: result.missingFields ?? [],
+        publicDocs: result.publicDocumentSuggestions ?? [],
+        confidentialDocs: result.confidentialDocumentSuggestions ?? [],
+      });
+      setMode("form");
+      setStep(0);
+    } catch {
+      setIngestError(true);
+    } finally {
+      setIngesting(false);
+    }
+  }
 
   const set = (patch: Partial<WizardData>) => setData((d) => ({ ...d, ...patch }));
 
@@ -176,11 +260,126 @@ export function ProjectWizard({
     );
   }
 
+  // Mode selection — manual vs AI document ingestion (new listings only)
+  if (mode === "choose") {
+    const a = dict.ai.wizard;
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-extrabold text-navy-950">{w.title}</h1>
+        <p className="text-sm text-navy-500">{a.chooseTitle}</p>
+        <div className="grid gap-5 lg:grid-cols-2">
+          <button
+            onClick={() => setMode("form")}
+            className="rounded-xl border border-navy-100 bg-white p-7 text-left shadow-card transition hover:-translate-y-0.5 hover:border-gold-300 hover:shadow-card-hover"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-900 text-gold-400">
+              <IconCheck className="h-6 w-6" />
+            </div>
+            <h2 className="mt-4 text-lg font-bold text-navy-950">{a.manualTitle}</h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-navy-500">{a.manualText}</p>
+          </button>
+
+          <div className="rounded-xl border border-navy-100 bg-white p-7 shadow-card">
+            <div className="flex items-center justify-between">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-900 text-gold-400">
+                <IconDoc className="h-6 w-6" />
+              </div>
+              <span className="rounded-full bg-gold-100 px-2.5 py-0.5 text-xs font-bold text-gold-800 ring-1 ring-gold-300">
+                {dict.ai.poweredBy}
+              </span>
+            </div>
+            <h2 className="mt-4 text-lg font-bold text-navy-950">{a.uploadTitle}</h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-navy-500">{a.uploadText}</p>
+
+            {aiIngestEnabled ? (
+              <div className="mt-5 space-y-3">
+                <div>
+                  <Label htmlFor="wz-ai-file">{a.fileLabel}</Label>
+                  <Input
+                    id="wz-ai-file"
+                    type="file"
+                    accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.md"
+                    onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                    className="file:mr-3 file:rounded-md file:border-0 file:bg-navy-900 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white"
+                  />
+                </div>
+                {ingestError && (
+                  <p className="text-sm font-medium text-red-600">{a.error}</p>
+                )}
+                <Button
+                  variant="gold"
+                  className="w-full"
+                  disabled={!file || ingesting}
+                  onClick={runIngest}
+                >
+                  {ingesting ? a.processing : a.uploadCta}
+                </Button>
+              </div>
+            ) : (
+              <p className="mt-5 rounded-lg bg-navy-50 px-4 py-3 text-xs leading-relaxed text-navy-500">
+                {dict.ai.disabledNote}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-extrabold text-navy-950">
         {projectId ? w.editTitle : w.title}
       </h1>
+
+      {/* AI ingestion review notes */}
+      {aiNotes && (
+        <div className="rounded-xl border border-gold-200 bg-gold-50/60 p-5">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-bold text-navy-950">{dict.ai.wizard.extractedTitle}</p>
+              <p className="mt-1 text-sm leading-relaxed text-navy-600">
+                {dict.ai.wizard.extractedText}
+              </p>
+            </div>
+            <button
+              onClick={() => setAiNotes(null)}
+              aria-label={dict.common.close}
+              className="rounded-md p-1 text-navy-400 hover:bg-white hover:text-navy-900"
+            >
+              <IconClose className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            {[
+              { title: dict.ai.wizard.missingTitle, items: aiNotes.missing, warn: true },
+              { title: dict.ai.wizard.publicSuggestTitle, items: aiNotes.publicDocs, warn: false },
+              { title: dict.ai.wizard.confidentialSuggestTitle, items: aiNotes.confidentialDocs, warn: false },
+            ]
+              .filter((b) => b.items.length > 0)
+              .map((block) => (
+                <div key={block.title}>
+                  <p
+                    className={cn(
+                      "text-xs font-bold uppercase tracking-wider",
+                      block.warn ? "text-amber-700" : "text-navy-500"
+                    )}
+                  >
+                    {block.title}
+                  </p>
+                  <ul className="mt-1.5 space-y-1 text-xs text-navy-700">
+                    {block.items.map((item, i) => (
+                      <li key={i} className="flex items-start gap-1.5">
+                        <span className={block.warn ? "text-amber-500" : "text-gold-500"}>•</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
 
       {/* Stepper */}
       <ol className="flex flex-wrap gap-2">
