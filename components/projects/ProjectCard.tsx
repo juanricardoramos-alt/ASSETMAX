@@ -43,12 +43,16 @@ export function ProjectCard({
     >
       <div className="relative h-52 w-full overflow-hidden bg-navy-100">
         {image ? (
-          <SmartImage
-            src={image.url}
-            alt={image.alt || project.title}
-            priority={priority}
-            className="transition duration-500 group-hover:scale-[1.04]"
-          />
+          <>
+            <SmartImage
+              src={image.url}
+              alt={image.alt || project.title}
+              priority={priority}
+              className="transition duration-500 group-hover:scale-[1.04]"
+            />
+            {/* Uniform navy treatment over listing imagery */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/45 via-navy-950/5 to-transparent" />
+          </>
         ) : (
           <div className="flex h-full items-center justify-center bg-gradient-to-br from-navy-800 to-navy-900 text-3xl font-bold text-white/20">
             AMX

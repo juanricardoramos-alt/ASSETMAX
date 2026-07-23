@@ -27,7 +27,7 @@ export function Logo({
       </span>
       <span
         className={cn(
-          "ml-1 text-[10px] font-bold uppercase tracking-[0.25em]",
+          "ml-1 hidden text-[10px] font-bold uppercase tracking-[0.25em] sm:inline",
           dark ? "text-navy-300" : "text-navy-400"
         )}
       >

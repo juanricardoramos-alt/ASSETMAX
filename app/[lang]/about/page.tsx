@@ -52,6 +52,61 @@ export default async function AboutPage({ params }: { params: { lang: string } }
           </p>
         </Card>
       </div>
+
+      {/* Leadership team */}
+      <div className="border-t border-navy-100 bg-navy-50/60 py-16">
+        <div className="container-site">
+          <SectionHeading
+            title={dict.aboutExtra.teamTitle}
+            subtitle={dict.aboutExtra.teamSubtitle}
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {dict.aboutExtra.team.map((member) => (
+              <Card key={member.name} className="p-7">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy-900 font-display text-lg font-bold text-gold-400">
+                    {member.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join("")}
+                  </div>
+                  <div>
+                    <p className="font-bold text-navy-950">{member.name}</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gold-600">
+                      {member.role}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-navy-500">{member.bio}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Global presence */}
+      <div className="bg-navy-950 py-16">
+        <div className="container-site">
+          <SectionHeading title={dict.aboutExtra.officesTitle} dark />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {dict.aboutExtra.offices.map((office) => (
+              <div
+                key={office.city}
+                className="rounded-xl border border-white/10 bg-white/5 p-6"
+              >
+                <p className="font-display text-xl font-bold text-white">{office.city}</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gold-400">
+                  {office.country}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-navy-300">
+                  {office.address}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

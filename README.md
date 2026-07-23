@@ -1,10 +1,16 @@
 # ASSETMAX Global
 
-**The global marketplace for industrial assets & megaprojects.**
+**The global marketplace for industrial assets, investment mandates & physical commodities.**
 
-ASSETMAX Global connects owners and developers of large-scale industrial assets — mines, desalination plants, energy projects, agro-industrial platforms, ports, manufacturing plants and infrastructure — with international investors and buyers. Think RE/MAX, but for industrial-scale M&A.
+ASSETMAX Global runs three connected business lines on one platform:
 
-Bilingual (English default / Spanish), fully responsive, and built with an institutional, investment-bank grade visual identity (deep navy, white, gold accent).
+1. **Projects** — sale and financing of industrial assets and megaprojects (mines, desalination plants, energy, agro, ports, manufacturing, infrastructure).
+2. **Investment Mandates (buy-side)** — funds and corporates publish structured search requirements that feed the matching engine.
+3. **Commodities** — physical sell offers and buy requirements (copper cathodes, concentrates, lithium, iron ore, agro-commodities…). The platform connects counterparties; payment and logistics settle through traditional channels.
+
+All three are AI-powered via an internal Anthropic (Claude) service: document ingestion that pre-fills listings, automatic project↔mandate and sell↔buy matching with natural-language rationales, per-project Q&A assistants grounded strictly in listing data, and AI-drafted deal documents (NDA, LOI, MOU, SPA, Commodity SPA) with a mandatory both-parties review workflow.
+
+Bilingual (English default / Spanish), fully responsive, and built with an institutional, investment-bank grade visual identity (deep navy, warm white, restrained gold; Playfair Display for headlines, Inter for UI).
 
 ---
 
@@ -13,11 +19,17 @@ Bilingual (English default / Spanish), fully responsive, and built with an insti
 | Layer | Technology |
 | --- | --- |
 | Framework | Next.js 14 (App Router) + TypeScript |
-| Styling | Tailwind CSS (custom navy/gold design system) |
+| Styling | Tailwind CSS (custom navy/gold design system, Playfair Display + Inter) |
 | Database | Prisma ORM — SQLite in development, PostgreSQL-ready for production |
 | Auth | NextAuth (email/password + optional Google OAuth), JWT sessions with roles |
+| AI | Anthropic API via internal service (`lib/ai.ts`) — ingestion, matching rationale, assistant, contract drafting |
+| Charts | Recharts (palette validated for CVD safety and contrast) |
 | Validation | Zod on every API route |
 | i18n | Locale-prefixed routes (`/en`, `/es`) with typed dictionaries |
+
+### AI configuration
+
+Set `ANTHROPIC_API_KEY` (console.anthropic.com) to activate all AI features; `AI_MODEL` optionally overrides the default `claude-sonnet-5`. **Everything degrades gracefully without a key**: matching runs on deterministic criteria scoring (rationales become criteria summaries), contracts generate from templates, and ingestion/assistant show a clear "not configured" state — so the platform is fully demonstrable either way.
 
 ## Features
 
@@ -71,7 +83,7 @@ All demo accounts use the password **`assetmax123`**:
 | `seller2@assetmax.global` | Seller |
 | `investor@assetmax.global` | Investor |
 
-The seed creates **15 realistic projects** across Chile, Peru, Mexico, USA, Spain, UAE, Australia, Morocco and Argentina (desalination, copper, green hydrogen, lithium, solar, agro-export, data centers, ports, industrial parks…), including one project waiting in the admin verification queue and sample offers, messages, favorites and an NDA acceptance.
+The seed creates **25 realistic projects** across 12 countries (desalination, copper, green hydrogen, lithium, solar, hydro, agro-export, data centers, ports, cold chain, industrial parks…), **6 investment mandates** (one confidential) generating 13 automatic matches, **14 commodity listings** (9 sell offers + 5 buy requirements) generating 5 matches, plus demo offers, messages, favorites, NDA acceptances and notifications. Two extra demo accounts join the originals: `fund@assetmax.global`, `strategics@assetmax.global` and `trader@assetmax.global` (same password).
 
 ### Useful scripts
 
@@ -129,6 +141,18 @@ components/             # UI kit, layout, home sections, project & dashboard com
 lib/                    # prisma client, auth config, i18n, constants, zod schemas, utils
 prisma/                 # schema + seed (15 demo projects, 5 demo users)
 ```
+
+## Platform modules (expansion phase)
+
+| Module | What it does |
+| --- | --- |
+| **AI ingestion** | Upload a PDF/DOCX/XLSX teaser and the wizard pre-fills every field, flags missing info and suggests public vs data-room documents |
+| **Mandates (buy-side)** | Structured or AI-structured free-text mandates, public explorer, confidential mode, admin verification |
+| **Matching engine** | Deterministic criteria scoring + AI rationale; runs on every approval; notifies both parties; one-click conversation |
+| **Deal documents** | AI-drafted NDA/LOI/MOU/SPA/Commodity-SPA with DRAFT banners, legal disclaimers, dual review gate and print-to-PDF export |
+| **Project assistant** | Per-listing chat grounded exclusively in published data — never invents figures |
+| **Commodities desk** | Sell/buy listings with specs, Incoterms, price references, NDA-gated certificates, matching and contracts |
+| **Premium layer** | Serif/sans type system, animated counters, scroll reveals, Recently Closed, Insights (7 bilingual research articles), leadership team, global offices, market-reference ticker, global search, notifications, skeletons, branded 404/500, OG image |
 
 ## Roadmap (post-MVP)
 

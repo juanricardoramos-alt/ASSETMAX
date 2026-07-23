@@ -47,6 +47,7 @@ const config: Config = {
           "Arial",
           "sans-serif",
         ],
+        display: ["Playfair Display", "Georgia", "Times New Roman", "serif"],
       },
       boxShadow: {
         card: "0 1px 2px rgba(10, 20, 38, 0.06), 0 4px 16px rgba(10, 20, 38, 0.08)",

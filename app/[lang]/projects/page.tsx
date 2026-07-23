@@ -101,7 +101,7 @@ export default async function ProjectsPage({
       </div>
 
       <div className="container-site grid gap-8 py-10 lg:grid-cols-[280px_1fr]">
-        <aside className="h-fit rounded-xl border border-navy-100 bg-white p-5 shadow-card lg:sticky lg:top-24">
+        <aside className="h-fit min-w-0 rounded-xl border border-navy-100 bg-white p-5 shadow-card lg:sticky lg:top-24">
           <Suspense>
             <FiltersPanel dict={dict} countries={countries} />
           </Suspense>

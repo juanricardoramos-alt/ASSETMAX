@@ -34,8 +34,8 @@ export function CommodityCard({
   const geo = isSell ? listing.originCode : listing.destinationCode;
 
   return (
-    <Link href={`/${lang}/commodities/${listing.slug}`}>
-      <Card className="flex h-full flex-col p-6 transition hover:-translate-y-0.5 hover:border-gold-300 hover:shadow-card-hover">
+    <Link href={`/${lang}/commodities/${listing.slug}`} className="block min-w-0">
+      <Card className="flex h-full min-w-0 flex-col p-6 transition hover:-translate-y-0.5 hover:border-gold-300 hover:shadow-card-hover">
         <div className="flex flex-wrap items-center gap-1.5">
           <Badge
             className={
@@ -61,20 +61,22 @@ export function CommodityCard({
 
         <dl className="mt-4 space-y-1.5 border-t border-navy-100 pt-4 text-sm">
           <div className="flex justify-between gap-3">
-            <dt className="text-navy-400">{c.volume}</dt>
-            <dd className="text-right font-semibold text-navy-900">{listing.volume}</dd>
+            <dt className="shrink-0 text-navy-400">{c.volume}</dt>
+            <dd className="min-w-0 text-right font-semibold text-navy-900">
+              {listing.volume}
+            </dd>
           </div>
           <div className="flex justify-between gap-3">
-            <dt className="text-navy-400">{c.incoterm}</dt>
-            <dd className="font-semibold text-navy-900">
+            <dt className="shrink-0 text-navy-400">{c.incoterm}</dt>
+            <dd className="min-w-0 text-right font-semibold text-navy-900">
               {listing.incoterm} ·{" "}
               {listing.periodicity === "spot" ? c.spot : c.contract}
             </dd>
           </div>
           {listing.priceDetails && (
             <div className="flex justify-between gap-3">
-              <dt className="text-navy-400">{c.price}</dt>
-              <dd className="truncate text-right font-semibold text-navy-900">
+              <dt className="shrink-0 text-navy-400">{c.price}</dt>
+              <dd className="min-w-0 truncate text-right font-semibold text-navy-900">
                 {listing.priceDetails}
               </dd>
             </div>

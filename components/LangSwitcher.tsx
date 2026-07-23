@@ -17,7 +17,7 @@ export function LangSwitcher({ current }: { current: Locale }) {
 
   return (
     <div className="flex items-center gap-1 rounded-full border border-navy-200 p-0.5">
-      <IconGlobe className="ml-1.5 h-4 w-4 text-navy-400" />
+      <IconGlobe className="ml-1.5 hidden h-4 w-4 text-navy-400 sm:block" />
       {locales.map((locale) => (
         <Link
           key={locale}

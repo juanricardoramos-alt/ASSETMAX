@@ -31,7 +31,7 @@ export function MandateCard({
   const dealTypes = parseJsonArray(mandate.dealTypes);
 
   return (
-    <Card className="flex h-full flex-col p-6">
+    <Card className="flex h-full min-w-0 flex-col p-6">
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-900 text-gold-400">
           <IconBuilding className="h-5 w-5" />

@@ -12,6 +12,8 @@ import {
   parseSpecs,
 } from "@/lib/utils";
 import { aiEnabled } from "@/lib/ai";
+import { HorizontalBars } from "@/components/charts/HorizontalBars";
+import { ProjectTimeline } from "@/components/projects/ProjectTimeline";
 import { Gallery } from "@/components/projects/Gallery";
 import { ProjectActions } from "@/components/projects/ProjectActions";
 import { ProjectAssistant } from "@/components/projects/ProjectAssistant";
@@ -223,6 +225,41 @@ export default async function ProjectDetailPage({
                   </li>
                 ))}
               </ul>
+            </Card>
+          )}
+
+          {/* Stage timeline */}
+          <Card className="p-7">
+            <h2 className="text-xl font-bold text-navy-950">{dict.project.stage}</h2>
+            <div className="mt-6">
+              <ProjectTimeline
+                currentStage={project.stage}
+                stageLabels={dict.stages as unknown as Record<string, string>}
+              />
+            </div>
+          </Card>
+
+          {/* Financial profile chart */}
+          {(project.revenue != null || project.ebitda != null) && (
+            <Card className="p-7">
+              <h2 className="text-xl font-bold text-navy-950">
+                {dict.project.financials}
+              </h2>
+              <div className="mt-5">
+                <HorizontalBars
+                  rows={[
+                    project.investmentMax != null
+                      ? { label: dict.project.investmentRange, value: project.investmentMax }
+                      : null,
+                    project.revenue != null
+                      ? { label: dict.project.revenue, value: project.revenue }
+                      : null,
+                    project.ebitda != null
+                      ? { label: dict.project.ebitda, value: project.ebitda }
+                      : null,
+                  ].filter((r): r is { label: string; value: number } => r !== null)}
+                />
+              </div>
             </Card>
           )}
 

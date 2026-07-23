@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
 import { formatUsdCompact, formatDate } from "@/lib/utils";
 import { StatCard } from "@/components/dashboard/StatCard";
+import { HorizontalBars } from "@/components/charts/HorizontalBars";
 import { Card, StatusBadge, ButtonLink } from "@/components/ui";
 
 export default async function DashboardOverview({
@@ -142,6 +143,23 @@ export default async function DashboardOverview({
         <StatCard label={t.stats.offersReceived} value={offersReceived} accent />
         <StatCard label={t.stats.unreadMessages} value={threads} />
       </div>
+      {myProjects.filter((p) => p.views > 0).length > 1 && (
+        <Card className="p-6">
+          <h2 className="mb-4 font-bold text-navy-950">{t.stats.totalViews}</h2>
+          <HorizontalBars
+            format="number"
+            rows={myProjects
+              .filter((p) => p.views > 0)
+              .sort((a, b) => b.views - a.views)
+              .slice(0, 6)
+              .map((p) => ({
+                label: p.title.length > 26 ? p.title.slice(0, 24) + "…" : p.title,
+                value: p.views,
+              }))}
+          />
+        </Card>
+      )}
+
       <Card className="p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-bold text-navy-950">{t.myProjects}</h2>

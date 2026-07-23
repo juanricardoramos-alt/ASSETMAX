@@ -891,6 +891,138 @@ const es: Dictionary = {
     empty: "Estás al día.",
     markAll: "Marcar todas como leídas",
   },
+  closedDeals: {
+    kicker: "Track Record",
+    title: "Cerrados Recientemente",
+    subtitle:
+      "Una selección de transacciones facilitadas por la plataforma. Los detalles se omiten parcialmente por confidencialidad.",
+    items: [
+      {
+        asset: "Proyecto de cobre, norte de Chile",
+        value: "USD 85M",
+        outcome: "Vendido a fondo minero internacional",
+        date: "Q2 2026",
+      },
+      {
+        asset: "Portafolio solar en operación, España",
+        value: "USD 140M",
+        outcome: "Adquirido por utility europea",
+        date: "Q1 2026",
+      },
+      {
+        asset: "Plataforma logística de frío, México",
+        value: "USD 62M",
+        outcome: "Mayoría a fondo de infraestructura",
+        date: "Q1 2026",
+      },
+      {
+        asset: "Plataforma agroexportadora, Perú",
+        value: "USD 48M",
+        outcome: "Ronda de growth equity completada",
+        date: "Q4 2025",
+      },
+      {
+        asset: "Contrato marco de cátodos de cobre, Chile–Golfo",
+        value: "24.000 t/año",
+        outcome: "Offtake multianual conectado en la plataforma",
+        date: "Q4 2025",
+      },
+      {
+        asset: "Terminal de graneles líquidos, Medio Oriente",
+        value: "USD 118M",
+        outcome: "Socio estratégico presentado, deal cerrado",
+        date: "Q3 2025",
+      },
+    ],
+  },
+  insights: {
+    navLabel: "Insights",
+    kicker: "Inteligencia de Mercado",
+    title: "Insights",
+    subtitle:
+      "Análisis e inteligencia sobre activos industriales, transición energética y mercados de commodities del equipo de research de ASSETMAX.",
+    readMore: "Leer Análisis",
+    backTo: "Todos los Insights",
+    byLine: "Por",
+    landingCta: "Ver Todos los Insights",
+  },
+  search: {
+    title: "Buscar",
+    placeholder: "Busca proyectos, commodities, mandatos…",
+    resultsFor: "Resultados para",
+    projects: "Proyectos",
+    commodities: "Commodities",
+    mandates: "Mandatos",
+    insights: "Insights",
+    noResults: "No se encontró nada. Prueba con otros términos.",
+    viewAll: "Ver todos",
+  },
+  errors: {
+    notFoundTitle: "Página no encontrada",
+    notFoundText:
+      "La página que buscas no existe o fue movida. Explora las oportunidades activas.",
+    notFoundCta: "Explorar Oportunidades",
+    errorTitle: "Algo salió mal",
+    errorText:
+      "Ocurrió un error inesperado. Nuestro equipo fue notificado — por favor intenta de nuevo.",
+    retry: "Reintentar",
+    backHome: "Volver al Inicio",
+  },
+  aboutExtra: {
+    teamTitle: "Equipo Directivo",
+    teamSubtitle:
+      "Deal-makers y especialistas sectoriales con experiencia internacional en transacciones.",
+    team: [
+      {
+        name: "Alexandra Reyes",
+        role: "Managing Partner",
+        bio: "15 años en M&A industrial en las Américas. Ex directora de banca de inversión cubriendo minería e infraestructura.",
+      },
+      {
+        name: "Marcus Aldridge",
+        role: "Founding Partner",
+        bio: "Principal de grupo industrial con experiencia operacional y transaccional en el Golfo, África y Latinoamérica.",
+      },
+      {
+        name: "Carolina Fuentes",
+        role: "Head of Mining & Energy Assets",
+        bio: "Ingeniera de minas y financista de proyectos. Lideró procesos sell-side por más de USD 2B en cobre, litio y renovables.",
+      },
+      {
+        name: "James Whitmore",
+        role: "Head of Investor Relations",
+        bio: "Dos décadas colocando oportunidades industriales y de infraestructura con fondos de pensiones, family offices y estratégicos.",
+      },
+      {
+        name: "Sofia Lindqvist",
+        role: "Head of Commodities Desk",
+        bio: "Trayectoria en trading físico de metales base y agro-commodities en mercados europeos y asiáticos.",
+      },
+      {
+        name: "Daniel Ferrada",
+        role: "Legal Counsel",
+        bio: "Abogado de M&A transfronterizo. Supervisa los marcos de verificación, NDA y documentación de deals de la plataforma.",
+      },
+    ],
+    officesTitle: "Presencia Global",
+    offices: [
+      { city: "Santiago", country: "Chile", address: "Av. Apoquindo 3000, Piso 21, Las Condes" },
+      { city: "Miami", country: "Estados Unidos", address: "1450 Brickell Ave, Suite 1900, FL 33131" },
+      { city: "Madrid", country: "España", address: "Paseo de la Castellana 95, Planta 15" },
+      { city: "Dubái", country: "Emiratos Árabes Unidos", address: "DIFC, Gate Village 7, Level 3" },
+    ],
+  },
+  footerExtra: {
+    resources: "Recursos",
+    offices: "Oficinas",
+    followUs: "Síguenos",
+    regulatory:
+      "ASSETMAX Global opera como plataforma de publicación y conexión. No es un corredor de valores, asesor de inversiones ni institución de pagos, y no custodia fondos ni valores. Las publicaciones son preparadas por sus dueños; los badges de verificación reflejan solo revisión documental. Nada en este sitio constituye una oferta de valores en jurisdicción alguna.",
+  },
+  home2: {
+    statDeals: "Deals facilitados",
+    statInvestors: "Inversionistas registrados",
+  },
   footer: {
     tagline:
       "El marketplace global de activos industriales y megaproyectos. Oportunidades verificadas, capital calificado, estándares institucionales.",

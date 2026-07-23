@@ -879,6 +879,138 @@ const en = {
     empty: "You're all caught up.",
     markAll: "Mark all as read",
   },
+  closedDeals: {
+    kicker: "Track Record",
+    title: "Recently Closed",
+    subtitle:
+      "A selection of transactions facilitated through the platform. Details are partially withheld for confidentiality.",
+    items: [
+      {
+        asset: "Copper project, northern Chile",
+        value: "USD 85M",
+        outcome: "Sold to international mining fund",
+        date: "Q2 2026",
+      },
+      {
+        asset: "Operating solar portfolio, Spain",
+        value: "USD 140M",
+        outcome: "Acquired by European utility",
+        date: "Q1 2026",
+      },
+      {
+        asset: "Cold-chain logistics platform, Mexico",
+        value: "USD 62M",
+        outcome: "Majority stake to infrastructure fund",
+        date: "Q1 2026",
+      },
+      {
+        asset: "Agro-export platform, Peru",
+        value: "USD 48M",
+        outcome: "Growth equity round completed",
+        date: "Q4 2025",
+      },
+      {
+        asset: "Copper cathodes supply frame, Chile–Gulf",
+        value: "24,000 t/year",
+        outcome: "Multi-year offtake connected on-platform",
+        date: "Q4 2025",
+      },
+      {
+        asset: "Bulk liquids terminal, Middle East",
+        value: "USD 118M",
+        outcome: "Strategic partner introduced, deal closed",
+        date: "Q3 2025",
+      },
+    ],
+  },
+  insights: {
+    navLabel: "Insights",
+    kicker: "Market Intelligence",
+    title: "Insights",
+    subtitle:
+      "Analysis and intelligence on industrial assets, energy transition and commodity markets from the ASSETMAX research desk.",
+    readMore: "Read Analysis",
+    backTo: "All Insights",
+    byLine: "By",
+    landingCta: "View All Insights",
+  },
+  search: {
+    title: "Search",
+    placeholder: "Search projects, commodities, mandates…",
+    resultsFor: "Results for",
+    projects: "Projects",
+    commodities: "Commodities",
+    mandates: "Mandates",
+    insights: "Insights",
+    noResults: "Nothing found. Try different terms.",
+    viewAll: "See all",
+  },
+  errors: {
+    notFoundTitle: "Page not found",
+    notFoundText:
+      "The page you are looking for does not exist or may have been moved. Explore live opportunities instead.",
+    notFoundCta: "Explore Opportunities",
+    errorTitle: "Something went wrong",
+    errorText:
+      "An unexpected error occurred. Our team has been notified — please try again.",
+    retry: "Try Again",
+    backHome: "Back to Home",
+  },
+  aboutExtra: {
+    teamTitle: "Leadership Team",
+    teamSubtitle:
+      "Deal-makers and sector specialists with international transaction experience.",
+    team: [
+      {
+        name: "Alexandra Reyes",
+        role: "Managing Partner",
+        bio: "15 years in industrial M&A across the Americas. Former investment banking director covering mining and infrastructure.",
+      },
+      {
+        name: "Marcus Aldridge",
+        role: "Founding Partner",
+        bio: "Industrial group principal with operating and transaction experience across the Gulf, Africa and Latin America.",
+      },
+      {
+        name: "Carolina Fuentes",
+        role: "Head of Mining & Energy Assets",
+        bio: "Mining engineer and project financier. Led sell-side processes totalling over USD 2B in copper, lithium and renewables.",
+      },
+      {
+        name: "James Whitmore",
+        role: "Head of Investor Relations",
+        bio: "Two decades placing industrial and infrastructure opportunities with pension funds, family offices and strategics.",
+      },
+      {
+        name: "Sofia Lindqvist",
+        role: "Head of Commodities Desk",
+        bio: "Physical-trading background across base metals and agro-commodities in European and Asian markets.",
+      },
+      {
+        name: "Daniel Ferrada",
+        role: "Legal Counsel",
+        bio: "Cross-border M&A lawyer. Oversees the platform's verification, NDA and deal-documentation frameworks.",
+      },
+    ],
+    officesTitle: "Global Presence",
+    offices: [
+      { city: "Santiago", country: "Chile", address: "Av. Apoquindo 3000, Piso 21, Las Condes" },
+      { city: "Miami", country: "United States", address: "1450 Brickell Ave, Suite 1900, FL 33131" },
+      { city: "Madrid", country: "Spain", address: "Paseo de la Castellana 95, Planta 15" },
+      { city: "Dubai", country: "United Arab Emirates", address: "DIFC, Gate Village 7, Level 3" },
+    ],
+  },
+  footerExtra: {
+    resources: "Resources",
+    offices: "Offices",
+    followUs: "Follow us",
+    regulatory:
+      "ASSETMAX Global operates as a listing and connection platform. It is not a broker-dealer, investment adviser or payment institution, and does not custody funds or securities. Listings are prepared by their owners; verification badges reflect documentation review only. Nothing on this site constitutes an offer of securities in any jurisdiction.",
+  },
+  home2: {
+    statDeals: "Deals facilitated",
+    statInvestors: "Registered investors",
+  },
   footer: {
     tagline:
       "The global marketplace for industrial assets and megaprojects. Verified opportunities, qualified capital, institutional standards.",

@@ -212,8 +212,10 @@ export default async function CommodityDetailPage({
             <dl className="mt-4 space-y-3">
               {facts.map((f) => (
                 <div key={f.label} className="flex items-start justify-between gap-3">
-                  <dt className="text-sm text-navy-500">{f.label}</dt>
-                  <dd className="text-right text-sm font-bold text-navy-900">{f.value}</dd>
+                  <dt className="shrink-0 text-sm text-navy-500">{f.label}</dt>
+                  <dd className="min-w-0 break-words text-right text-sm font-bold text-navy-900">
+                    {f.value}
+                  </dd>
                 </div>
               ))}
             </dl>

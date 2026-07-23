@@ -25,6 +25,13 @@ export async function generateMetadata({
       description: dict.home.heroSubtitle,
       type: "website",
       siteName: dict.brand.name,
+      images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${dict.brand.name} — ${dict.brand.tagline}`,
+      description: dict.home.heroSubtitle,
+      images: ["/og-image.png"],
     },
   };
 }
@@ -46,7 +53,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Runtime-loaded font: no build-time network dependency, graceful fallback */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
