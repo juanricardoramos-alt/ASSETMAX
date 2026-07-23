@@ -1134,14 +1134,400 @@ async function main() {
     console.log(`  ✔ Mandate: ${m.title}`);
   }
 
-  // Run the matching engine over the seeded mandates.
-  const { runMatchingForMandate } = await import("../lib/matching");
+  // --- Commodities marketplace ----------------------------------------------
+  const trader = await prisma.user.upsert({
+    where: { email: "trader@assetmax.global" },
+    update: {},
+    create: {
+      name: "Rashid Al Maktoum",
+      email: "trader@assetmax.global",
+      passwordHash,
+      role: "INVESTOR",
+      company: "Gulf Metals Trading FZE",
+      country: "AE",
+      verifiedSeller: true,
+    },
+  });
+
+  const commodityListings = [
+    // ------------------------------------------------------------- SELL side
+    {
+      slug: "grade-a-copper-cathodes-antofagasta",
+      side: "SELL",
+      commodity: "copper_cathodes",
+      title: "Grade A Copper Cathodes — 2,000 t/month, FOB Antofagasta",
+      description:
+        "LME-registered Grade A copper cathodes (99.9935% Cu) produced at an established electro-winning operation in northern Chile. Consistent monthly availability of 2,000 tonnes with capacity to scale to 3,000 tonnes under an annual frame contract. Full traceability, ISO 9001 production and certificates of analysis issued by an independent laboratory for every lot.",
+      specs: [
+        { label: "Purity", value: "99.9935% Cu (LME Grade A)" },
+        { label: "Format", value: "Cathode sheets, ~125 kg, steel-strapped bundles" },
+        { label: "Registration", value: "LME-registered brand" },
+        { label: "Packing", value: "Bundles of ~2.2 t" },
+      ],
+      volume: "2,000 t/month",
+      periodicity: "contract",
+      originCode: "CL",
+      incoterm: "FOB",
+      deliveryLocation: "Port of Antofagasta, Chile",
+      priceType: "indexed",
+      priceDetails: "LME Cash Settlement minus 45 USD/t",
+      ownerId: seller1.id,
+      verified: true,
+      views: 640,
+      documents: [
+        { name: "Certificate of Analysis (sample lot)", url: DOC, isConfidential: true },
+        { name: "Product Specification Sheet", url: DOC, isConfidential: false },
+      ],
+    },
+    {
+      slug: "copper-concentrate-26-southern-peru",
+      side: "SELL",
+      commodity: "copper_concentrate",
+      title: "Copper Concentrate 26% Cu — 10,000 t/quarter, CIF Main Asian Port",
+      description:
+        "Clean copper concentrate from a producing mine in southern Peru: 26% Cu with gold and silver credits, low arsenic (<0.15%). Quarterly parcels of 10,000 wmt under an annual offtake frame, shipped in bulk from Matarani. Standard TC/RC terms with quotational period negotiable.",
+      specs: [
+        { label: "Cu grade", value: "26% (typical)" },
+        { label: "Au / Ag credits", value: "3.1 g/t Au · 68 g/t Ag" },
+        { label: "Arsenic", value: "<0.15%" },
+        { label: "Moisture", value: "8.5%" },
+      ],
+      volume: "10,000 wmt/quarter",
+      periodicity: "contract",
+      originCode: "PE",
+      incoterm: "CIF",
+      deliveryLocation: "Main Asian port (buyer's option)",
+      priceType: "indexed",
+      priceDetails: "LME basis, benchmark TC/RC, QP M+1",
+      ownerId: partner.id,
+      verified: true,
+      views: 512,
+      documents: [
+        { name: "Typical Assay Certificate", url: DOC, isConfidential: true },
+      ],
+    },
+    {
+      slug: "battery-grade-lithium-carbonate-chile",
+      side: "SELL",
+      commodity: "lithium_carbonate",
+      title: "Battery-Grade Lithium Carbonate — 300 t/month, FOB Chilean Port",
+      description:
+        "Battery-grade lithium carbonate (≥99.5% Li₂CO₃) from brine operations in the Atacama basin. Monthly availability of 300 tonnes in 500 kg big bags, containerized. Suitable for cathode manufacturing; magnetic impurities controlled below 300 ppb. Long-term supply contracts preferred; spot parcels considered.",
+      specs: [
+        { label: "Purity", value: "≥99.5% Li₂CO₃" },
+        { label: "Magnetic impurities", value: "<300 ppb" },
+        { label: "Packing", value: "500 kg big bags, 20 t per container" },
+      ],
+      volume: "300 t/month",
+      periodicity: "contract",
+      originCode: "CL",
+      incoterm: "FOB",
+      deliveryLocation: "Port of Angamos, Chile",
+      priceType: "indexed",
+      priceDetails: "Fastmarkets Li₂CO₃ CIF Asia index minus 3%",
+      ownerId: seller1.id,
+      verified: true,
+      views: 738,
+      documents: [
+        { name: "Battery-Grade Specification", url: DOC, isConfidential: false },
+        { name: "Full Impurity Panel (CoA)", url: DOC, isConfidential: true },
+      ],
+    },
+    {
+      slug: "iron-ore-fines-62-port-hedland",
+      side: "SELL",
+      commodity: "iron_ore",
+      title: "Iron Ore Fines 62% Fe — 50,000 t Spot Parcels, FOB Port Hedland",
+      description:
+        "Standard 62% Fe iron ore fines available in spot parcels of 50,000 tonnes from Port Hedland. Low phosphorus and alumina; sized 0–10 mm. Immediate laycans available; larger contract volumes negotiable for H2.",
+      specs: [
+        { label: "Fe content", value: "62% (typical)" },
+        { label: "Sizing", value: "0–10 mm fines" },
+        { label: "Phosphorus", value: "0.07%" },
+        { label: "Alumina", value: "2.1%" },
+      ],
+      volume: "50,000 t/parcel (spot)",
+      periodicity: "spot",
+      originCode: "AU",
+      incoterm: "FOB",
+      deliveryLocation: "Port Hedland, Australia",
+      priceType: "indexed",
+      priceDetails: "Platts IODEX 62% Fe minus 2.5 USD/t",
+      ownerId: seller2.id,
+      verified: true,
+      views: 431,
+      documents: [],
+    },
+    {
+      slug: "molybdenum-oxide-chile",
+      side: "SELL",
+      commodity: "molybdenum_oxide",
+      title: "Molybdenum Oxide (Tech Grade) — 200 t/month, CIF Rotterdam",
+      description:
+        "Technical-grade molybdenum oxide (57% Mo min) in drums, by-product of a Chilean copper operation. Monthly volume of 200 tonnes, shipped containerized to Rotterdam or main European port. Annual contract with quarterly price reviews preferred.",
+      specs: [
+        { label: "Mo content", value: "57% min" },
+        { label: "Packing", value: "250 kg drums" },
+      ],
+      volume: "200 t/month",
+      periodicity: "contract",
+      originCode: "CL",
+      incoterm: "CIF",
+      deliveryLocation: "Rotterdam, Netherlands",
+      priceType: "indexed",
+      priceDetails: "Platts Mo oxide mean, quarterly review",
+      ownerId: seller1.id,
+      verified: false,
+      views: 210,
+      documents: [],
+    },
+    {
+      slug: "zinc-concentrate-52-callao",
+      side: "SELL",
+      commodity: "zinc_concentrate",
+      title: "Zinc Concentrate 52% Zn — 5,000 t/month, FOB Callao",
+      description:
+        "High-grade zinc concentrate (52% Zn, 380 g/t Ag credits) from a producing polymetallic mine in central Peru. Monthly liftings of 5,000 wmt from Callao under annual frames; standard smelter terms.",
+      specs: [
+        { label: "Zn grade", value: "52%" },
+        { label: "Ag credits", value: "380 g/t" },
+        { label: "Fe", value: "6.2%" },
+      ],
+      volume: "5,000 wmt/month",
+      periodicity: "contract",
+      originCode: "PE",
+      incoterm: "FOB",
+      deliveryLocation: "Port of Callao, Peru",
+      priceType: "indexed",
+      priceDetails: "LME Zn basis, benchmark TC",
+      ownerId: seller2.id,
+      verified: true,
+      views: 356,
+      documents: [{ name: "Typical Assay", url: DOC, isConfidential: true }],
+    },
+    {
+      slug: "gold-dore-lima",
+      side: "SELL",
+      commodity: "gold_dore",
+      title: "Gold Doré 92% Au — 50 kg/month, EXW Lima",
+      description:
+        "Gold doré bars (92% Au, 6% Ag typical) from a formalized medium-scale producer in Peru, with full chain-of-custody documentation and export permits. Monthly availability of 50 kg; refining and logistics support available for qualified buyers. Compliance dossier (LBMA-aligned responsible sourcing) shared under NDA.",
+      specs: [
+        { label: "Au content", value: "92% (typical)" },
+        { label: "Ag content", value: "6% (typical)" },
+        { label: "Bar size", value: "~12.5 kg" },
+      ],
+      volume: "50 kg/month",
+      periodicity: "contract",
+      originCode: "PE",
+      incoterm: "EXW",
+      deliveryLocation: "Lima, Peru (secure facility)",
+      priceType: "indexed",
+      priceDetails: "LBMA PM fix minus 1.2%, assay-adjusted",
+      ownerId: seller2.id,
+      verified: false,
+      views: 489,
+      documents: [
+        { name: "Responsible Sourcing Dossier", url: DOC, isConfidential: true },
+      ],
+    },
+    {
+      slug: "premium-fishmeal-callao",
+      side: "SELL",
+      commodity: "fishmeal",
+      title: "Premium Fishmeal 67% Protein — 3,000 t/quarter, FOB Callao",
+      description:
+        "Super-prime fishmeal (67% protein min, TVN <100) from certified Peruvian producers, IFFO RS chain of custody. Quarterly parcels of 3,000 tonnes in 50 kg bags or big bags. Annual supply programs available with fixed premium over the Peruvian export reference.",
+      specs: [
+        { label: "Protein", value: "67% min" },
+        { label: "TVN", value: "<100 mg/100g" },
+        { label: "Certification", value: "IFFO RS" },
+      ],
+      volume: "3,000 t/quarter",
+      periodicity: "contract",
+      originCode: "PE",
+      incoterm: "FOB",
+      deliveryLocation: "Port of Callao, Peru",
+      priceType: "fixed",
+      priceDetails: "USD 1,720/t FOB (current quarter)",
+      ownerId: seller2.id,
+      verified: true,
+      views: 298,
+      documents: [],
+    },
+    {
+      slug: "bek-wood-pulp-brazil",
+      side: "SELL",
+      commodity: "wood_pulp",
+      title: "Bleached Eucalyptus Kraft Pulp — 8,000 t/month, FOB Santos",
+      description:
+        "BEK market pulp from a certified Brazilian producer (FSC), 8,000 tonnes monthly in unitized bales. Suitable for tissue and printing grades. Annual contracts with quarterly volume flexibility of ±10%.",
+      specs: [
+        { label: "Grade", value: "BEKP (bleached eucalyptus kraft)" },
+        { label: "Certification", value: "FSC" },
+        { label: "Brightness", value: "≥89% ISO" },
+      ],
+      volume: "8,000 t/month",
+      periodicity: "contract",
+      originCode: "BR",
+      incoterm: "FOB",
+      deliveryLocation: "Port of Santos, Brazil",
+      priceType: "indexed",
+      priceDetails: "PIX BHKP index minus agreed discount",
+      ownerId: seller1.id,
+      verified: false,
+      views: 187,
+      documents: [],
+    },
+    // -------------------------------------------------------------- BUY side
+    {
+      slug: "buy-copper-cathodes-gulf",
+      side: "BUY",
+      commodity: "copper_cathodes",
+      title: "Buying: Grade A Copper Cathodes — 1,500–3,000 t/month, Gulf Destination",
+      description:
+        "Gulf Metals Trading FZE seeks Grade A copper cathodes for long-term supply into Gulf and South Asian re-rolling customers. Monthly volumes of 1,500–3,000 tonnes under 12-month frames with LCs from first-class banks. LME-registered brands preferred; non-registered considered with full assay history.",
+      specs: [
+        { label: "Purity required", value: "99.99% Cu min" },
+        { label: "Payment", value: "LC at sight, first-class bank" },
+      ],
+      volume: "1,500–3,000 t/month",
+      periodicity: "contract",
+      destinationCode: "AE",
+      incoterm: "CIF",
+      deliveryLocation: "Jebel Ali, UAE",
+      priceType: "indexed",
+      priceDetails: "LME basis plus negotiable premium",
+      ownerId: trader.id,
+      verified: true,
+      views: 402,
+      documents: [],
+    },
+    {
+      slug: "buy-lithium-carbonate-us",
+      side: "BUY",
+      commodity: "lithium_carbonate",
+      title: "Buying: Battery-Grade Lithium Carbonate — 200 t/month, US Cathode Plant",
+      description:
+        "US cathode-materials manufacturer seeks battery-grade lithium carbonate under multi-year contract, 200 t/month ramping to 500 t/month by 2028. Qualification samples required; IRA-compliant origins prioritized.",
+      specs: [
+        { label: "Purity required", value: "≥99.5% Li₂CO₃, battery grade" },
+        { label: "Qualification", value: "2-lot sampling process" },
+      ],
+      volume: "200 t/month (ramping to 500 t)",
+      periodicity: "contract",
+      destinationCode: "US",
+      incoterm: "FOB",
+      deliveryLocation: "US Gulf port",
+      priceType: "indexed",
+      priceDetails: "Fastmarkets index basis, collar structure",
+      ownerId: investor3.id,
+      verified: true,
+      views: 377,
+      documents: [],
+    },
+    {
+      slug: "buy-iron-ore-fines-gulf-steel",
+      side: "BUY",
+      commodity: "iron_ore",
+      title: "Buying: Iron Ore Fines 62% — Spot Parcels 50,000 t, Gulf Steel Mill",
+      description:
+        "Integrated steel producer in the Gulf seeks spot parcels of 62% Fe fines, 50,000–80,000 t per shipment, 4–6 shipments per year. Prompt laycans; payment by confirmed LC.",
+      specs: [{ label: "Fe required", value: "61.5% min" }],
+      volume: "50,000–80,000 t/parcel",
+      periodicity: "spot",
+      destinationCode: "AE",
+      incoterm: "FOB",
+      deliveryLocation: "Loading port at seller's option",
+      priceType: "indexed",
+      priceDetails: "Platts IODEX basis",
+      ownerId: trader.id,
+      verified: true,
+      views: 265,
+      documents: [],
+    },
+    {
+      slug: "buy-fishmeal-aquafeed-spain",
+      side: "BUY",
+      commodity: "fishmeal",
+      title: "Buying: Super-Prime Fishmeal — 2,500 t/quarter, Spanish Aquafeed Group",
+      description:
+        "European aquafeed producer seeks super-prime fishmeal (66%+ protein) on annual programs, 2,500 tonnes quarterly, delivered FOB origin with IFFO RS certification mandatory.",
+      specs: [
+        { label: "Protein required", value: "66% min" },
+        { label: "Certification", value: "IFFO RS mandatory" },
+      ],
+      volume: "2,500 t/quarter",
+      periodicity: "contract",
+      destinationCode: "ES",
+      incoterm: "FOB",
+      deliveryLocation: "Origin port",
+      priceType: "fixed",
+      priceDetails: "Fixed quarterly, negotiable",
+      ownerId: investor2.id,
+      verified: false,
+      views: 143,
+      documents: [],
+    },
+    {
+      slug: "buy-copper-concentrate-smelter-spain",
+      side: "BUY",
+      commodity: "copper_concentrate",
+      title: "Buying: Clean Copper Concentrates — 40,000 t/year, European Smelter",
+      description:
+        "European custom smelter seeks clean copper concentrates (24%+ Cu, low As) for annual frames totaling 40,000 tonnes, CIF Huelva. Benchmark TC/RC; QP flexible. Long-term relationships with producing mines preferred over trader material.",
+      specs: [
+        { label: "Cu required", value: "24% min" },
+        { label: "As limit", value: "<0.2%" },
+      ],
+      volume: "40,000 t/year",
+      periodicity: "contract",
+      destinationCode: "ES",
+      incoterm: "CIF",
+      deliveryLocation: "Port of Huelva, Spain",
+      priceType: "indexed",
+      priceDetails: "LME basis, benchmark TC/RC",
+      ownerId: investor2.id,
+      verified: true,
+      views: 231,
+      documents: [],
+    },
+  ];
+
+  for (const l of commodityListings) {
+    const { specs, documents, ...rest } = l;
+    await prisma.commodityListing.upsert({
+      where: { slug: l.slug },
+      update: {},
+      create: {
+        ...rest,
+        specs: JSON.stringify(specs),
+        documents: JSON.stringify(documents),
+        status: "PUBLISHED",
+      },
+    });
+    console.log(`  ✔ Commodity: ${l.title}`);
+  }
+
+  // Run the matching engine over mandates and commodity listings.
+  const { runMatchingForMandate, runMatchingForCommodity } = await import(
+    "../lib/matching"
+  );
   const allMandates = await prisma.mandate.findMany({ where: { status: "PUBLISHED" } });
   let totalMatches = 0;
   for (const m of allMandates) {
     totalMatches += await runMatchingForMandate(m.id);
   }
   console.log(`  ✔ Matching engine: ${totalMatches} new project–mandate matches`);
+
+  const buyListings = await prisma.commodityListing.findMany({
+    where: { status: "PUBLISHED", side: "BUY" },
+  });
+  let commodityMatches = 0;
+  for (const b of buyListings) {
+    commodityMatches += await runMatchingForCommodity(b.id);
+  }
+  console.log(`  ✔ Matching engine: ${commodityMatches} new commodity matches`);
 
   console.log("Seed complete.");
   console.log(`Demo password for all accounts: ${PASSWORD}`);

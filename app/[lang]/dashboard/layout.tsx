@@ -31,6 +31,7 @@ export default async function DashboardLayout({
     items.push({ href: `${base}/offers`, label: dict.dashboard.offersSent });
     items.push({ href: `${base}/alerts`, label: dict.dashboard.alerts });
   }
+  items.push({ href: `${base}/commodities`, label: dict.commodities.navLabel });
   items.push({ href: `${base}/matches`, label: dict.matches.title });
   items.push({ href: `${base}/contracts`, label: dict.contracts.title });
   items.push({ href: `${base}/messages`, label: dict.dashboard.messages });

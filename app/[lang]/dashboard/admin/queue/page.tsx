@@ -18,7 +18,7 @@ export default async function AdminQueuePage({
   if (!session) redirect(`/${lang}/auth/signin`);
   if (session.user.role !== "ADMIN") redirect(`/${lang}/dashboard`);
 
-  const [queue, mandateQueue] = await Promise.all([
+  const [queue, mandateQueue, commodityQueue] = await Promise.all([
     prisma.project.findMany({
       where: { status: "IN_REVIEW" },
       include: { owner: { select: { name: true, company: true, email: true } } },
@@ -29,6 +29,11 @@ export default async function AdminQueuePage({
       include: { investor: { select: { name: true, company: true, email: true } } },
       orderBy: { updatedAt: "asc" },
     }),
+    prisma.commodityListing.findMany({
+      where: { status: "IN_REVIEW" },
+      include: { owner: { select: { name: true, company: true, email: true } } },
+      orderBy: { updatedAt: "asc" },
+    }),
   ]);
 
   const t = dict.dashboard.admin;
@@ -37,7 +42,7 @@ export default async function AdminQueuePage({
     <div className="space-y-6">
       <h1 className="text-2xl font-extrabold text-navy-950">{t.queueTitle}</h1>
 
-      {queue.length === 0 && mandateQueue.length === 0 ? (
+      {queue.length === 0 && mandateQueue.length === 0 && commodityQueue.length === 0 ? (
         <Card className="p-12 text-center text-navy-500">{t.queueEmpty}</Card>
       ) : (
         <div className="space-y-4">
@@ -103,6 +108,51 @@ export default async function AdminQueuePage({
                 <ReviewActions
                   projectId={m.id}
                   entity="mandates"
+                  labels={{
+                    approve: t.approve,
+                    reject: t.reject,
+                    reason: t.rejectReason,
+                    confirm: t.rejectConfirm,
+                    cancel: dict.common.cancel,
+                  }}
+                />
+              </div>
+            </Card>
+          ))}
+          {commodityQueue.map((l) => (
+            <Card key={l.id} className="p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="font-bold text-navy-950">{l.title}</h2>
+                    <Badge
+                      className={
+                        l.side === "SELL"
+                          ? "bg-gold-500 text-navy-950"
+                          : "bg-navy-900 text-white"
+                      }
+                    >
+                      {l.side === "SELL"
+                        ? dict.commodities.sell
+                        : dict.commodities.buy}
+                    </Badge>
+                    <Badge className="bg-navy-100 text-navy-600">
+                      {dict.commodities.names[
+                        l.commodity as keyof typeof dict.commodities.names
+                      ] ?? l.commodity}
+                    </Badge>
+                  </div>
+                  <p className="mt-1 text-xs text-navy-400">
+                    {l.owner.company ?? l.owner.name} · {l.owner.email} ·{" "}
+                    {formatDate(l.updatedAt, lang)} · {l.volume} · {l.incoterm}
+                  </p>
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-navy-600">
+                    {l.description}
+                  </p>
+                </div>
+                <ReviewActions
+                  projectId={l.id}
+                  entity="commodities"
                   labels={{
                     approve: t.approve,
                     reject: t.reject,

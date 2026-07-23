@@ -306,6 +306,59 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* ------------------------------------------------------ Commodities */}
+      <section className="border-y border-navy-100 bg-white py-20">
+        <div className="container-site grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">
+              {dict.commodities.landingKicker}
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy-950 sm:text-4xl">
+              {dict.commodities.landingTitle}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-navy-500">
+              {dict.commodities.landingText}
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <ButtonLink href={`/${lang}/commodities`} variant="primary" size="lg">
+                {dict.commodities.landingCta}
+                <IconArrowRight className="h-4 w-4" />
+              </ButtonLink>
+              <ButtonLink
+                href={`/${lang}/dashboard/commodities/new`}
+                variant="outline"
+                size="lg"
+              >
+                {dict.commodities.postCta}
+              </ButtonLink>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {(
+              [
+                { key: "copper_cathodes", icon: CATEGORY_ICONS.mining },
+                { key: "lithium_carbonate", icon: CATEGORY_ICONS.energy },
+                { key: "iron_ore", icon: CATEGORY_ICONS.manufacturing },
+                { key: "fishmeal", icon: CATEGORY_ICONS.agro },
+              ] as const
+            ).map(({ key, icon: Icon }) => (
+              <Link
+                key={key}
+                href={`/${lang}/commodities?commodity=${key}`}
+                className="rounded-xl border border-navy-100 bg-navy-50/60 p-5 transition hover:-translate-y-0.5 hover:border-gold-300 hover:shadow-card"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-900 text-gold-400">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <p className="mt-3 font-bold text-navy-950">
+                  {dict.commodities.names[key]}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ---------------------------------------------------- Testimonials */}
       <section className="bg-navy-50/60 py-20">
         <div className="container-site">

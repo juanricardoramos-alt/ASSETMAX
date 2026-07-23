@@ -19,6 +19,7 @@ export async function SiteHeader({
 
   const links = [
     { href: `/${lang}/projects`, label: dict.nav.explore },
+    { href: `/${lang}/commodities`, label: dict.commodities.navLabel },
     { href: `/${lang}/mandates`, label: dict.mandates.navLabel },
     { href: `/${lang}/for-sellers`, label: dict.nav.forSellers },
     { href: `/${lang}/for-investors`, label: dict.nav.forInvestors },
