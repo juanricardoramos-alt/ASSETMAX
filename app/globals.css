@@ -26,6 +26,22 @@
   }
 }
 
+/* Print styles — used by the contract "Export PDF" flow */
+@media print {
+  header,
+  footer,
+  aside,
+  nav {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
+
 /* Subtle dotted-grid backdrop used on dark hero/map sections */
 .bg-grid-dots {
   background-image: radial-gradient(

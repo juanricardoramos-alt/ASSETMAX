@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/api-helpers";
+import { createContractFromOffer } from "@/lib/contracts-service";
+import { notify } from "@/lib/notify";
 
 const schema = z.object({
   status: z.enum(["IN_DISCUSSION", "ACCEPTED", "DECLINED", "WITHDRAWN"]),
@@ -44,5 +46,21 @@ export async function PATCH(
   }
 
   await prisma.offer.update({ where: { id: offer.id }, data: { status } });
+
+  // Deal progressed to acceptance — auto-draft the Letter of Intent.
+  if (status === "ACCEPTED") {
+    await createContractFromOffer(offer.id, "LOI").catch((e) =>
+      console.error("[contracts] auto LOI failed", e)
+    );
+  }
+
+  const counterpart = isSeller ? offer.investorId : offer.project.ownerId;
+  await notify({
+    userId: counterpart,
+    type: "OFFER",
+    title: `Offer ${status.toLowerCase().replace("_", " ")}`,
+    href: "/en/dashboard/offers",
+  });
+
   return NextResponse.json({ ok: true });
 }

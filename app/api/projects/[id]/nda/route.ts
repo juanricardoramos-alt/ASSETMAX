@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/api-helpers";
+import { createNdaContract } from "@/lib/contracts-service";
 
 const schema = z.object({
   fullName: z.string().min(5).max(160),
@@ -38,6 +39,11 @@ export async function POST(
       company: parsed.data.company || null,
     },
   });
+
+  // Data room access granted — record the executed NDA as a deal document.
+  await createNdaContract(project.id, session!.user.id, parsed.data.fullName).catch(
+    (e) => console.error("[contracts] auto NDA failed", e)
+  );
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }

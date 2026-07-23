@@ -32,6 +32,7 @@ export default async function DashboardLayout({
     items.push({ href: `${base}/alerts`, label: dict.dashboard.alerts });
   }
   items.push({ href: `${base}/matches`, label: dict.matches.title });
+  items.push({ href: `${base}/contracts`, label: dict.contracts.title });
   items.push({ href: `${base}/messages`, label: dict.dashboard.messages });
   if (role === "PARTNER" || role === "ADMIN") {
     items.push({ href: `${base}/partner`, label: dict.dashboard.partnerPanel });
