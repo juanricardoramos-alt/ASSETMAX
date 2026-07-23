@@ -4,9 +4,19 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
+function seedFrom(src: string): string {
+  let hash = 0;
+  for (let i = 0; i < src.length; i++) {
+    hash = (hash * 31 + src.charCodeAt(i)) >>> 0;
+  }
+  return `amx-${hash.toString(36)}`;
+}
+
 /**
- * next/image wrapper that degrades gracefully to a branded gradient
- * if a remote placeholder image fails to load.
+ * next/image wrapper with a two-stage fallback so listing imagery never
+ * renders broken: primary URL → seeded picsum.photos placeholder → branded
+ * gradient. Keeps the "world-class first impression" even if a remote
+ * placeholder disappears.
  */
 export function SmartImage({
   src,
@@ -21,9 +31,9 @@ export function SmartImage({
   sizes?: string;
   priority?: boolean;
 }) {
-  const [failed, setFailed] = useState(false);
+  const [stage, setStage] = useState<0 | 1 | 2>(0);
 
-  if (failed) {
+  if (stage === 2) {
     return (
       <div
         className={cn(
@@ -39,6 +49,18 @@ export function SmartImage({
     );
   }
 
+  if (stage === 1) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={`https://picsum.photos/seed/${seedFrom(src)}/1600/900`}
+        alt={alt}
+        className={cn("absolute inset-0 h-full w-full object-cover", className)}
+        onError={() => setStage(2)}
+      />
+    );
+  }
+
   return (
     <Image
       src={src}
@@ -47,7 +69,7 @@ export function SmartImage({
       sizes={sizes}
       priority={priority}
       className={cn("object-cover", className)}
-      onError={() => setFailed(true)}
+      onError={() => setStage(1)}
     />
   );
 }
