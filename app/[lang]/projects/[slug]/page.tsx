@@ -11,8 +11,10 @@ import {
   parseJsonArray,
   parseSpecs,
 } from "@/lib/utils";
+import { aiEnabled } from "@/lib/ai";
 import { Gallery } from "@/components/projects/Gallery";
 import { ProjectActions } from "@/components/projects/ProjectActions";
+import { ProjectAssistant } from "@/components/projects/ProjectAssistant";
 import { DataRoom } from "@/components/projects/DataRoom";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Badge, VerifiedBadge, PartnerBadge, Card } from "@/components/ui";
@@ -281,6 +283,14 @@ export default async function ProjectDetailPage({
                 />
               </div>
             </Card>
+          )}
+
+          {project.status === "PUBLISHED" && (
+            <ProjectAssistant
+              projectId={project.id}
+              dict={dict}
+              enabled={aiEnabled()}
+            />
           )}
         </div>
 
