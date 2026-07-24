@@ -2,15 +2,15 @@
 //
 // NOTE ON PORTABILITY: the schema uses String columns (with typed constants in
 // lib/constants.ts) instead of Prisma enums so the exact same schema runs on
-// SQLite in development and PostgreSQL in production. To migrate, switch the
-// datasource provider to "postgresql" and set DATABASE_URL.
+// any SQL backend. Production runs on PostgreSQL (Neon); migrations live in
+// prisma/migrations and are applied on deploy by scripts/deploy-db.mjs.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

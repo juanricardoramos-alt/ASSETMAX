@@ -20,7 +20,7 @@ Bilingual (English default / Spanish), fully responsive, and built with an insti
 | --- | --- |
 | Framework | Next.js 14 (App Router) + TypeScript |
 | Styling | Tailwind CSS (custom navy/gold design system, Playfair Display + Inter) |
-| Database | Prisma ORM — SQLite in development, PostgreSQL-ready for production |
+| Database | Prisma ORM — PostgreSQL (Neon in production); migrations applied automatically on deploy |
 | Auth | NextAuth (email/password + optional Google OAuth), JWT sessions with roles |
 | AI | Anthropic API via internal service (`lib/ai.ts`) — ingestion, matching rationale, assistant, contract drafting |
 | Charts | Recharts (palette validated for CVD safety and contrast) |
@@ -61,10 +61,10 @@ Set `ANTHROPIC_API_KEY` (console.anthropic.com) to activate all AI features; `AI
 npm install
 
 # 2. Configure environment
-cp .env.example .env        # defaults work out of the box for SQLite
+cp .env.example .env        # set DATABASE_URL to a PostgreSQL instance (e.g. a free Neon database)
 
-# 3. Create the database and seed demo data
-npm run db:push
+# 3. Create the database schema and seed demo data
+npx prisma migrate deploy
 npm run db:seed
 
 # 4. Run
@@ -99,28 +99,21 @@ The seed creates **25 realistic projects** across 12 countries (desalination, co
 
 ## Deploying to Vercel (with PostgreSQL)
 
-1. **Provision Postgres** (Vercel Postgres, Neon, Supabase…).
-2. **Switch the Prisma provider** in `prisma/schema.prisma`:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-   The schema deliberately uses portable types (String enums, no JSON columns), so no other changes are needed.
-3. **Set environment variables** in the Vercel project:
-   - `DATABASE_URL` — your Postgres connection string
+1. **Provision Postgres** (Neon, Vercel Postgres, Supabase…).
+2. **Set environment variables** in the Vercel project:
+   - `DATABASE_URL` — your Postgres connection string (Neon's pooled URL is fine)
    - `NEXTAUTH_SECRET` — `openssl rand -base64 32`
    - `NEXTAUTH_URL` — `https://your-domain.com`
    - `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — optional, enables Google sign-in
-4. **Push the schema & seed** (once, from your machine):
-   ```bash
-   DATABASE_URL="postgresql://…" npx prisma db push
-   DATABASE_URL="postgresql://…" npx tsx prisma/seed.ts
-   ```
-5. **Deploy** — `vercel` or connect the Git repository. The build command is the default `npm run build`.
+   - `ANTHROPIC_API_KEY` — optional, activates the AI modules (everything degrades gracefully without it)
+3. **Deploy** — connect the Git repository (production tracks `main`). Vercel runs
+   `npm run vercel-build`, which applies pending Prisma migrations
+   (`scripts/deploy-db.mjs`) and seeds the demo data automatically when the
+   database is empty. Subsequent deploys never touch existing data.
 
-> For production-grade migrations, switch from `db push` to `prisma migrate dev` / `prisma migrate deploy` once the schema stabilizes.
+> Schema changes: add a migration with `npx prisma migrate dev --name <change>`
+> (or generate SQL offline via `prisma migrate diff`) and push — it is applied
+> on the next deploy.
 
 ---
 
