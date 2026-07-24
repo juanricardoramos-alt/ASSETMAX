@@ -79,7 +79,7 @@ Public documents available: ${publicDocs.map((d) => d.name).join(", ") || "none"
 Data room documents (NDA required): ${confidentialDocs.map((d) => d.name).join(", ") || "none"}
 Current user has data room access: ${hasNda ? "yes" : "no"}`;
 
-  const system = `You are the project assistant of ASSETMAX Global for the listing "${project.title}". You answer investor questions using ONLY the project fact sheet provided below. Strict rules:
+  const system = `You are the project assistant of VORTAMAX Global for the listing "${project.title}". You answer investor questions using ONLY the project fact sheet provided below. Strict rules:
 1. NEVER invent, estimate or extrapolate figures, dates, permits or facts that are not explicitly in the fact sheet.
 2. If the requested information is not in the fact sheet, say so explicitly (e.g. "That information is not included in this listing") and suggest requesting it from the seller through the "Request Information" button, or reviewing the data room if documents may cover it.
 3. Answer in the same language the user writes in (English or Spanish).

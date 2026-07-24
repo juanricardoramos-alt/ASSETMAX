@@ -106,7 +106,7 @@ async function aiRationale(prompt: string, fallback: string): Promise<string> {
   try {
     const text = await askClaude({
       system:
-        "You are the matching engine of ASSETMAX Global, an industrial-assets marketplace. In 2-3 sentences of polished institutional English, explain to both parties why this opportunity and this requirement are compatible. Base yourself STRICTLY on the data provided — never invent figures.",
+        "You are the matching engine of VORTAMAX Global, an industrial-assets marketplace. In 2-3 sentences of polished institutional English, explain to both parties why this opportunity and this requirement are compatible. Base yourself STRICTLY on the data provided — never invent figures.",
       messages: [{ role: "user", content: prompt }],
       maxTokens: 300,
     });

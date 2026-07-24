@@ -14,7 +14,7 @@ export function Logo({
     <Link
       href={`/${lang}`}
       className={cn("flex items-baseline gap-0.5 select-none", className)}
-      aria-label="ASSETMAX Global — Home"
+      aria-label="VORTAMAX Global — Home"
     >
       <span
         className={cn(
@@ -22,7 +22,7 @@ export function Logo({
           dark ? "text-white" : "text-navy-950"
         )}
       >
-        ASSET
+        VORTA
         <span className="text-gold-500">MAX</span>
       </span>
       <span

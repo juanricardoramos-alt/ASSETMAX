@@ -1,4 +1,4 @@
-// ASSETMAX Global — data model
+// VORTAMAX Global — data model
 //
 // NOTE ON PORTABILITY: the schema uses String columns (with typed constants in
 // lib/constants.ts) instead of Prisma enums so the exact same schema runs on

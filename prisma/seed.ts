@@ -773,30 +773,30 @@ const projects: SeedProject[] = [
 ];
 
 async function main() {
-  console.log("Seeding ASSETMAX Global…");
+  console.log("Seeding VORTAMAX Global…");
 
   const passwordHash = await bcrypt.hash(PASSWORD, 10);
 
   // --- Users -----------------------------------------------------------------
   const admin = await prisma.user.upsert({
-    where: { email: "admin@assetmax.global" },
+    where: { email: "admin@vortamax.global" },
     update: {},
     create: {
       name: "Alexandra Reyes",
-      email: "admin@assetmax.global",
+      email: "admin@vortamax.global",
       passwordHash,
       role: "ADMIN",
-      company: "ASSETMAX Global",
+      company: "VORTAMAX Global",
       country: "CL",
     },
   });
 
   const partner = await prisma.user.upsert({
-    where: { email: "partner@assetmax.global" },
+    where: { email: "partner@vortamax.global" },
     update: {},
     create: {
       name: "Marcus Aldridge",
-      email: "partner@assetmax.global",
+      email: "partner@vortamax.global",
       passwordHash,
       role: "PARTNER",
       company: "Aldridge Industrial Holdings",
@@ -806,11 +806,11 @@ async function main() {
   });
 
   const seller1 = await prisma.user.upsert({
-    where: { email: "seller@assetmax.global" },
+    where: { email: "seller@vortamax.global" },
     update: {},
     create: {
       name: "Carolina Fuentes",
-      email: "seller@assetmax.global",
+      email: "seller@vortamax.global",
       passwordHash,
       role: "SELLER",
       company: "Andes Capital Advisors",
@@ -820,11 +820,11 @@ async function main() {
   });
 
   const seller2 = await prisma.user.upsert({
-    where: { email: "seller2@assetmax.global" },
+    where: { email: "seller2@vortamax.global" },
     update: {},
     create: {
       name: "James Whitmore",
-      email: "seller2@assetmax.global",
+      email: "seller2@vortamax.global",
       passwordHash,
       role: "SELLER",
       company: "Meridian Asset Partners",
@@ -834,11 +834,11 @@ async function main() {
   });
 
   const investor = await prisma.user.upsert({
-    where: { email: "investor@assetmax.global" },
+    where: { email: "investor@vortamax.global" },
     update: {},
     create: {
       name: "Sofia Lindqvist",
-      email: "investor@assetmax.global",
+      email: "investor@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Northbridge Infrastructure Fund",
@@ -1445,11 +1445,11 @@ async function main() {
 
   // --- Buy-side mandates + matching ------------------------------------------
   const investor2 = await prisma.user.upsert({
-    where: { email: "fund@assetmax.global" },
+    where: { email: "fund@vortamax.global" },
     update: {},
     create: {
       name: "Henrik Osterberg",
-      email: "fund@assetmax.global",
+      email: "fund@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Baltica Infrastructure Partners",
@@ -1457,11 +1457,11 @@ async function main() {
     },
   });
   const investor3 = await prisma.user.upsert({
-    where: { email: "strategics@assetmax.global" },
+    where: { email: "strategics@vortamax.global" },
     update: {},
     create: {
       name: "Mei-Ling Chen",
-      email: "strategics@assetmax.global",
+      email: "strategics@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Pacific Rim Strategic Holdings",
@@ -1576,11 +1576,11 @@ async function main() {
 
   // --- Commodities marketplace ----------------------------------------------
   const trader = await prisma.user.upsert({
-    where: { email: "trader@assetmax.global" },
+    where: { email: "trader@vortamax.global" },
     update: {},
     create: {
       name: "Rashid Al Maktoum",
-      email: "trader@assetmax.global",
+      email: "trader@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Gulf Metals Trading FZE",

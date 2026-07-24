@@ -1,8 +1,8 @@
-# ASSETMAX Global
+# VORTAMAX Global
 
 **The global marketplace for industrial assets, investment mandates & physical commodities.**
 
-ASSETMAX Global runs three connected business lines on one platform:
+VORTAMAX Global runs three connected business lines on one platform:
 
 1. **Projects** — sale and financing of industrial assets and megaprojects (mines, desalination plants, energy, agro, ports, manufacturing, infrastructure).
 2. **Investment Mandates (buy-side)** — funds and corporates publish structured search requirements that feed the matching engine.
@@ -77,13 +77,13 @@ All demo accounts use the password **`assetmax123`**:
 
 | Email | Role |
 | --- | --- |
-| `admin@assetmax.global` | Administrator |
-| `partner@assetmax.global` | Founding Partner |
-| `seller@assetmax.global` | Seller (verified) |
-| `seller2@assetmax.global` | Seller |
-| `investor@assetmax.global` | Investor |
+| `admin@vortamax.global` | Administrator |
+| `partner@vortamax.global` | Founding Partner |
+| `seller@vortamax.global` | Seller (verified) |
+| `seller2@vortamax.global` | Seller |
+| `investor@vortamax.global` | Investor |
 
-The seed creates **25 realistic projects** across 12 countries (desalination, copper, green hydrogen, lithium, solar, hydro, agro-export, data centers, ports, cold chain, industrial parks…), **6 investment mandates** (one confidential) generating 13 automatic matches, **14 commodity listings** (9 sell offers + 5 buy requirements) generating 5 matches, plus demo offers, messages, favorites, NDA acceptances and notifications. Two extra demo accounts join the originals: `fund@assetmax.global`, `strategics@assetmax.global` and `trader@assetmax.global` (same password).
+The seed creates **25 realistic projects** across 12 countries (desalination, copper, green hydrogen, lithium, solar, hydro, agro-export, data centers, ports, cold chain, industrial parks…), **6 investment mandates** (one confidential) generating 13 automatic matches, **14 commodity listings** (9 sell offers + 5 buy requirements) generating 5 matches, plus demo offers, messages, favorites, NDA acceptances and notifications. Two extra demo accounts join the originals: `fund@vortamax.global`, `strategics@vortamax.global` and `trader@vortamax.global` (same password).
 
 ### Useful scripts
 

@@ -9,9 +9,9 @@ type BeforeInstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 };
 
-const VISITS_KEY = "amx-visits";
-const SESSION_KEY = "amx-visit-counted";
-const DISMISSED_KEY = "amx-a2hs-dismissed";
+const VISITS_KEY = "vmx-visits";
+const SESSION_KEY = "vmx-visit-counted";
+const DISMISSED_KEY = "vmx-a2hs-dismissed";
 
 function isStandalone(): boolean {
   return (

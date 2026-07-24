@@ -30,7 +30,7 @@ export type ContractContext = {
 
 const DRAFT_HEADER = `> **DRAFT — Subject to legal review / BORRADOR — Sujeto a revisión legal**
 >
-> This document was generated automatically by ASSETMAX Global as a negotiation convenience. ASSETMAX Global does not provide legal advice. Both parties must have this draft reviewed by qualified counsel in the applicable jurisdiction before signature. / Este documento fue generado automáticamente por ASSETMAX Global para facilitar la negociación. ASSETMAX Global no presta asesoría legal. Ambas partes deben validar este borrador con abogados de la jurisdicción aplicable antes de firmar.
+> This document was generated automatically by VORTAMAX Global as a negotiation convenience. VORTAMAX Global does not provide legal advice. Both parties must have this draft reviewed by qualified counsel in the applicable jurisdiction before signature. / Este documento fue generado automáticamente por VORTAMAX Global para facilitar la negociación. VORTAMAX Global no presta asesoría legal. Ambas partes deben validar este borrador con abogados de la jurisdicción aplicable antes de firmar.
 
 ---
 `;
@@ -77,7 +77,7 @@ ${partiesBlock(c)}
 
 **1. Purpose.** The Disclosing Party will make available certain confidential technical, financial, legal and commercial information concerning ${c.assetTitle} (the "Confidential Information") exclusively to allow the Receiving Party to evaluate a potential transaction involving the asset (the "Purpose").
 
-**2. Confidential Information.** Includes all information disclosed through the ASSETMAX Global data room or by any other means, in any format, including the existence and status of negotiations. Excludes information that is or becomes public without breach, was lawfully known prior to disclosure, or is independently developed.
+**2. Confidential Information.** Includes all information disclosed through the VORTAMAX Global data room or by any other means, in any format, including the existence and status of negotiations. Excludes information that is or becomes public without breach, was lawfully known prior to disclosure, or is independently developed.
 
 **3. Obligations.** The Receiving Party shall: (a) use the Confidential Information solely for the Purpose; (b) not disclose it to third parties without prior written consent, except to advisors bound by equivalent duties; (c) protect it with no less than reasonable care; (d) not contact employees, customers, suppliers or authorities related to the asset without authorization.
 
@@ -90,7 +90,7 @@ ${partiesBlock(c)}
 **7. Remedies.** The Parties acknowledge that unauthorized disclosure may cause irreparable harm; the Disclosing Party may seek injunctive relief in addition to any other remedy.
 
 **8. Governing Law & Jurisdiction.** This Agreement is governed by the laws of ${c.jurisdiction}. Disputes shall be submitted to the competent courts of ${c.jurisdiction}, unless the Parties agree to arbitration.
-${c.ndaFullName ? `\n**Digital acceptance on platform:** ${c.ndaFullName} accepted the ASSETMAX Global digital NDA for this asset.\n` : ""}
+${c.ndaFullName ? `\n**Digital acceptance on platform:** ${c.ndaFullName} accepted the VORTAMAX Global digital NDA for this asset.\n` : ""}
 ${signatureBlock(c)}`;
 }
 
@@ -207,7 +207,7 @@ ${partiesBlock(c)}
 
 **10. Governing Law & Arbitration.** ${c.jurisdiction} law; disputes to [ICC/LME arbitration], seat [city], language English.
 
-> **Platform note:** ASSETMAX Global connects the Parties and facilitates negotiation. Payment and logistics are executed by the Parties through traditional trade channels outside the platform.
+> **Platform note:** VORTAMAX Global connects the Parties and facilitates negotiation. Payment and logistics are executed by the Parties through traditional trade channels outside the platform.
 
 ${signatureBlock(c)}`;
 }
@@ -227,7 +227,7 @@ export async function generateContract(c: ContractContext): Promise<string> {
   try {
     const refined = await askClaude({
       system:
-        "You are the legal-drafting assistant of ASSETMAX Global. You receive a draft deal document in Markdown. Improve its drafting quality and fill obvious gaps USING ONLY the deal data already present — never invent amounts, percentages, dates or party details. Keep the exact same structure, the DRAFT banner, all bracketed [TO BE NEGOTIATED] placeholders that lack data, the platform disclaimers and the signature block. Return the full Markdown document only.",
+        "You are the legal-drafting assistant of VORTAMAX Global. You receive a draft deal document in Markdown. Improve its drafting quality and fill obvious gaps USING ONLY the deal data already present — never invent amounts, percentages, dates or party details. Keep the exact same structure, the DRAFT banner, all bracketed [TO BE NEGOTIATED] placeholders that lack data, the platform disclaimers and the signature block. Return the full Markdown document only.",
       messages: [{ role: "user", content: base }],
       maxTokens: 4096,
       temperature: 0.2,

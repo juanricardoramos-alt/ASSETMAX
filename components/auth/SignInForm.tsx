@@ -100,10 +100,10 @@ export function SignInForm({
         </p>
         <p className="mt-1.5">{dict.auth.demoHint}</p>
         <ul className="mt-2 space-y-1 font-mono text-[11px]">
-          <li>admin@assetmax.global</li>
-          <li>partner@assetmax.global</li>
-          <li>seller@assetmax.global</li>
-          <li>investor@assetmax.global</li>
+          <li>admin@vortamax.global</li>
+          <li>partner@vortamax.global</li>
+          <li>seller@vortamax.global</li>
+          <li>investor@vortamax.global</li>
         </ul>
       </div>
     </Card>

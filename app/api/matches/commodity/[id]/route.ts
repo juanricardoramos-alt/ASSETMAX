@@ -84,7 +84,7 @@ export async function POST(
     data: {
       threadId: thread.id,
       senderId: session!.user.id,
-      body: `[ASSETMAX Matching] This conversation was opened from the commodity match between "${match.sell.title}" and "${match.buy.title}" (${match.score}% compatibility).`,
+      body: `[VORTAMAX Matching] This conversation was opened from the commodity match between "${match.sell.title}" and "${match.buy.title}" (${match.score}% compatibility).`,
     },
   });
 

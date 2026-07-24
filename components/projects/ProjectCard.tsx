@@ -55,7 +55,7 @@ export function ProjectCard({
           </>
         ) : (
           <div className="flex h-full items-center justify-center bg-gradient-to-br from-navy-800 to-navy-900 text-3xl font-bold text-white/20">
-            AMX
+            VMX
           </div>
         )}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">

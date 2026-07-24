@@ -4,8 +4,8 @@ import type { MetadataRoute } from "next";
 // Brand colors: navy #0A1426 background / gold accents in the icon set.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "ASSETMAX Global",
-    short_name: "ASSETMAX",
+    name: "VORTAMAX Global",
+    short_name: "VORTAMAX",
     description:
       "El marketplace global de activos industriales y megaproyectos · The global marketplace for industrial assets & megaprojects",
     id: "/",

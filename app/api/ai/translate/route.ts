@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
   try {
     const translation = await askClaude({
-      system: `You are the translation service of ASSETMAX Global, an institutional marketplace for industrial assets, megaprojects and physical commodities. Translate the user's listing text into polished, professional ${LANG_NAMES[target]} with an investment-teaser register. Keep proper nouns, brand names, market indices (LME, Platts, Fastmarkets), certifications and technical units unchanged. Preserve paragraph breaks. Respond with the translation only — no preamble, no quotes.`,
+      system: `You are the translation service of VORTAMAX Global, an institutional marketplace for industrial assets, megaprojects and physical commodities. Translate the user's listing text into polished, professional ${LANG_NAMES[target]} with an investment-teaser register. Keep proper nouns, brand names, market indices (LME, Platts, Fastmarkets), certifications and technical units unchanged. Preserve paragraph breaks. Respond with the translation only — no preamble, no quotes.`,
       messages: [{ role: "user", content: text }],
       maxTokens: 4096,
     });

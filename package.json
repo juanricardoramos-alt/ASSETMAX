@@ -1,8 +1,8 @@
 {
-  "name": "assetmax-global",
+  "name": "vortamax-global",
   "version": "0.1.0",
   "private": true,
-  "description": "ASSETMAX Global — International marketplace for industrial assets and megaprojects",
+  "description": "VORTAMAX Global — International marketplace for industrial assets and megaprojects",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

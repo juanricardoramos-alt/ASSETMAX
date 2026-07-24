@@ -9,7 +9,7 @@ function seedFrom(src: string): string {
   for (let i = 0; i < src.length; i++) {
     hash = (hash * 31 + src.charCodeAt(i)) >>> 0;
   }
-  return `amx-${hash.toString(36)}`;
+  return `vmx-${hash.toString(36)}`;
 }
 
 /**
@@ -43,7 +43,7 @@ export function SmartImage({
         aria-label={alt}
       >
         <span className="select-none text-4xl font-bold tracking-widest text-white/20">
-          AMX
+          VMX
         </span>
       </div>
     );

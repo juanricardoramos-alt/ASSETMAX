@@ -1,4 +1,4 @@
-// ASSETMAX Global — service worker.
+// VORTAMAX Global — service worker.
 //
 // Caching strategy:
 //   · Precache: offline page + app icons (available from first load).
@@ -10,7 +10,7 @@
 //   · Never cached: /api/*, non-GET requests, cross-origin requests — dynamic
 //     content (projects, matches, messages) is always fresh from the network.
 
-const VERSION = "amx-v1";
+const VERSION = "vmx-v1";
 const STATIC_CACHE = `${VERSION}-static`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;

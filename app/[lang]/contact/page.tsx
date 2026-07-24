@@ -48,7 +48,7 @@ export default async function ContactPage({ params }: { params: { lang: string }
           ))}
           <Card className="p-5 text-sm text-navy-600">
             <p className="font-bold text-navy-900">Email</p>
-            <p className="mt-1">contact@assetmax.global</p>
+            <p className="mt-1">contact@vortamax.global</p>
           </Card>
         </div>
       </div>

@@ -20,7 +20,7 @@ export type StructuredMandate = {
   conditions: string | null;
 };
 
-const SYSTEM = `You are the mandate-structuring agent of ASSETMAX Global. An investor describes what they are looking for in free text. Convert it into structured search criteria as JSON with EXACTLY these keys:
+const SYSTEM = `You are the mandate-structuring agent of VORTAMAX Global. An investor describes what they are looking for in free text. Convert it into structured search criteria as JSON with EXACTLY these keys:
 
 title (short professional mandate title in English), description (2-3 paragraph polished English version of the requirement), categories (array from: ${CATEGORIES.join(", ")}), countries (array of ISO-2 codes from: ${COUNTRIES.map((c) => c.code).join(", ")} — only those explicitly implied), stages (array from: ${STAGES.join(", ")}), dealTypes (array from: ${DEAL_TYPES.join(", ")}), ticketMin (USD number or null), ticketMax (USD number or null), equityMin (percent number or null), equityMax (percent number or null), conditions (short string of key conditions, or null).
 
