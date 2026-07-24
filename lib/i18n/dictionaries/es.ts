@@ -12,6 +12,136 @@ const es: Dictionary = {
     later: "Ahora no",
     iosHint: "En Safari, toca Compartir y elige “Agregar a pantalla de inicio”.",
   },
+  vorta: {
+    name: "VORTA",
+    title: "VORTA — Tu guía en VORTAMAX",
+    open: "Conversa con VORTA, tu guía",
+    welcome:
+      "¡Hola! Soy VORTA 👋 — tu guía en VORTAMAX. Te acompaño a publicar tu proyecto, invertir, entender los mandatos, los contratos y más. ¿Qué te gustaría hacer?",
+    faqNote:
+      "Ahora mismo respondo desde mi guía rápida. Para algo más profundo, el equipo está a un mensaje de distancia.",
+    chips: [
+      "Quiero publicar mi proyecto",
+      "Quiero invertir",
+      "¿Qué es un mandato?",
+      "Ver contratos modelo",
+      "Hablar con el fundador",
+    ],
+    inputPlaceholder: "Pregúntale a VORTA…",
+    send: "Enviar",
+    thinking: "VORTA está pensando…",
+    limitReached:
+      "¡Hoy conversamos bastante! 😊 Necesito una pausa — vuelve mañana, o escríbele al equipo y ellos retoman de inmediato.",
+    contactTeam: "Escribir al equipo",
+    tipDismiss: "Entendido",
+    tips: {
+      wizard: [
+        "En este paso le pones nombre a tu proyecto y cuentas su historia. Lenguaje simple funciona mejor — los inversionistas leen cientos de estas fichas.",
+        "Aquí ubicas tu proyecto en el mapa: sector, país y qué tipo de operación buscas.",
+        "Los detalles técnicos generan confianza. Completa lo que tengas — siempre puedes volver y agregar más.",
+        "Hablemos de cifras: con un rango de inversión basta para partir. Los números exactos pueden quedar para el data room.",
+        "Fotos y documentos. Sube aquí lo público — los archivos confidenciales quedan protegidos tras el NDA automáticamente.",
+        "¡Última revisión! Chequea todo y envía. Nuestro equipo verifica tu publicación antes de que salga al aire.",
+      ],
+      wizardUpload:
+        "Atajo: sube tu PDF o presentación y yo lo leo y lleno el formulario por ti.",
+      commodity:
+        "Describe tu commodity como se lo contarías a un trader: producto, volumen, condiciones de entrega. Yo te ayudo a conectar con las contrapartes correctas.",
+      mandate:
+        "Un mandato les dice a los vendedores qué buscas comprar o financiar. Mientras más claros tus criterios, mejores matches puedo encontrarte.",
+      templates: [
+        "Elige el documento que calza con tu situación — la frase bajo cada tarjeta te dice cuándo se usa.",
+        "Completa lo básico: quién firma, qué activo y las cifras clave. Lo que dejes en blanco queda como punto abierto a negociar.",
+        "¡Listo! Tu borrador está para descargar. Recuerda: es un punto de partida — revísalo con tu abogado antes de firmar.",
+      ],
+    },
+  },
+  templates: {
+    navLabel: "Contratos Modelo",
+    navDesc: "Borradores listos para usar",
+    title: "Contratos Modelo",
+    subtitle:
+      "Un borrador profesional en minutos: elige la plantilla, completa lo básico y descarga tu PDF. Todo documento va marcado BORRADOR — valídalo con tu abogado antes de firmar.",
+    disclaimer:
+      "VORTAMAX Global no presta asesoría legal. Los documentos son borradores de negociación y deben ser revisados por abogados de la jurisdicción aplicable antes de la firma.",
+    useCta: "Usar esta plantilla",
+    steps: ["Plantilla", "Datos", "Borrador"],
+    kinds: {
+      INTERMEDIATION: {
+        name: "Mandato de Intermediación",
+        when: "Autoriza a VORTAMAX a ofrecer tu proyecto a inversionistas.",
+      },
+      INTERMEDIATION_EXCLUSIVE: {
+        name: "Mandato con Exclusividad",
+        when: "Igual que el anterior, pero VORTAMAX es tu único canal por un período.",
+      },
+      NDA: {
+        name: "NDA / Acuerdo de Confidencialidad",
+        when: "Antes de compartir información sensible con un interesado.",
+      },
+      LOI: {
+        name: "LOI / Carta de Intención",
+        when: "Para poner una oferta seria por escrito antes del due diligence.",
+      },
+      MOU: {
+        name: "MOU / Memorándum de Entendimiento",
+        when: "Cuando ambas partes acuerdan lo grueso y quieren dejarlo por escrito.",
+      },
+      SPA: {
+        name: "Promesa de Compraventa de Activo",
+        when: "El borrador para comprar o vender el activo propiamente tal.",
+      },
+      JV: {
+        name: "Acuerdo de Participación / Joint Venture",
+        when: "Cuando desarrollarás u operarás un proyecto junto a un socio.",
+      },
+      COMMODITY_SPA: {
+        name: "Compraventa de Commodities (Spot)",
+        when: "Para un embarque único de un commodity físico.",
+      },
+      COMMODITY_SUPPLY: {
+        name: "Contrato de Suministro de Commodities",
+        when: "Para entregas recurrentes durante meses o años.",
+      },
+    },
+    form: {
+      language: "Idioma del documento",
+      languageEn: "Inglés",
+      languageEs: "Español",
+      partyA: "Tu parte",
+      partyB: "Contraparte",
+      name: "Nombre completo",
+      company: "Empresa",
+      project: "Proyecto relacionado",
+      projectNone: "— Sin proyecto publicado / escribe el activo abajo —",
+      assetTitle: "Nombre del activo / proyecto",
+      assetLocation: "Ubicación (ciudad, país)",
+      jurisdiction: "Ley aplicable (país)",
+      amount: "Monto (USD)",
+      equityPct: "Participación (%)",
+      termMonths: "Vigencia (meses)",
+      exclusivityMonths: "Exclusividad (meses)",
+      commodity: "Commodity",
+      volume: "Volumen",
+      incoterm: "Incoterm",
+      priceDetails: "Condiciones de precio",
+      generate: "Generar borrador",
+      generating: "Generando tu borrador…",
+      intermediaryNote:
+        "En esta plantilla la contraparte es VORTAMAX Global (la plataforma).",
+      signInFirst: "Inicia sesión para generar documentos",
+    },
+    viewer: {
+      download: "Descargar PDF",
+      back: "Todas las plantillas",
+      generatedNote: "Generado con la biblioteca de contratos de VORTAMAX",
+    },
+    myTitle: "Mis documentos generados",
+    newCta: "Nuevo documento",
+    empty: "Aún no has generado documentos.",
+    adminTitle: "Documentos generados",
+    adminEmpty: "Todavía no se han generado documentos.",
+  },
   nav: {
     explore: "Proyectos",
     solutions: "Soluciones",

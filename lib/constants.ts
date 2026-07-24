@@ -113,6 +113,21 @@ export type ListingSide = (typeof LISTING_SIDES)[number];
 export const CONTRACT_KINDS = ["NDA", "LOI", "MOU", "SPA", "COMMODITY_SPA"] as const;
 export type ContractKind = (typeof CONTRACT_KINDS)[number];
 
+// Standalone template library (Contract Templates section). Superset of the
+// deal-contract kinds above plus intermediation, JV and recurring supply.
+export const TEMPLATE_KINDS = [
+  "INTERMEDIATION",
+  "INTERMEDIATION_EXCLUSIVE",
+  "NDA",
+  "LOI",
+  "MOU",
+  "SPA",
+  "JV",
+  "COMMODITY_SPA",
+  "COMMODITY_SUPPLY",
+] as const;
+export type TemplateKind = (typeof TEMPLATE_KINDS)[number];
+
 export const MATCH_STATUSES = ["NEW", "CONTACTED", "DISMISSED"] as const;
 
 // Static market reference prices for the indicators widget (seed data,

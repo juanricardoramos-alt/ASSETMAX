@@ -42,6 +42,7 @@ export default async function AdminPage({ params }: { params: { lang: string } }
     { href: `/${lang}/dashboard/admin/queue`, title: t.verificationQueue, badge: pending },
     { href: `/${lang}/dashboard/admin/users`, title: t.users, badge: totalUsers },
     { href: `/${lang}/dashboard/admin/featured`, title: t.featuredManager, badge: null },
+    { href: `/${lang}/dashboard/admin/documents`, title: dict.templates.adminTitle, badge: null },
   ];
 
   return (

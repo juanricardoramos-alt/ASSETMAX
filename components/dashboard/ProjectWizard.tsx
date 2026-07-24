@@ -8,6 +8,7 @@ import type { IngestResult } from "@/app/api/ai/ingest/route";
 import { Button, Input, Label, Select, Textarea, Card } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { IconCheck, IconDoc, IconClose } from "@/components/icons";
+import { VortaTip } from "@/components/vorta/VortaTip";
 
 export type WizardData = {
   title: string;
@@ -262,6 +263,7 @@ export function ProjectWizard({
     setBusy(false);
     if (res.ok) {
       setSubmitted(true);
+      window.dispatchEvent(new Event("vorta:celebrate"));
     } else {
       setError(`${w.review.missing}: ${dict.common.error}`);
     }
@@ -296,6 +298,13 @@ export function ProjectWizard({
       <div className="space-y-6">
         <h1 className="text-2xl font-extrabold text-navy-950">{w.title}</h1>
         <p className="text-sm text-navy-500">{a.chooseTitle}</p>
+        {aiIngestEnabled && (
+          <VortaTip
+            id="wizard-upload"
+            text={dict.vorta.tips.wizardUpload}
+            dismissLabel={dict.vorta.tipDismiss}
+          />
+        )}
         <div className="grid gap-5 lg:grid-cols-2">
           <button
             onClick={() => setMode("form")}
@@ -431,6 +440,14 @@ export function ProjectWizard({
           </li>
         ))}
       </ol>
+
+      {dict.vorta.tips.wizard[step] && (
+        <VortaTip
+          id={`wizard-${step}`}
+          text={dict.vorta.tips.wizard[step]}
+          dismissLabel={dict.vorta.tipDismiss}
+        />
+      )}
 
       <Card className="p-7">
         {/* Step 1 — Basics */}

@@ -83,10 +83,10 @@ export function PwaSetup({ dict }: { dict: Dictionary }) {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-md animate-fade-up sm:inset-x-auto sm:right-6 print:hidden">
+    <div className="fixed inset-x-3 bottom-20 z-50 mx-auto max-w-md animate-fade-up sm:inset-x-auto sm:right-6 print:hidden">
       <div className="flex items-start gap-3.5 rounded-xl border border-navy-100 bg-white p-4 shadow-card-hover">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-navy-950 text-lg font-extrabold text-gold-400">
-          A
+          V
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-bold text-navy-950">{dict.pwa.installTitle}</p>

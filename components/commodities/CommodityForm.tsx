@@ -7,6 +7,7 @@ import { COMMODITIES, INCOTERMS, COUNTRIES, PERIODICITIES, PRICE_TYPES } from "@
 import type { IngestResult } from "@/app/api/ai/ingest/route";
 import { Button, Card, Input, Label, Select, Textarea } from "@/components/ui";
 import { IconCheck } from "@/components/icons";
+import { VortaTip } from "@/components/vorta/VortaTip";
 
 export type CommodityFormData = {
   side: string;
@@ -167,7 +168,10 @@ export function CommodityForm({
       body: JSON.stringify(payload),
     });
     setBusy(false);
-    if (res.ok) setSubmitted(true);
+    if (res.ok) {
+      setSubmitted(true);
+      window.dispatchEvent(new Event("vorta:celebrate"));
+    }
     else setError(true);
   }
 
@@ -199,6 +203,12 @@ export function CommodityForm({
       <h1 className="text-2xl font-extrabold text-navy-950">
         {listingId ? c.editListing : c.newListing}
       </h1>
+
+      <VortaTip
+        id="commodity-form"
+        text={dict.vorta.tips.commodity}
+        dismissLabel={dict.vorta.tipDismiss}
+      />
 
       {/* AI ingestion */}
       {!listingId && (

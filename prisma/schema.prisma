@@ -50,6 +50,7 @@ model User {
   contractsAsSeller Contract[] @relation("ContractSeller")
   contractsAsBuyer  Contract[] @relation("ContractBuyer")
   notifications     Notification[]
+  generatedDocuments GeneratedDocument[]
 }
 
 model Account {
@@ -400,6 +401,30 @@ model Contract {
   commodityListing CommodityListing? @relation(fields: [commodityListingId], references: [id], onDelete: Cascade)
   seller           User              @relation("ContractSeller", fields: [sellerId], references: [id], onDelete: Cascade)
   buyer            User              @relation("ContractBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Standalone template documents (Contract Templates library)
+// ---------------------------------------------------------------------------
+
+// kind: NDA | LOI | MOU | SPA | COMMODITY_SPA | INTERMEDIATION |
+//       INTERMEDIATION_EXCLUSIVE | JV | COMMODITY_SUPPLY
+// language: en | es
+// Drafts generated from the template library. Unlike Contract, these are not
+// tied to a counterparty account — the creator fills both parties manually.
+model GeneratedDocument {
+  id          String   @id @default(cuid())
+  kind        String
+  language    String   @default("en")
+  title       String
+  content     String
+  partyA      String
+  partyB      String
+  projectId   String?
+  createdById String
+  createdAt   DateTime @default(now())
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
 }
 
 // ---------------------------------------------------------------------------

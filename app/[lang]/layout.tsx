@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Providers } from "@/components/Providers";
 import { PwaSetup } from "@/components/PwaSetup";
+import { VortaWidget } from "@/components/vorta/VortaWidget";
+import { aiEnabled } from "@/lib/ai";
 import "../globals.css";
 
 // Marketplace content is database-driven and session-aware — render at request time.
@@ -77,6 +79,7 @@ export default async function RootLayout({
           <main className="flex-1">{children}</main>
           <SiteFooter lang={lang} dict={dict} />
           <PwaSetup dict={dict} />
+          <VortaWidget dict={dict} lang={lang} aiEnabled={aiEnabled()} />
         </Providers>
       </body>
     </html>

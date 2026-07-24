@@ -10,6 +10,136 @@ const en = {
     later: "Not now",
     iosHint: "In Safari, tap Share and choose “Add to Home Screen”.",
   },
+  vorta: {
+    name: "VORTA",
+    title: "VORTA — Your VORTAMAX guide",
+    open: "Chat with VORTA, your guide",
+    welcome:
+      "Hi! I'm VORTA 👋 — your guide here at VORTAMAX. I can walk you through listing a project, investing, mandates, contracts and more. What would you like to do?",
+    faqNote:
+      "I'm answering from my quick guide right now. For anything deeper, the team is one message away.",
+    chips: [
+      "I want to list my project",
+      "I want to invest",
+      "What is a mandate?",
+      "See contract templates",
+      "Talk to the founder",
+    ],
+    inputPlaceholder: "Ask VORTA…",
+    send: "Send",
+    thinking: "VORTA is thinking…",
+    limitReached:
+      "We've chatted a lot today! 😊 I need a short break — come back tomorrow, or write to the team and they'll pick it right up.",
+    contactTeam: "Write to the team",
+    tipDismiss: "Got it",
+    tips: {
+      wizard: [
+        "In this step you give your project a name and tell its story. Plain language works best — investors read hundreds of these.",
+        "Here you place your project on the map: sector, country and what kind of deal you're looking for.",
+        "Technical details build trust. Fill in what you have — you can always come back and add more.",
+        "Money talk: an investment range is enough to start. You can keep exact figures for the data room.",
+        "Photos and documents. Upload what's public here — confidential files go behind the NDA wall automatically.",
+        "Last check! Review everything and submit. Our team verifies your listing before it goes live.",
+      ],
+      wizardUpload:
+        "Shortcut: upload your PDF or presentation and I'll read it and fill the form for you.",
+      commodity:
+        "Describe your commodity as you would to a trader: product, volume, delivery terms. I'll help match you with the right counterparties.",
+      mandate:
+        "A mandate tells sellers what you're looking to buy or fund. The clearer your criteria, the better the matches I can find for you.",
+      templates: [
+        "Pick the document that fits your situation — the one-line description under each card tells you when to use it.",
+        "Fill in the basics: who signs, which asset, and the key numbers. Anything you leave blank stays as an open point to negotiate.",
+        "Done! Your draft is ready to download. Remember: it's a starting point — have your lawyer review it before signing.",
+      ],
+    },
+  },
+  templates: {
+    navLabel: "Contract Templates",
+    navDesc: "Ready-to-use draft agreements",
+    title: "Contract Templates",
+    subtitle:
+      "A professional draft in minutes: pick a template, fill in the basics, download your PDF. Every document is marked DRAFT — validate with your lawyer before signing.",
+    disclaimer:
+      "VORTAMAX Global does not provide legal advice. Documents are negotiation drafts and must be reviewed by qualified counsel in the applicable jurisdiction before signature.",
+    useCta: "Use this template",
+    steps: ["Template", "Details", "Draft"],
+    kinds: {
+      INTERMEDIATION: {
+        name: "Intermediation Mandate",
+        when: "Authorizes VORTAMAX to present your project to investors.",
+      },
+      INTERMEDIATION_EXCLUSIVE: {
+        name: "Exclusive Intermediation Mandate",
+        when: "Same as above, but VORTAMAX is your only channel for a set period.",
+      },
+      NDA: {
+        name: "NDA / Confidentiality Agreement",
+        when: "Before sharing sensitive information with an interested party.",
+      },
+      LOI: {
+        name: "LOI / Letter of Intent",
+        when: "To put a serious offer on paper before due diligence.",
+      },
+      MOU: {
+        name: "MOU / Memorandum of Understanding",
+        when: "When both sides agree on the big picture and want it in writing.",
+      },
+      SPA: {
+        name: "Asset Purchase Agreement",
+        when: "The draft for actually buying or selling the asset.",
+      },
+      JV: {
+        name: "Joint Venture Agreement",
+        when: "When you'll develop or operate a project together with a partner.",
+      },
+      COMMODITY_SPA: {
+        name: "Commodity Sale Contract (Spot)",
+        when: "For a one-off shipment of a physical commodity.",
+      },
+      COMMODITY_SUPPLY: {
+        name: "Commodity Supply Contract",
+        when: "For recurring deliveries over months or years.",
+      },
+    },
+    form: {
+      language: "Document language",
+      languageEn: "English",
+      languageEs: "Spanish",
+      partyA: "Your side",
+      partyB: "Counterparty",
+      name: "Full name",
+      company: "Company",
+      project: "Related project",
+      projectNone: "— No listed project / type the asset below —",
+      assetTitle: "Asset / project name",
+      assetLocation: "Location (city, country)",
+      jurisdiction: "Governing law (country)",
+      amount: "Amount (USD)",
+      equityPct: "Stake (%)",
+      termMonths: "Term (months)",
+      exclusivityMonths: "Exclusivity (months)",
+      commodity: "Commodity",
+      volume: "Volume",
+      incoterm: "Incoterm",
+      priceDetails: "Price terms",
+      generate: "Generate draft",
+      generating: "Generating your draft…",
+      intermediaryNote:
+        "On this template the counterparty is VORTAMAX Global (the platform).",
+      signInFirst: "Sign in to generate documents",
+    },
+    viewer: {
+      download: "Download PDF",
+      back: "All templates",
+      generatedNote: "Generated with the VORTAMAX template library",
+    },
+    myTitle: "My generated documents",
+    newCta: "New document",
+    empty: "You haven't generated any documents yet.",
+    adminTitle: "Generated documents",
+    adminEmpty: "No documents have been generated yet.",
+  },
   nav: {
     explore: "Projects",
     solutions: "Solutions",

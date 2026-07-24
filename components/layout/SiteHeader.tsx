@@ -13,9 +13,15 @@ import {
   IconBuilding,
   IconChart,
   IconHandshake,
+  IconDoc,
 } from "@/components/icons";
 
-const solutionsIcons = { sellers: IconBuilding, investors: IconChart, how: IconHandshake };
+const solutionsIcons = {
+  sellers: IconBuilding,
+  investors: IconChart,
+  how: IconHandshake,
+  templates: IconDoc,
+};
 
 export async function SiteHeader({
   lang,
@@ -51,6 +57,12 @@ export async function SiteHeader({
       href: `/${lang}/how-it-works`,
       label: dict.nav.howItWorks,
       desc: dict.nav.solutionsMenu.howDesc,
+    },
+    {
+      key: "templates" as const,
+      href: `/${lang}/contract-templates`,
+      label: dict.templates.navLabel,
+      desc: dict.templates.navDesc,
     },
   ];
 
