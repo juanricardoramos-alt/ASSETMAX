@@ -110,15 +110,17 @@ export default async function HomePage({
             { mp4: "/videos/hero-flow.mp4", webm: "/videos/hero-flow.webm" },
           ]}
         />
+        {/* Radial scrim keeps the copy readable over bright footage */}
+        <div className="pointer-events-none absolute inset-0 hero-scrim" />
         <div className="container-site relative py-20 sm:py-28">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="animate-fade-up text-xs font-bold uppercase tracking-[0.25em] text-gold-400">
+            <p className="hero-text-shadow animate-fade-up text-xs font-bold uppercase tracking-[0.25em] text-gold-400">
               {dict.home.heroKicker}
             </p>
-            <h1 className="mt-5 animate-fade-up font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="hero-text-shadow mt-5 animate-fade-up font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
               {dict.home.heroTitle}
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-base leading-relaxed text-navy-200 sm:text-lg">
+            <p className="hero-text-shadow mx-auto mt-6 max-w-2xl animate-fade-up text-base leading-relaxed text-navy-100 sm:text-lg">
               {dict.home.heroSubtitle}
             </p>
 
@@ -155,7 +157,7 @@ export default async function HomePage({
 
             <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
               {trustBadges.map((b) => (
-                <div key={b.label} className="flex items-center gap-2 text-sm text-navy-300">
+                <div key={b.label} className="hero-text-shadow flex items-center gap-2 text-sm text-navy-200">
                   <b.icon className="h-4 w-4 text-gold-400" />
                   {b.label}
                 </div>

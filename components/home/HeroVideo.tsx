@@ -127,9 +127,11 @@ export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] })
           <source src={clips[i].webm} type="video/webm" />
         </video>
       ))}
-      {/* Navy overlay — keeps text and CTAs perfectly readable */}
-      <div className="absolute inset-0 bg-navy-950/60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/70 via-navy-950/35 to-navy-950/85" />
+      {/* Navy overlay — light enough to let the footage carry the hero;
+          text legibility comes from the radial scrim + text shadows in the
+          hero content itself. */}
+      <div className="absolute inset-0 bg-navy-950/25" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/65 via-navy-950/10 to-navy-950/75" />
     </div>
   );
 }
