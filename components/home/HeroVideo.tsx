@@ -20,9 +20,11 @@ const ROTATE_MS = 9000;
 const FADE_CLASS = "transition-opacity duration-[1800ms] ease-in-out";
 
 export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] }) {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const [ready, setReady] = useState(false);
-  const [alive, setAlive] = useState<number[]>([]);
+  // A slot joins the rotation only after its video confirms `canplay`;
+  // empty drop-in slots (404 on every source) therefore never join.
+  const [playable, setPlayable] = useState<number[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
@@ -38,10 +40,7 @@ export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] })
           ? (cb: () => void) => (window as Window & { requestIdleCallback: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback(cb, { timeout: 2500 })
           : (cb: () => void) => setTimeout(cb, 1200);
       idle(() => {
-        if (!cancelled) {
-          setAlive(clips.map((_, i) => i));
-          setReady(true);
-        }
+        if (!cancelled) setReady(true);
       });
     };
 
@@ -59,22 +58,22 @@ export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Slow rotation across surviving clips.
+  // Slow rotation across confirmed-playable clips.
   useEffect(() => {
-    if (!ready || alive.length < 2) return;
+    if (playable.length < 2) return;
     const t = setInterval(() => {
       setActive((a) => {
-        const pos = alive.indexOf(a);
-        return alive[(pos + 1) % alive.length] ?? alive[0];
+        const pos = playable.indexOf(a);
+        return playable[(pos + 1) % playable.length] ?? playable[0];
       });
     }, ROTATE_MS);
     return () => clearInterval(t);
-  }, [ready, alive]);
+  }, [playable]);
 
   // Pause everything while the hero is off-screen.
   useEffect(() => {
-    if (!ready) return;
-    const el = videoRefs.current[0]?.parentElement;
+    if (playable.length === 0) return;
+    const el = videoRefs.current.find(Boolean)?.parentElement;
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -88,22 +87,30 @@ export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] })
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [ready, alive]);
+  }, [playable]);
+
+  const markPlayable = (i: number) =>
+    setPlayable((xs) => (xs.includes(i) ? xs : [...xs, i].sort((a, b) => a - b)));
 
   const drop = (i: number) =>
-    setAlive((xs) => {
+    setPlayable((xs) => {
       const next = xs.filter((x) => x !== i);
-      if (!next.includes(active) && next.length > 0) setActive(next[0]);
+      if (!next.includes(active)) setActive(next[0] ?? -1);
       return next;
     });
 
-  if (!ready || alive.length === 0) return null;
+  // First confirmed clip becomes the visible one.
+  useEffect(() => {
+    if (active === -1 && playable.length > 0) setActive(playable[0]);
+  }, [playable, active]);
+
+  if (!ready) return null;
 
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
-      {alive.map((i) => (
+      {clips.map((clip, i) => (
         <video
-          key={clips[i].webm}
+          key={clip.mp4}
           ref={(el) => {
             videoRefs.current[i] = el;
           }}
@@ -112,9 +119,10 @@ export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] })
           loop
           playsInline
           preload="auto"
+          onCanPlay={() => markPlayable(i)}
           onError={(e) => {
-            // A failing <source> (e.g. missing mp4 falling back to webm) also
-            // surfaces here — only drop when the element itself gave up.
+            // A failing <source> (e.g. an empty drop-in slot) never fires an
+            // element-level error — only a true MediaError evicts a clip.
             if (e.currentTarget.error) drop(i);
           }}
           className={cn(
@@ -123,15 +131,19 @@ export function HeroVideo({ clips }: { clips: { mp4: string; webm: string }[] })
             i === active ? "opacity-100" : "opacity-0"
           )}
         >
-          <source src={clips[i].mp4} type="video/mp4" />
-          <source src={clips[i].webm} type="video/webm" />
+          <source src={clip.mp4} type="video/mp4" />
+          <source src={clip.webm} type="video/webm" />
         </video>
       ))}
-      {/* Navy overlay — light enough to let the footage carry the hero;
-          text legibility comes from the radial scrim + text shadows in the
-          hero content itself. */}
-      <div className="absolute inset-0 bg-navy-950/25" />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/65 via-navy-950/10 to-navy-950/75" />
+      {playable.length > 0 && (
+        <>
+          {/* Navy overlay — light enough to let the footage carry the hero;
+              text legibility comes from the radial scrim + text shadows in
+              the hero content itself. */}
+          <div className="absolute inset-0 bg-navy-950/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/65 via-navy-950/10 to-navy-950/75" />
+        </>
+      )}
     </div>
   );
 }

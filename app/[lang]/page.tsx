@@ -105,9 +105,11 @@ export default async function HomePage({
         {/* Motion background — desktop only, loads after idle, static fallback */}
         <HeroVideo
           clips={[
+            // Slots 2-4 are drop-in: a missing file self-removes from rotation.
             { mp4: "/videos/hero-embers.mp4", webm: "/videos/hero-embers.webm" },
-            { mp4: "/videos/hero-sweep.mp4", webm: "/videos/hero-sweep.webm" },
-            { mp4: "/videos/hero-flow.mp4", webm: "/videos/hero-flow.webm" },
+            { mp4: "/videos/hero-sweep.mp4", webm: "/videos/hero-sweep.mp4" },
+            { mp4: "/videos/hero-flow.mp4", webm: "/videos/hero-flow.mp4" },
+            { mp4: "/videos/hero-extra.mp4", webm: "/videos/hero-extra.mp4" },
           ]}
         />
         {/* Radial scrim keeps the copy readable over bright footage */}

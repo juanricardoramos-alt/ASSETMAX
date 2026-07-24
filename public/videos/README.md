@@ -1,18 +1,17 @@
 # Hero background clips
 
-The homepage hero plays these clips (desktop only, lazy-loaded, slow
-crossfade). The `.webm` files in this folder are **provisional branded
-motion loops** generated in-house; swap them for real royalty-free stock
-footage whenever you like — no code changes needed:
+The homepage hero plays the clips below (desktop only, lazy-loaded, slow
+crossfade when more than one exists). Slots are wired in code — a missing
+file simply drops out of the rotation, so adding a clip is pure drag & drop:
 
-1. Download 3 clips from Pexels / Pixabay / Coverr (drone mining site,
-   molten metal pour, industrial plant / conveyor / port). Search terms:
-   "aerial mine", "molten gold pour", "industrial plant night", "container
-   port aerial".
-2. Compress to ≤5 MB each, 1080p max, H.264 MP4 (e.g. HandBrake, "Web"
-   preset, or an online compressor).
-3. Name them exactly `hero-embers.mp4`, `hero-sweep.mp4`, `hero-flow.mp4`
-   and drop them in this folder. MP4 takes priority automatically; the
-   webm files remain as fallback and can then be deleted.
+| Slot | File | Status |
+| --- | --- | --- |
+| 1 | `hero-embers.mp4` (+ `.webm` fallback) | ✔ active |
+| 2 | `hero-sweep.mp4` | empty — drop a file to activate |
+| 3 | `hero-flow.mp4` | empty — drop a file to activate |
+| 4 | `hero-extra.mp4` | empty — drop a file to activate |
 
-`hero-poster.jpg` is the static frame used while loading and on mobile.
+To add or replace a clip: compress to ≤5 MB (1080p max, H.264 MP4, no
+audio — HandBrake "Web" preset works), name it exactly as above and upload
+it to this folder. `hero-poster.jpg` is the static frame used while
+loading and on mobile.
