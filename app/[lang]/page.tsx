@@ -6,6 +6,7 @@ import { CATEGORIES, countryName } from "@/lib/constants";
 import { INSIGHTS } from "@/lib/insights";
 import { formatDate } from "@/lib/utils";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { HeroVideo } from "@/components/home/HeroVideo";
 import { WorldMap } from "@/components/home/WorldMap";
 import { MarketRefsBar } from "@/components/commodities/MarketRefsBar";
 import { SmartImage } from "@/components/SmartImage";
@@ -101,6 +102,14 @@ export default async function HomePage({
       <section className="relative overflow-hidden bg-navy-950">
         <div className="absolute inset-0 bg-grid-dots opacity-60" />
         <div className="absolute -top-40 left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-navy-700/40 blur-3xl" />
+        {/* Motion background — desktop only, loads after idle, static fallback */}
+        <HeroVideo
+          clips={[
+            { mp4: "/videos/hero-embers.mp4", webm: "/videos/hero-embers.webm" },
+            { mp4: "/videos/hero-sweep.mp4", webm: "/videos/hero-sweep.webm" },
+            { mp4: "/videos/hero-flow.mp4", webm: "/videos/hero-flow.webm" },
+          ]}
+        />
         <div className="container-site relative py-20 sm:py-28">
           <div className="mx-auto max-w-4xl text-center">
             <p className="animate-fade-up text-xs font-bold uppercase tracking-[0.25em] text-gold-400">

@@ -10,7 +10,7 @@
 //   · Never cached: /api/*, non-GET requests, cross-origin requests — dynamic
 //     content (projects, matches, messages) is always fresh from the network.
 
-const VERSION = "vmx-v1";
+const VERSION = "vmx-v2";
 const STATIC_CACHE = `${VERSION}-static`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
@@ -65,6 +65,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // cross-origin: browser default
   if (url.pathname.startsWith("/api/")) return; // dynamic data: always network
+  if (url.pathname.startsWith("/videos/")) return; // hero clips: HTTP cache only
 
   // Page navigations — network-first, cached page fallback, offline screen last.
   if (request.mode === "navigate") {
