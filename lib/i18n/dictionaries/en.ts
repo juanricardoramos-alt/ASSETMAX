@@ -142,6 +142,38 @@ const en = {
     adminTitle: "Generated documents",
     adminEmpty: "No documents have been generated yet.",
   },
+  markets: {
+    "navLabel": "Markets",
+    "title": "Market Intelligence",
+    "subtitle": "Reference prices and sector context for the metals, mining and digital-asset markets that shape our industry.",
+    "kicker": "Market Intelligence",
+    "delayedBadge": "Reference — delayed data",
+    "referenceBadge": "Static reference",
+    "updatedAt": "Updated",
+    "baseMetalsTitle": "Base Metals",
+    "baseMetalsNote": "LME-style reference prices compiled from public market data for orientation purposes.",
+    "preciousTitle": "Precious Metals",
+    "preciousNote": "LBMA-style reference levels drawn from public sources, shown for general context.",
+    "indicesTitle": "Indices & Mining Majors",
+    "indicesNote": "Benchmark indices and flagship mining companies, shown as context for the broader resources sector.",
+    "cryptoTitle": "Digital Assets",
+    "cryptoNote": "Reference prices for the principal digital assets, presented for informational context only.",
+    "change24h": "24h",
+    "trend30d": "30-day trend",
+    "rwa": {
+      "kicker": "Perspective",
+      "title": "Real-World Asset Tokenization",
+      "paragraphs": [
+        "Tokenization of real-world assets (RWA) means representing ownership of a physical or financial asset — a mineral concession, a warehouse of refined metal, an invoice, a share in an industrial project — as a digital token recorded on a distributed ledger. The token does not replace the asset; it is a registry entry designed to make ownership easier to record, divide and transfer.",
+        "For mining and industrial assets, the potential relevance is concrete. Fractional ownership could lower the ticket size needed to participate in capital-intensive projects. Secondary transfers could bring a measure of liquidity to assets that today change hands slowly and privately. And a well-designed token registry can improve traceability — of provenance, of custody, of who holds what — in sectors where documentation is often fragmented.",
+        "The honest picture, however, is one of a market still maturing. Regulatory frameworks for tokenized assets are evolving at different speeds across jurisdictions, custody and settlement standards are still consolidating, and the legal enforceability of token ownership depends on structures that remain under construction in much of the world. Serious institutions are experimenting; few are operating at scale.",
+        "Our position at VORTAMAX is deliberate: we follow this evolution closely, and we are prepared to integrate asset tokenization when the regulatory framework allows it. Until then, our role is to understand the technology, watch the standards mature, and keep our platform ready — not to anticipate the rules."
+      ],
+      "note": "This section is informational content only and does not constitute an offer of tokenized products or securities."
+    },
+    "disclaimer": "Reference information based on delayed data from public sources. It does not constitute financial advice or an investment recommendation. Official LME and LBMA prices are licensed products of their respective institutions.",
+    "sourcesNote": "Sources: public market data (CoinGecko, Stooq and others), cached server-side."
+  },
   nav: {
     explore: "Projects",
     solutions: "Solutions",
@@ -149,6 +181,7 @@ const en = {
       sellersDesc: "List and sell industrial assets",
       investorsDesc: "Source vetted opportunities",
       howDesc: "The process, step by step",
+      aboutDesc: "The team behind the platform",
     },
     forSellers: "For Sellers",
     forInvestors: "For Investors",

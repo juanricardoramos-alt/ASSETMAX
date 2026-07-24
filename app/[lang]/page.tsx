@@ -173,6 +173,7 @@ export default async function HomePage({
       <MarketRefsBar
         title={dict.commodities.marketRefs}
         note={dict.commodities.marketRefsNote}
+        lang={lang}
       />
 
       {/* -------------------------------------------------- Partner logos */}

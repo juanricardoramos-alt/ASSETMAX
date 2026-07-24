@@ -434,6 +434,75 @@ export const VORTA_FAQ: FaqEntry[] = [
       ],
     },
   },
+  {
+    "id": "markets-page",
+    "keywords": [
+      "mercados",
+      "markets",
+      "precios",
+      "prices",
+      "cobre",
+      "copper",
+      "oro",
+      "gold",
+      "metales",
+      "metals",
+      "indices",
+      "cotizacion"
+    ],
+    "en": {
+      "answer": "Yes — we have a Markets page where I bring together reference prices for base metals, precious metals, benchmark indices and digital assets, all in one place. The data comes from public sources with a delay, so think of it as sector context rather than trading prices. Take a look whenever you want a quick pulse of the market.",
+      "links": [
+        {
+          "label": "View Markets",
+          "href": "/LANG/markets"
+        }
+      ]
+    },
+    "es": {
+      "answer": "¡Sí! Tenemos una página de Mercados donde reúno precios de referencia de metales base, metales preciosos, índices bursátiles y activos digitales, todo en un solo lugar. Los datos provienen de fuentes públicas con desfase, así que tómalos como contexto sectorial, no como precios para operar. Visítala cuando quieras un pulso rápido del mercado.",
+      "links": [
+        {
+          "label": "Ver Mercados",
+          "href": "/LANG/markets"
+        }
+      ]
+    }
+  },
+  {
+    "id": "rwa-tokenization",
+    "keywords": [
+      "tokenizacion",
+      "tokenization",
+      "rwa",
+      "token",
+      "tokens",
+      "blockchain",
+      "activos reales",
+      "real world assets",
+      "cripto",
+      "crypto",
+      "digital"
+    ],
+    "en": {
+      "answer": "Great question. Tokenizing real-world assets (RWA) means representing ownership of a physical asset — like a mining stake or refined metal — as a digital token, making it easier to divide, trace and transfer. At VORTAMAX we follow this space closely, but to be clear: we do not offer token investments today. We are prepared to integrate asset tokenization when the regulatory framework allows it, and you can read our full perspective on the Markets page.",
+      "links": [
+        {
+          "label": "Our RWA perspective",
+          "href": "/LANG/markets"
+        }
+      ]
+    },
+    "es": {
+      "answer": "¡Buena pregunta! Tokenizar activos reales (RWA) significa representar la propiedad de un activo físico — como una participación minera o metal refinado — mediante un token digital, lo que facilita dividirlo, trazarlo y transferirlo. En VORTAMAX seguimos este tema de cerca, pero te lo digo con claridad: hoy no ofrecemos inversión en tokens. Estamos preparados para integrar la tokenización de activos cuando el marco regulatorio lo permita, y puedes leer nuestra perspectiva completa en la página de Mercados.",
+      "links": [
+        {
+          "label": "Nuestra perspectiva RWA",
+          "href": "/LANG/markets"
+        }
+      ]
+    }
+  },
 ];
 
 export const VORTA_FALLBACK = {

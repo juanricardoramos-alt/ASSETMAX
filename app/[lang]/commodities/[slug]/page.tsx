@@ -135,7 +135,7 @@ export default async function CommodityDetailPage({
 
   return (
     <div className="bg-navy-50/40 pb-20">
-      <MarketRefsBar title={c.marketRefs} note={c.marketRefsNote} />
+      <MarketRefsBar title={c.marketRefs} note={c.marketRefsNote} lang={lang} />
       <div className="border-b border-navy-100 bg-navy-950">
         <div className="container-site py-10">
           <div className="flex flex-wrap items-center gap-2">

@@ -14,6 +14,7 @@ import {
   IconChart,
   IconHandshake,
   IconDoc,
+  IconUsers,
 } from "@/components/icons";
 
 const solutionsIcons = {
@@ -21,6 +22,7 @@ const solutionsIcons = {
   investors: IconChart,
   how: IconHandshake,
   templates: IconDoc,
+  about: IconUsers,
 };
 
 export async function SiteHeader({
@@ -36,6 +38,7 @@ export async function SiteHeader({
     { href: `/${lang}/projects`, label: dict.nav.explore },
     { href: `/${lang}/commodities`, label: dict.commodities.navLabel },
     { href: `/${lang}/mandates`, label: dict.mandates.navLabel },
+    { href: `/${lang}/markets`, label: dict.markets.navLabel },
     { href: `/${lang}/insights`, label: dict.insights.navLabel },
   ];
 
@@ -63,6 +66,12 @@ export async function SiteHeader({
       href: `/${lang}/contract-templates`,
       label: dict.templates.navLabel,
       desc: dict.templates.navDesc,
+    },
+    {
+      key: "about" as const,
+      href: `/${lang}/about`,
+      label: dict.nav.about,
+      desc: dict.nav.solutionsMenu.aboutDesc,
     },
   ];
 
@@ -129,9 +138,6 @@ export async function SiteHeader({
             </div>
           </div>
 
-          <Link href={aboutLink.href} className={navLinkClass}>
-            {aboutLink.label}
-          </Link>
         </nav>
 
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2.5 xl:ml-0">

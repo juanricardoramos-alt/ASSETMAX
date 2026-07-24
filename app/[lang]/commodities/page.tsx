@@ -58,7 +58,7 @@ export default async function CommoditiesPage({
 
   return (
     <div className="bg-navy-50/40">
-      <MarketRefsBar title={c.marketRefs} note={c.marketRefsNote} />
+      <MarketRefsBar title={c.marketRefs} note={c.marketRefsNote} lang={lang} />
       <div className="border-b border-navy-100 bg-navy-950">
         <div className="container-site flex flex-wrap items-end justify-between gap-6 py-12">
           <div className="max-w-2xl">

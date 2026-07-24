@@ -144,6 +144,38 @@ const es: Dictionary = {
     adminTitle: "Documentos generados",
     adminEmpty: "Todavía no se han generado documentos.",
   },
+  markets: {
+    "navLabel": "Mercados",
+    "title": "Inteligencia de Mercado",
+    "subtitle": "Precios de referencia y contexto sectorial de los mercados de metales, minería y activos digitales que definen nuestra industria.",
+    "kicker": "Inteligencia de Mercado",
+    "delayedBadge": "Referencia — datos diferidos",
+    "referenceBadge": "Referencia estática",
+    "updatedAt": "Actualizado",
+    "baseMetalsTitle": "Metales Base",
+    "baseMetalsNote": "Precios de referencia tipo LME, compilados a partir de datos públicos de mercado con fines orientativos.",
+    "preciousTitle": "Metales Preciosos",
+    "preciousNote": "Niveles de referencia tipo LBMA, tomados de fuentes públicas y presentados como contexto general.",
+    "indicesTitle": "Índices y Mineras Emblemáticas",
+    "indicesNote": "Índices bursátiles de referencia y compañías mineras emblemáticas, como contexto del sector de recursos en su conjunto.",
+    "cryptoTitle": "Activos Digitales",
+    "cryptoNote": "Precios de referencia de los principales activos digitales, presentados únicamente como contexto informativo.",
+    "change24h": "24h",
+    "trend30d": "Tendencia 30 días",
+    "rwa": {
+      "kicker": "Perspectiva",
+      "title": "Tokenización de Activos Reales",
+      "paragraphs": [
+        "La tokenización de activos reales (RWA, por sus siglas en inglés) consiste en representar la propiedad de un activo físico o financiero — una concesión minera, un inventario de metal refinado, una factura, una participación en un proyecto industrial — como un token digital inscrito en un registro distribuido. El token no reemplaza al activo: es una anotación registral diseñada para que la propiedad sea más fácil de registrar, dividir y transferir.",
+        "Para los activos mineros e industriales, la relevancia potencial es concreta. El fraccionamiento podría reducir el monto mínimo necesario para participar en proyectos intensivos en capital. Las transferencias secundarias podrían aportar cierta liquidez a activos que hoy cambian de manos de forma lenta y privada. Y un registro tokenizado bien diseñado puede mejorar la trazabilidad — del origen, de la custodia, de quién posee qué — en sectores donde la documentación suele estar fragmentada.",
+        "El panorama honesto, sin embargo, es el de un mercado aún en maduración. Los marcos regulatorios para activos tokenizados evolucionan a ritmos distintos según la jurisdicción, los estándares de custodia y liquidación todavía se están consolidando, y la exigibilidad legal de la propiedad vía token depende de estructuras que siguen en construcción en buena parte del mundo. Las instituciones serias están experimentando; pocas operan a escala.",
+        "Nuestra posición en VORTAMAX es deliberada: seguimos la evolución de cerca y estamos preparados para integrar la tokenización de activos cuando el marco regulatorio lo permita. Hasta entonces, nuestro rol es comprender la tecnología, observar la maduración de los estándares y mantener nuestra plataforma lista — no adelantarnos a las reglas."
+      ],
+      "note": "Esta sección es únicamente contenido informativo y no constituye una oferta de productos tokenizados ni de valores."
+    },
+    "disclaimer": "Información referencial basada en datos diferidos de fuentes públicas. No constituye asesoría financiera ni recomendación de inversión. Los precios oficiales de LME y LBMA son productos licenciados de sus respectivas instituciones.",
+    "sourcesNote": "Fuentes: datos públicos de mercado (CoinGecko, Stooq y otros), almacenados en la caché del servidor."
+  },
   nav: {
     explore: "Proyectos",
     solutions: "Soluciones",
@@ -151,6 +183,7 @@ const es: Dictionary = {
       sellersDesc: "Publica y vende activos industriales",
       investorsDesc: "Accede a oportunidades verificadas",
       howDesc: "El proceso, paso a paso",
+      aboutDesc: "El equipo detrás de la plataforma",
     },
     forSellers: "Para Vendedores",
     forInvestors: "Para Inversionistas",
