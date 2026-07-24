@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized, localizedAll } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import {
   formatInvestmentRange,
@@ -35,11 +36,12 @@ export async function generateMetadata({
 }: {
   params: { lang: string; slug: string };
 }): Promise<Metadata> {
-  const project = await prisma.project.findUnique({
+  const found = await prisma.project.findUnique({
     where: { slug: params.slug },
     include: { images: { orderBy: { order: "asc" }, take: 1 } },
   });
-  if (!project) return {};
+  if (!found) return {};
+  const project = localized(found, isLocale(params.lang) ? params.lang : defaultLocale);
   return {
     title: project.title,
     description: project.summary,
@@ -60,7 +62,7 @@ export default async function ProjectDetailPage({
   const dict = await getDictionary(lang);
   const session = await auth();
 
-  const project = await prisma.project.findUnique({
+  const projectRaw = await prisma.project.findUnique({
     where: { slug: params.slug },
     include: {
       images: { orderBy: { order: "asc" } },
@@ -78,12 +80,14 @@ export default async function ProjectDetailPage({
     },
   });
 
-  const isOwner = !!session && session.user.id === project?.ownerId;
+  const isOwner = !!session && session.user.id === projectRaw?.ownerId;
   const isAdmin = session?.user.role === "ADMIN";
 
-  if (!project || (project.status !== "PUBLISHED" && !isOwner && !isAdmin)) {
+  if (!projectRaw || (projectRaw.status !== "PUBLISHED" && !isOwner && !isAdmin)) {
     notFound();
   }
+
+  const project = localized(projectRaw, lang);
 
   // Fire-and-forget view counter (skip the owner's own visits).
   if (!isOwner) {
@@ -116,19 +120,22 @@ export default async function ProjectDetailPage({
       }))
     : false;
 
-  const similar = await prisma.project.findMany({
-    where: {
-      status: "PUBLISHED",
-      id: { not: project.id },
-      OR: [{ category: project.category }, { countryCode: project.countryCode }],
-    },
-    include: {
-      images: { orderBy: { order: "asc" } },
-      owner: { select: { role: true } },
-    },
-    orderBy: { views: "desc" },
-    take: 3,
-  });
+  const similar = localizedAll(
+    await prisma.project.findMany({
+      where: {
+        status: "PUBLISHED",
+        id: { not: project.id },
+        OR: [{ category: project.category }, { countryCode: project.countryCode }],
+      },
+      include: {
+        images: { orderBy: { order: "asc" } },
+        owner: { select: { role: true } },
+      },
+      orderBy: { views: "desc" },
+      take: 3,
+    }),
+    lang
+  );
 
   const techRows = [
     { label: dict.project.capacity, value: project.capacity },

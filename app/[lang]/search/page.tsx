@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { INSIGHTS } from "@/lib/insights";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { CommodityCard } from "@/components/commodities/CommodityCard";
@@ -31,7 +32,7 @@ export default async function SearchPage({
   const q = (searchParams.q ?? "").trim();
   const l = lang === "es" ? "es" : "en";
 
-  const [projects, commodities, mandates] = q
+  const [projectsRaw, commoditiesRaw, mandatesRaw] = q
     ? await Promise.all([
         prisma.project.findMany({
           where: {
@@ -41,6 +42,7 @@ export default async function SearchPage({
               { summary: { contains: q } },
               { country: { contains: q } },
               { city: { contains: q } },
+              { translations: { contains: q } },
             ],
           },
           include: {
@@ -56,6 +58,7 @@ export default async function SearchPage({
               { title: { contains: q } },
               { description: { contains: q } },
               { commodity: { contains: q.toLowerCase().replace(/ /g, "_") } },
+              { translations: { contains: q } },
             ],
           },
           take: 6,
@@ -64,13 +67,21 @@ export default async function SearchPage({
           where: {
             status: "PUBLISHED",
             isPublic: true,
-            OR: [{ title: { contains: q } }, { description: { contains: q } }],
+            OR: [
+              { title: { contains: q } },
+              { description: { contains: q } },
+              { translations: { contains: q } },
+            ],
           },
           include: { investor: { select: { name: true, company: true } } },
           take: 6,
         }),
       ])
     : [[], [], []];
+
+  const projects = localizedAll(projectsRaw, lang);
+  const commodities = localizedAll(commoditiesRaw, lang);
+  const mandates = localizedAll(mandatesRaw, lang);
 
   const insights = q
     ? INSIGHTS.filter(

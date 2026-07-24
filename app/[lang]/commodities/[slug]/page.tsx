@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized, localizedAll } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import { formatDate, parseSpecs } from "@/lib/utils";
 import { Badge, Card, VerifiedBadge } from "@/components/ui";
@@ -18,10 +19,11 @@ export async function generateMetadata({
 }: {
   params: { lang: string; slug: string };
 }): Promise<Metadata> {
-  const listing = await prisma.commodityListing.findUnique({
+  const found = await prisma.commodityListing.findUnique({
     where: { slug: params.slug },
   });
-  if (!listing) return {};
+  if (!found) return {};
+  const listing = localized(found, isLocale(params.lang) ? params.lang : defaultLocale);
   return { title: listing.title, description: listing.description.slice(0, 160) };
 }
 
@@ -37,7 +39,7 @@ export default async function CommodityDetailPage({
   const c = dict.commodities;
   const session = await auth();
 
-  const listing = await prisma.commodityListing.findUnique({
+  const listingRaw = await prisma.commodityListing.findUnique({
     where: { slug: params.slug },
     include: {
       owner: {
@@ -52,11 +54,13 @@ export default async function CommodityDetailPage({
     },
   });
 
-  const isOwner = !!session && session.user.id === listing?.ownerId;
+  const isOwner = !!session && session.user.id === listingRaw?.ownerId;
   const isAdmin = session?.user.role === "ADMIN";
-  if (!listing || (listing.status !== "PUBLISHED" && !isOwner && !isAdmin)) {
+  if (!listingRaw || (listingRaw.status !== "PUBLISHED" && !isOwner && !isAdmin)) {
     notFound();
   }
+
+  const listing = localized(listingRaw, lang);
 
   if (!isOwner) {
     prisma.commodityListing
@@ -86,14 +90,17 @@ export default async function CommodityDetailPage({
           }))
         : false;
 
-  const similar = await prisma.commodityListing.findMany({
-    where: {
-      status: "PUBLISHED",
-      id: { not: listing.id },
-      commodity: listing.commodity,
-    },
-    take: 3,
-  });
+  const similar = localizedAll(
+    await prisma.commodityListing.findMany({
+      where: {
+        status: "PUBLISHED",
+        id: { not: listing.id },
+        commodity: listing.commodity,
+      },
+      take: 3,
+    }),
+    lang
+  );
 
   const isSell = listing.side === "SELL";
   const facts = [

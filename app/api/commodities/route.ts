@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/api-helpers";
 import { commodityInputSchema } from "@/lib/commodity-schema";
+import { withTranslation } from "@/lib/l10n";
 import { slugify } from "@/lib/utils";
 
 async function uniqueSlug(title: string): Promise<string> {
@@ -46,6 +47,7 @@ export async function POST(req: Request) {
       priceDetails: d.priceDetails || null,
       validUntil: d.validUntil ? new Date(d.validUntil) : null,
       documents: JSON.stringify(d.documents),
+      translations: withTranslation(null, "es", { description: d.descriptionEs }),
       status: d.action === "submit" ? "IN_REVIEW" : "DRAFT",
       ownerId: session!.user.id,
     },

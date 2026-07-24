@@ -44,8 +44,8 @@ export default async function DashboardLayout({
 
   return (
     <div className="bg-navy-50/50">
-      <div className="container-site grid gap-8 py-10 lg:grid-cols-[230px_1fr]">
-        <aside>
+      <div className="container-site grid grid-cols-1 gap-8 py-10 lg:grid-cols-[230px_1fr]">
+        <aside className="min-w-0">
           <div className="rounded-xl border border-navy-100 bg-white p-3 shadow-card lg:sticky lg:top-24">
             <div className="border-b border-navy-100 px-3 pb-3 pt-1">
               <p className="truncate text-sm font-bold text-navy-950">

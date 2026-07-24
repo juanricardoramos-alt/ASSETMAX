@@ -3,8 +3,21 @@ const en = {
     name: "ASSETMAX Global",
     tagline: "The global marketplace for industrial assets & megaprojects",
   },
+  pwa: {
+    installTitle: "Install ASSETMAX",
+    installText: "Add the app to your home screen for fast, full-screen access.",
+    installCta: "Install",
+    later: "Not now",
+    iosHint: "In Safari, tap Share and choose “Add to Home Screen”.",
+  },
   nav: {
-    explore: "Explore Opportunities",
+    explore: "Projects",
+    solutions: "Solutions",
+    solutionsMenu: {
+      sellersDesc: "List and sell industrial assets",
+      investorsDesc: "Source vetted opportunities",
+      howDesc: "The process, step by step",
+    },
     forSellers: "For Sellers",
     forInvestors: "For Investors",
     howItWorks: "How It Works",
@@ -427,9 +440,17 @@ const en = {
       summary: "Executive summary",
       summaryPlaceholder:
         "One or two sentences that will appear on the project card…",
-      description: "Full description",
+      description: "Full description (English)",
       descriptionPlaceholder:
         "Describe the asset, its history, market position and the rationale for the transaction…",
+      descriptionEs: "Full description (Spanish)",
+      descriptionEsPlaceholder:
+        "Spanish version shown to Spanish-speaking investors. Write it yourself or generate it with AI from the English text…",
+      translateCta: "Translate with AI",
+      translating: "Translating…",
+      translateNote: "AI translation — review and edit before publishing.",
+      translateError: "Translation failed. Please try again or write it manually.",
+      optionalTag: "optional",
     },
     catLoc: {
       category: "Category",
@@ -835,7 +856,8 @@ const en = {
       commodity: "Commodity",
       title: "Listing title",
       titlePlaceholder: "e.g. Grade A Copper Cathodes — 2,000 t/month, FOB Antofagasta",
-      description: "Description",
+      description: "Description (English)",
+      descriptionEs: "Description (Spanish)",
       volume: "Volume & frequency",
       volumePlaceholder: "e.g. 2,000 t/month",
       periodicity: "Periodicity",

@@ -125,6 +125,9 @@ model Project {
   // JSON-encoded string arrays / objects (portable across SQLite & Postgres)
   highlights      String    @default("[]")
   specs           String    @default("[]")
+  // Per-locale content overrides, JSON keyed by locale (e.g. {"es": {"summary": …}}).
+  // Missing keys fall back to the base (English) columns at render time.
+  translations    String    @default("{}")
   views           Int       @default(0)
   rejectionReason String?
   publishedAt     DateTime?
@@ -272,6 +275,8 @@ model Mandate {
   equityMin       Float?
   equityMax       Float?
   conditions      String?
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations    String   @default("{}")
   isPublic        Boolean  @default(true)
   status          String   @default("IN_REVIEW")
   rejectionReason String?
@@ -321,6 +326,8 @@ model CommodityListing {
   priceDetails     String?
   validUntil       DateTime?
   documents        String    @default("[]")
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations     String    @default("{}")
   status           String    @default("IN_REVIEW")
   verified         Boolean   @default(false)
   rejectionReason  String?

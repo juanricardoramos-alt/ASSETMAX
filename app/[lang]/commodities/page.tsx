@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { CommodityCard } from "@/components/commodities/CommodityCard";
 import { CommodityFilters } from "@/components/commodities/CommodityFilters";
 import { MarketRefsBar } from "@/components/commodities/MarketRefsBar";
@@ -47,10 +48,13 @@ export default async function CommoditiesPage({
     ];
   }
 
-  const listings = await prisma.commodityListing.findMany({
-    where,
-    orderBy: [{ verified: "desc" }, { createdAt: "desc" }],
-  });
+  const listings = localizedAll(
+    await prisma.commodityListing.findMany({
+      where,
+      orderBy: [{ verified: "desc" }, { createdAt: "desc" }],
+    }),
+    lang
+  );
 
   return (
     <div className="bg-navy-50/40">

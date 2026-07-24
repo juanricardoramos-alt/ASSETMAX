@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { PROJECT_ES, MANDATE_ES, COMMODITY_ES } from "./seed-i18n-es";
 
 const prisma = new PrismaClient();
 
 const PASSWORD = "assetmax123";
+
+// Serialize a per-locale Spanish override for the `translations` column.
+const esTranslations = (es: unknown) => JSON.stringify(es ? { es } : {});
 
 type SeedProject = {
   slug: string;
@@ -849,11 +853,12 @@ async function main() {
     const { images, documents, owner, highlights, specs, ...rest } = p;
     const created = await prisma.project.upsert({
       where: { slug: p.slug },
-      update: {},
+      update: { translations: esTranslations(PROJECT_ES[p.slug]) },
       create: {
         ...rest,
         highlights: JSON.stringify(highlights),
         specs: JSON.stringify(specs),
+        translations: esTranslations(PROJECT_ES[p.slug]),
         status: "PUBLISHED",
         publishedAt: new Date(Date.now() - Math.floor(Math.random() * 90) * 86_400_000),
         ownerId: owners[owner].id,
@@ -869,9 +874,12 @@ async function main() {
   // One project pending review (for the admin queue demo)
   await prisma.project.upsert({
     where: { slug: "patagonia-wind-farm-repowering" },
-    update: {},
+    update: {
+      translations: esTranslations(PROJECT_ES["patagonia-wind-farm-repowering"]),
+    },
     create: {
       slug: "patagonia-wind-farm-repowering",
+      translations: esTranslations(PROJECT_ES["patagonia-wind-farm-repowering"]),
       title: "Patagonia Wind Farm Repowering",
       summary:
         "Repowering of an existing 48 MW wind farm in Argentine Patagonia to 120 MW with new-generation turbines.",
@@ -1417,11 +1425,12 @@ async function main() {
     const { images, documents, owner, highlights, specs, ...rest } = p;
     await prisma.project.upsert({
       where: { slug: p.slug },
-      update: {},
+      update: { translations: esTranslations(PROJECT_ES[p.slug]) },
       create: {
         ...rest,
         highlights: JSON.stringify(highlights),
         specs: JSON.stringify(specs),
+        translations: esTranslations(PROJECT_ES[p.slug]),
         status: "PUBLISHED",
         publishedAt: new Date(Date.now() - Math.floor(Math.random() * 90) * 86_400_000),
         ownerId: owners[owner].id,
@@ -1551,13 +1560,14 @@ async function main() {
     const { categories, countries, stages, dealTypes, ...rest } = m;
     await prisma.mandate.upsert({
       where: { slug: m.slug },
-      update: {},
+      update: { translations: esTranslations(MANDATE_ES[m.slug]) },
       create: {
         ...rest,
         categories: JSON.stringify(categories),
         countries: JSON.stringify(countries),
         stages: JSON.stringify(stages),
         dealTypes: JSON.stringify(dealTypes),
+        translations: esTranslations(MANDATE_ES[m.slug]),
         status: "PUBLISHED",
       },
     });
@@ -1928,11 +1938,12 @@ async function main() {
     const { specs, documents, ...rest } = l;
     await prisma.commodityListing.upsert({
       where: { slug: l.slug },
-      update: {},
+      update: { translations: esTranslations(COMMODITY_ES[l.slug]) },
       create: {
         ...rest,
         specs: JSON.stringify(specs),
         documents: JSON.stringify(documents),
+        translations: esTranslations(COMMODITY_ES[l.slug]),
         status: "PUBLISHED",
       },
     });

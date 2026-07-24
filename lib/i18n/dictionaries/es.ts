@@ -5,8 +5,21 @@ const es: Dictionary = {
     name: "ASSETMAX Global",
     tagline: "El marketplace global de activos industriales y megaproyectos",
   },
+  pwa: {
+    installTitle: "Instala ASSETMAX",
+    installText: "Agrega la app a tu pantalla de inicio para un acceso rápido y a pantalla completa.",
+    installCta: "Instalar",
+    later: "Ahora no",
+    iosHint: "En Safari, toca Compartir y elige “Agregar a pantalla de inicio”.",
+  },
   nav: {
-    explore: "Explorar Oportunidades",
+    explore: "Proyectos",
+    solutions: "Soluciones",
+    solutionsMenu: {
+      sellersDesc: "Publica y vende activos industriales",
+      investorsDesc: "Accede a oportunidades verificadas",
+      howDesc: "El proceso, paso a paso",
+    },
     forSellers: "Para Vendedores",
     forInvestors: "Para Inversionistas",
     howItWorks: "Cómo Funciona",
@@ -438,9 +451,17 @@ const es: Dictionary = {
       summary: "Resumen ejecutivo",
       summaryPlaceholder:
         "Una o dos frases que aparecerán en la tarjeta del proyecto…",
-      description: "Descripción completa",
+      description: "Descripción completa (Inglés)",
       descriptionPlaceholder:
         "Describe el activo, su historia, posición de mercado y la razón de la transacción…",
+      descriptionEs: "Descripción completa (Español)",
+      descriptionEsPlaceholder:
+        "Versión en español que verán los inversionistas hispanohablantes. Escríbela tú o genérala con IA desde el texto en inglés…",
+      translateCta: "Traducir con IA",
+      translating: "Traduciendo…",
+      translateNote: "Traducción automática — revísala y edítala antes de publicar.",
+      translateError: "La traducción falló. Intenta de nuevo o escríbela manualmente.",
+      optionalTag: "opcional",
     },
     catLoc: {
       category: "Categoría",
@@ -847,7 +868,8 @@ const es: Dictionary = {
       commodity: "Commodity",
       title: "Título de la publicación",
       titlePlaceholder: "ej. Cátodos de Cobre Grado A — 2.000 t/mes, FOB Antofagasta",
-      description: "Descripción",
+      description: "Descripción (Inglés)",
+      descriptionEs: "Descripción (Español)",
       volume: "Volumen y frecuencia",
       volumePlaceholder: "ej. 2.000 t/mes",
       periodicity: "Periodicidad",

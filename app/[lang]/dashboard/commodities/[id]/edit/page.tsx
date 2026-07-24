@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { aiEnabled } from "@/lib/ai";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { translationField } from "@/lib/l10n";
 import { parseSpecs } from "@/lib/utils";
 import {
   CommodityForm,
@@ -39,6 +40,7 @@ export default async function EditCommodityPage({
     commodity: listing.commodity,
     title: listing.title,
     description: listing.description,
+    descriptionEs: translationField(listing.translations, "es", "description"),
     specs: parseSpecs(listing.specs),
     volume: listing.volume,
     periodicity: listing.periodicity,

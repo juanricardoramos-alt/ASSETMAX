@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { MandateCard } from "@/components/mandates/MandateCard";
 import { ButtonLink } from "@/components/ui";
 import { IconArrowRight } from "@/components/icons";
@@ -22,11 +23,14 @@ export default async function MandatesPage({
   const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
   const dict = await getDictionary(lang);
 
-  const mandates = await prisma.mandate.findMany({
-    where: { status: "PUBLISHED", isPublic: true },
-    include: { investor: { select: { name: true, company: true } } },
-    orderBy: { createdAt: "desc" },
-  });
+  const mandates = localizedAll(
+    await prisma.mandate.findMany({
+      where: { status: "PUBLISHED", isPublic: true },
+      include: { investor: { select: { name: true, company: true } } },
+      orderBy: { createdAt: "desc" },
+    }),
+    lang
+  );
 
   return (
     <div className="bg-navy-50/40">

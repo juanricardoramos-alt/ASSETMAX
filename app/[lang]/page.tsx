@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { CATEGORIES, countryName } from "@/lib/constants";
 import { INSIGHTS } from "@/lib/insights";
 import { formatDate } from "@/lib/utils";
@@ -31,7 +32,7 @@ export default async function HomePage({
   const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
   const dict = await getDictionary(lang);
 
-  const [featured, published, categoryCounts] = await Promise.all([
+  const [featuredRaw, published, categoryCounts] = await Promise.all([
     prisma.project.findMany({
       where: { status: "PUBLISHED", featured: true },
       include: { images: { orderBy: { order: "asc" } }, owner: { select: { role: true } } },
@@ -57,6 +58,8 @@ export default async function HomePage({
       _count: true,
     }),
   ]);
+
+  const featured = localizedAll(featuredRaw, lang);
 
   const countByCategory = Object.fromEntries(
     categoryCounts.map((c) => [c.category, c._count])
