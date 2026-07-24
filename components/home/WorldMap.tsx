@@ -57,7 +57,7 @@ export function WorldMap({
       >
         <defs>
           <radialGradient id="mapGlow" cx="50%" cy="42%" r="65%">
-            <stop offset="0%" stopColor="#16305F" stopOpacity="0.9" />
+            <stop offset="0%" stopColor="#1B2D4C" stopOpacity="0.9" />
             <stop offset="100%" stopColor="#0A1426" stopOpacity="0" />
           </radialGradient>
           <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="0">

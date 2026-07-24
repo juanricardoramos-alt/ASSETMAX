@@ -98,7 +98,7 @@ export default async function CommoditiesPage({
             </div>
           )}
 
-          <p className="mt-8 rounded-xl border border-navy-200 bg-white px-5 py-4 text-xs leading-relaxed text-navy-500">
+          <p className="mt-8 rounded-xl border border-navy-100 bg-white px-5 py-4 text-xs leading-relaxed text-navy-500">
             {c.disclaimer}
           </p>
         </div>

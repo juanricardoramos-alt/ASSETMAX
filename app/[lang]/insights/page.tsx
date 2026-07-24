@@ -27,12 +27,12 @@ export default async function InsightsPage({
 
   return (
     <div className="bg-navy-50/40">
-      <div className="border-b border-navy-100 bg-navy-950 py-14">
+      <div className="border-b border-navy-100 bg-navy-950 py-12">
         <div className="container-site max-w-3xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">
             {dict.insights.kicker}
           </p>
-          <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-white">
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             {dict.insights.title}
           </h1>
           <p className="mt-3 text-navy-200">{dict.insights.subtitle}</p>

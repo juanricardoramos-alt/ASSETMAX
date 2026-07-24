@@ -17,9 +17,9 @@ export function AudiencePage({
 }) {
   return (
     <div>
-      <div className="bg-navy-950 py-16">
+      <div className="border-b border-navy-100 bg-navy-950 py-16">
         <div className="container-site max-w-3xl">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white">{title}</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{title}</h1>
           <p className="mt-5 text-lg leading-relaxed text-navy-200">{intro}</p>
           <ButtonLink href={ctaHref} variant="gold" size="lg" className="mt-8">
             {ctaLabel}

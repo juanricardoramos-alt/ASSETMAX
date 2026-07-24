@@ -265,7 +265,7 @@ export function ProjectWizard({
       setSubmitted(true);
       window.dispatchEvent(new Event("vorta:celebrate"));
     } else {
-      setError(`${w.review.missing}: ${dict.common.error}`);
+      setError(dict.common.error);
     }
   }
 
@@ -283,7 +283,7 @@ export function ProjectWizard({
         </p>
         <Link
           href={`/${lang}/dashboard/projects`}
-          className="mt-7 inline-flex rounded-md bg-navy-900 px-5 py-2.5 text-sm font-bold text-white hover:bg-navy-800"
+          className="mt-7 inline-flex rounded-md bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-800"
         >
           {w.review.backToProjects}
         </Link>

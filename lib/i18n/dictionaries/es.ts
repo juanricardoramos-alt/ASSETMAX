@@ -64,7 +64,7 @@ const es: Dictionary = {
       "Un borrador profesional en minutos: elige la plantilla, completa lo básico y descarga tu PDF. Todo documento va marcado BORRADOR — valídalo con tu abogado antes de firmar.",
     disclaimer:
       "VORTAMAX Global no presta asesoría legal. Los documentos son borradores de negociación y deben ser revisados por abogados de la jurisdicción aplicable antes de la firma.",
-    useCta: "Usar esta plantilla",
+    useCta: "Usar esta Plantilla",
     steps: ["Plantilla", "Datos", "Borrador"],
     kinds: {
       INTERMEDIATION: {
@@ -122,10 +122,12 @@ const es: Dictionary = {
       termMonths: "Vigencia (meses)",
       exclusivityMonths: "Exclusividad (meses)",
       commodity: "Commodity",
+      commodityPlaceholder: "ej. Cátodos de cobre Grado A",
       volume: "Volumen",
       incoterm: "Incoterm",
       priceDetails: "Condiciones de precio",
-      generate: "Generar borrador",
+      priceDetailsPlaceholder: "ej. Base LME menos 45 USD/t",
+      generate: "Generar Borrador",
       generating: "Generando tu borrador…",
       intermediaryNote:
         "En esta plantilla la contraparte es VORTAMAX Global (la plataforma).",
@@ -137,7 +139,7 @@ const es: Dictionary = {
       generatedNote: "Generado con la biblioteca de contratos de VORTAMAX",
     },
     myTitle: "Mis documentos generados",
-    newCta: "Nuevo documento",
+    newCta: "Nuevo Documento",
     empty: "Aún no has generado documentos.",
     adminTitle: "Documentos generados",
     adminEmpty: "Todavía no se han generado documentos.",
@@ -315,12 +317,12 @@ const es: Dictionary = {
         text: "Envía expresiones de interés u ofertas vinculantes directamente a los dueños — adquisiciones, participaciones, deuda o JVs.",
       },
     ],
-    statsTitle: "La plataforma en cifras",
+    statsTitle: "La Plataforma en Cifras",
     statProjects: "Proyectos publicados",
     statCountries: "Países",
     statPipeline: "Pipeline combinado",
     statCategories: "Clases de activos",
-    testimonialsTitle: "Lo que dicen nuestros clientes",
+    testimonialsTitle: "Lo que Dicen Nuestros Clientes",
     testimonials: [
       {
         quote:
@@ -330,7 +332,7 @@ const es: Dictionary = {
       },
       {
         quote:
-          "El proceso de verificación y el estándar de los data rooms fue lo que convenció a nuestro comité de inversión. Se siente institucional.",
+          "El proceso de verificación y el estándar de los data rooms fueron lo que convenció a nuestro comité de inversión. Se siente institucional.",
         author: "Managing Director, Fondo de Infraestructura",
         location: "Madrid, España",
       },
@@ -341,7 +343,7 @@ const es: Dictionary = {
         location: "Perth, Australia",
       },
     ],
-    partnersTitle: "Con la confianza de líderes de la industria",
+    partnersTitle: "Con la Confianza de Líderes de la Industria",
     ctaTitle: "¿Listo para mover tu activo — o tu capital?",
     ctaSubtitle:
       "Únete a una red global de dueños de activos, desarrolladores e inversionistas institucionales.",
@@ -366,11 +368,11 @@ const es: Dictionary = {
     noResultsHint: "Intenta ampliar los filtros o limpiarlos por completo.",
     searchPlaceholder: "Buscar proyectos…",
     investmentRanges: {
-      u10: "Menos de $10M",
-      "10-50": "$10M – $50M",
-      "50-100": "$50M – $100M",
-      "100-500": "$100M – $500M",
-      "500p": "$500M+",
+      u10: "Menos de USD 10M",
+      "10-50": "USD 10M–50M",
+      "50-100": "USD 50M–100M",
+      "100-500": "USD 100M–500M",
+      "500p": "USD 500M+",
     },
   },
   project: {
@@ -407,7 +409,7 @@ const es: Dictionary = {
     similar: "Oportunidades Similares",
     signInToAct:
       "Inicia sesión como inversionista para solicitar información o enviar ofertas.",
-    downloadNote: "Documento de muestra — placeholder para la demo",
+    downloadNote: "Documento de muestra para fines de demostración",
     nda: {
       title: "Acuerdo de Confidencialidad (NDA)",
       intro:
@@ -474,7 +476,7 @@ const es: Dictionary = {
   },
   dashboard: {
     overview: "Resumen",
-    welcome: "Bienvenido",
+    welcome: "Hola de nuevo",
     myProjects: "Mis Proyectos",
     newProject: "Nuevo Proyecto",
     favorites: "Favoritos",
@@ -482,7 +484,7 @@ const es: Dictionary = {
     offersReceived: "Ofertas Recibidas",
     offersSent: "Mis Ofertas",
     messages: "Mensajes",
-    partnerPanel: "Panel de Socio",
+    partnerPanel: "Panel de Founding Partner",
     adminPanel: "Admin",
     verificationQueue: "Cola de Verificación",
     users: "Usuarios",
@@ -507,7 +509,7 @@ const es: Dictionary = {
     emptyProjectsCta: "Crea tu primera publicación",
     emptyFavorites: "Aún no has guardado proyectos.",
     emptyFavoritesCta: "Explorar oportunidades",
-    emptyOffers: "Sin ofertas por ahora.",
+    emptyOffers: "Sin ofertas por ahora. Aparecerán aquí cuando los inversionistas respondan a tus publicaciones.",
     emptyAlerts:
       "Sin alertas guardadas. Crea una para enterarte de nuevos proyectos que coincidan.",
     emptyMessages: "Aún no hay conversaciones.",
@@ -522,7 +524,7 @@ const es: Dictionary = {
     amount: "Monto",
     accept: "Aceptar",
     decline: "Rechazar",
-    markInDiscussion: "Pasar a conversación",
+    markInDiscussion: "Pasar a Conversación",
     withdraw: "Retirar",
     reply: "Responder",
     newAlert: {
@@ -589,7 +591,7 @@ const es: Dictionary = {
         "Versión en español que verán los inversionistas hispanohablantes. Escríbela tú o genérala con IA desde el texto en inglés…",
       translateCta: "Traducir con IA",
       translating: "Traduciendo…",
-      translateNote: "Traducción automática — revísala y edítala antes de publicar.",
+      translateNote: "Traducción con IA — revísala y edítala antes de publicar.",
       translateError: "La traducción falló. Intenta de nuevo o escríbela manualmente.",
       optionalTag: "opcional",
     },
@@ -811,20 +813,20 @@ const es: Dictionary = {
   ai: {
     poweredBy: "Con IA",
     disabledNote:
-      "Las funciones de IA no están configuradas en este despliegue (falta ANTHROPIC_API_KEY). El flujo manual sigue disponible.",
+      "Las funciones de IA no están disponibles en este despliegue. El flujo manual sigue disponible.",
     wizard: {
       chooseTitle: "¿Cómo quieres crear tu publicación?",
       manualTitle: "Completar el formulario manualmente",
       manualText: "Completa tú mismo el asistente guiado paso a paso.",
       uploadTitle: "Subir documentación existente",
       uploadText:
-        "Sube un informe técnico, memorando de información o presentación (PDF, Word, Excel) y nuestra IA pre-llena la publicación para tu revisión.",
+        "Sube un informe técnico, memorando de información o presentación (PDF, Word, Excel) y nuestra IA prellena la publicación para tu revisión.",
       uploadCta: "Extraer con IA",
       fileLabel: "Documento — PDF, DOCX, XLSX o TXT, máx 8 MB",
       processing: "Analizando documento… puede tardar hasta un minuto.",
       extractedTitle: "Documento procesado",
       extractedText:
-        "El asistente fue pre-llenado desde tu documento. Revisa y corrige cada campo antes de enviar — nada se publica sin verificación del admin.",
+        "El asistente fue prellenado desde tu documento. Revisa y corrige cada campo antes de enviar — nada se publica sin la verificación de nuestro equipo.",
       missingTitle: "No encontrado en el documento",
       publicSuggestTitle: "Sugeridos como documentos públicos",
       confidentialSuggestTitle: "Sugeridos para el data room (NDA)",
@@ -849,7 +851,7 @@ const es: Dictionary = {
     navLabel: "Mandatos",
     title: "Mandatos de Inversión",
     subtitle:
-      "Requerimientos activos de fondos y empresas. Pon tu activo frente a capital que ya lo está buscando.",
+      "Requerimientos de compra activos de fondos y empresas. Pon tu activo frente a capital que ya lo está buscando.",
     postCta: "Publica tu Mandato de Inversión",
     newTitle: "Nuevo Mandato de Inversión",
     editTitle: "Editar Mandato",

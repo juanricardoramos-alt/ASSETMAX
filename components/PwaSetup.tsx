@@ -97,7 +97,7 @@ export function PwaSetup({ dict }: { dict: Dictionary }) {
             {!ios && (
               <button
                 onClick={install}
-                className="rounded-md bg-gold-500 px-3.5 py-1.5 text-xs font-bold text-navy-950 transition hover:bg-gold-400"
+                className="rounded-md bg-gold-500 px-3 py-1.5 text-xs font-semibold text-navy-950 transition hover:bg-gold-400"
               >
                 {dict.pwa.installCta}
               </button>

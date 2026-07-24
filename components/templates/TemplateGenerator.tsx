@@ -358,7 +358,7 @@ export function TemplateGenerator({
                     id="tg-commodity"
                     value={d.commodity}
                     onChange={(e) => set({ commodity: e.target.value, assetTitle: e.target.value })}
-                    placeholder="Copper cathodes Grade A"
+                    placeholder={t.form.commodityPlaceholder}
                   />
                 </div>
                 <div>
@@ -390,7 +390,7 @@ export function TemplateGenerator({
                     id="tg-price"
                     value={d.priceDetails}
                     onChange={(e) => set({ priceDetails: e.target.value })}
-                    placeholder="LME basis minus 45 USD/t"
+                    placeholder={t.form.priceDetailsPlaceholder}
                   />
                 </div>
               </>

@@ -98,10 +98,10 @@ export default async function SearchPage({
     <div className="bg-navy-50/40 pb-20">
       <div className="border-b border-navy-100 bg-navy-950 py-12">
         <div className="container-site max-w-2xl">
-          <h1 className="font-display text-3xl font-bold text-white">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             {dict.search.title}
           </h1>
-          <form action={`/${lang}/search`} className="mt-5 flex overflow-hidden rounded-lg bg-white shadow-card-hover">
+          <form action={`/${lang}/search`} className="mt-5 flex overflow-hidden rounded-lg bg-white shadow-card-hover transition focus-within:ring-2 focus-within:ring-gold-400">
             <div className="flex flex-1 items-center gap-2 pl-4">
               <IconSearch className="h-5 w-5 shrink-0 text-navy-400" />
               <input
@@ -114,7 +114,7 @@ export default async function SearchPage({
             </div>
             <button
               type="submit"
-              className="bg-gold-500 px-6 text-sm font-bold text-navy-950 transition hover:bg-gold-400"
+              className="bg-gold-500 px-6 text-sm font-semibold text-navy-950 transition hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-navy-800"
             >
               {dict.common.search}
             </button>
@@ -189,7 +189,7 @@ export default async function SearchPage({
                   <Badge className="bg-navy-50 text-navy-600 ring-1 ring-navy-200">
                     {a.category}
                   </Badge>
-                  <h3 className="mt-3 font-display text-base font-bold leading-snug text-navy-950 group-hover:text-navy-700">
+                  <h3 className="mt-3 font-display text-lg font-bold leading-snug text-navy-950 group-hover:text-navy-700">
                     {a[l].title}
                   </h3>
                   <p className="mt-2 text-xs text-navy-400">

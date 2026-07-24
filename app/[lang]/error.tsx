@@ -19,13 +19,13 @@ export default function ErrorPage({
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <button
           onClick={reset}
-          className="rounded-md bg-gold-500 px-6 py-3 text-sm font-bold text-navy-950 transition hover:bg-gold-400"
+          className="rounded-md bg-gold-500 px-6 py-3 text-base font-semibold text-navy-950 transition hover:bg-gold-400"
         >
           Try Again / Reintentar
         </button>
         <a
           href="/en"
-          className="rounded-md border border-white/30 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+          className="rounded-md border border-white/30 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
         >
           Home
         </a>

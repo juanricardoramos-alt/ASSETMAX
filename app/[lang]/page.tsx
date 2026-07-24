@@ -128,7 +128,7 @@ export default async function HomePage({
 
             <form
               action={`/${lang}/projects`}
-              className="mx-auto mt-9 flex max-w-2xl overflow-hidden rounded-lg bg-white shadow-card-hover"
+              className="mx-auto mt-9 flex max-w-2xl overflow-hidden rounded-lg bg-white shadow-card-hover transition focus-within:ring-2 focus-within:ring-gold-400"
             >
               <div className="flex flex-1 items-center gap-2 pl-4">
                 <IconSearch className="h-5 w-5 shrink-0 text-navy-400" />
@@ -141,7 +141,7 @@ export default async function HomePage({
               </div>
               <button
                 type="submit"
-                className="bg-gold-500 px-6 text-sm font-bold text-navy-950 transition hover:bg-gold-400"
+                className="bg-gold-500 px-6 text-sm font-semibold text-navy-950 transition hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-navy-800"
               >
                 {dict.home.searchCta}
               </button>
@@ -414,7 +414,7 @@ export default async function HomePage({
                       </Badge>
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <h3 className="font-display text-base font-bold leading-snug text-navy-950 group-hover:text-navy-700">
+                      <h3 className="font-display text-lg font-bold leading-snug text-navy-950 group-hover:text-navy-700">
                         {article[l].title}
                       </h3>
                       <p className="mt-2 line-clamp-2 flex-1 text-sm text-navy-500">

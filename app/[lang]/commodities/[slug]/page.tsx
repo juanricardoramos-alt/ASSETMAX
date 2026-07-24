@@ -206,7 +206,7 @@ export default async function CommodityDetailPage({
             </Card>
           )}
 
-          <p className="rounded-xl border border-navy-200 bg-white px-5 py-4 text-xs leading-relaxed text-navy-500">
+          <p className="rounded-xl border border-navy-100 bg-white px-5 py-4 text-xs leading-relaxed text-navy-500">
             {c.disclaimer}
           </p>
         </div>

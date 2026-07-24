@@ -15,7 +15,7 @@ export function StatCard({
         {label}
       </p>
       <p
-        className={`mt-1.5 text-2xl font-extrabold ${accent ? "text-gold-600" : "text-navy-950"}`}
+        className={`tabular mt-1.5 text-2xl font-extrabold ${accent ? "text-gold-600" : "text-navy-950"}`}
       >
         {value}
       </p>

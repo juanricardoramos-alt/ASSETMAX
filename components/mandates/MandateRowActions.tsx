@@ -28,14 +28,14 @@ export function MandateRowActions({
     <div className="flex items-center gap-2 text-xs font-semibold">
       <Link
         href={`/${lang}/dashboard/mandates/${mandateId}/edit`}
-        className="rounded-md border border-navy-200 px-2.5 py-1.5 text-navy-700 hover:bg-navy-50"
+        className="rounded-md border border-navy-200 px-3 py-1.5 text-navy-700 hover:bg-navy-50"
       >
         {labels.edit}
       </Link>
       <button
         onClick={remove}
         disabled={busy}
-        className="rounded-md border border-red-200 px-2.5 py-1.5 text-red-600 hover:bg-red-50 disabled:opacity-50"
+        className="rounded-md border border-red-200 px-3 py-1.5 text-red-600 hover:bg-red-50 disabled:opacity-50"
       >
         {labels.del}
       </button>

@@ -62,7 +62,7 @@ const en = {
       "A professional draft in minutes: pick a template, fill in the basics, download your PDF. Every document is marked DRAFT — validate with your lawyer before signing.",
     disclaimer:
       "VORTAMAX Global does not provide legal advice. Documents are negotiation drafts and must be reviewed by qualified counsel in the applicable jurisdiction before signature.",
-    useCta: "Use this template",
+    useCta: "Use This Template",
     steps: ["Template", "Details", "Draft"],
     kinds: {
       INTERMEDIATION: {
@@ -120,10 +120,12 @@ const en = {
       termMonths: "Term (months)",
       exclusivityMonths: "Exclusivity (months)",
       commodity: "Commodity",
+      commodityPlaceholder: "e.g. Copper cathodes Grade A",
       volume: "Volume",
       incoterm: "Incoterm",
       priceDetails: "Price terms",
-      generate: "Generate draft",
+      priceDetailsPlaceholder: "e.g. LME basis minus 45 USD/t",
+      generate: "Generate Draft",
       generating: "Generating your draft…",
       intermediaryNote:
         "On this template the counterparty is VORTAMAX Global (the platform).",
@@ -135,7 +137,7 @@ const en = {
       generatedNote: "Generated with the VORTAMAX template library",
     },
     myTitle: "My generated documents",
-    newCta: "New document",
+    newCta: "New Document",
     empty: "You haven't generated any documents yet.",
     adminTitle: "Generated documents",
     adminEmpty: "No documents have been generated yet.",
@@ -313,12 +315,12 @@ const en = {
         text: "Send expressions of interest or binding offers directly to asset owners — acquisitions, stakes, debt or JVs.",
       },
     ],
-    statsTitle: "The platform in numbers",
+    statsTitle: "The Platform in Numbers",
     statProjects: "Listed projects",
     statCountries: "Countries",
     statPipeline: "Combined pipeline",
     statCategories: "Asset classes",
-    testimonialsTitle: "What our clients say",
+    testimonialsTitle: "What Our Clients Say",
     testimonials: [
       {
         quote:
@@ -339,7 +341,7 @@ const en = {
         location: "Perth, Australia",
       },
     ],
-    partnersTitle: "Trusted by industry leaders",
+    partnersTitle: "Trusted by Industry Leaders",
     ctaTitle: "Ready to move your asset — or your capital?",
     ctaSubtitle:
       "Join a global network of asset owners, developers and institutional investors.",
@@ -365,9 +367,9 @@ const en = {
     searchPlaceholder: "Search projects…",
     investmentRanges: {
       u10: "Under $10M",
-      "10-50": "$10M – $50M",
-      "50-100": "$50M – $100M",
-      "100-500": "$100M – $500M",
+      "10-50": "$10M–$50M",
+      "50-100": "$50M–$100M",
+      "100-500": "$100M–$500M",
       "500p": "$500M+",
     },
   },
@@ -404,7 +406,7 @@ const en = {
     keyFacts: "Key Facts",
     similar: "Similar Opportunities",
     signInToAct: "Sign in as an investor to request information or submit offers.",
-    downloadNote: "Sample document — placeholder for demo purposes",
+    downloadNote: "Sample document for demonstration purposes",
     nda: {
       title: "Non-Disclosure Agreement",
       intro:
@@ -504,7 +506,7 @@ const en = {
     emptyProjectsCta: "Create your first listing",
     emptyFavorites: "You haven't saved any projects yet.",
     emptyFavoritesCta: "Explore opportunities",
-    emptyOffers: "No offers yet.",
+    emptyOffers: "No offers yet. They will appear here when investors respond to your listings.",
     emptyAlerts: "No saved alerts. Create one to get notified about new matching projects.",
     emptyMessages: "No conversations yet.",
     viewsLabel: "views",
@@ -518,7 +520,7 @@ const en = {
     amount: "Amount",
     accept: "Accept",
     decline: "Decline",
-    markInDiscussion: "Move to discussion",
+    markInDiscussion: "Move to Discussion",
     withdraw: "Withdraw",
     reply: "Reply",
     newAlert: {
@@ -799,7 +801,7 @@ const en = {
   ai: {
     poweredBy: "AI-powered",
     disabledNote:
-      "AI features are not configured on this deployment (ANTHROPIC_API_KEY missing). The manual flow remains fully available.",
+      "AI features are not available on this deployment. The manual flow remains fully available.",
     wizard: {
       chooseTitle: "How would you like to create your listing?",
       manualTitle: "Fill in the form manually",
@@ -812,7 +814,7 @@ const en = {
       processing: "Analyzing document… this can take up to a minute.",
       extractedTitle: "Document processed",
       extractedText:
-        "The wizard was pre-filled from your document. Review and correct every field before submitting — nothing is published without admin verification.",
+        "The wizard was pre-filled from your document. Review and correct every field before submitting — nothing is published without our team's verification.",
       missingTitle: "Not found in the document",
       publicSuggestTitle: "Suggested as public documents",
       confidentialSuggestTitle: "Suggested for the NDA data room",
@@ -1126,7 +1128,7 @@ const en = {
       {
         name: "Carolina Fuentes",
         role: "Head of Mining & Energy Assets",
-        bio: "Mining engineer and project financier. Led sell-side processes totalling over USD 2B in copper, lithium and renewables.",
+        bio: "Mining engineer and project financier. Led sell-side processes totaling over USD 2B in copper, lithium and renewables.",
       },
       {
         name: "James Whitmore",

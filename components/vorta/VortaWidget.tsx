@@ -234,7 +234,7 @@ export function VortaWidget({
                     "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
                     m.role === "user"
                       ? "rounded-br-md bg-navy-900 text-white"
-                      : "rounded-bl-md border border-navy-100 bg-white text-navy-800 shadow-sm"
+                      : "rounded-bl-md border border-navy-100 bg-white text-navy-800 shadow-card"
                   )}
                 >
                   {m.content.split("\n\n").map((p, j) => (
@@ -263,7 +263,7 @@ export function VortaWidget({
 
             {busy && (
               <div className="flex justify-start">
-                <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-md border border-navy-100 bg-white px-4 py-3 shadow-sm">
+                <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-md border border-navy-100 bg-white px-4 py-3 shadow-card">
                   {[0, 1, 2].map((i) => (
                     <span
                       key={i}

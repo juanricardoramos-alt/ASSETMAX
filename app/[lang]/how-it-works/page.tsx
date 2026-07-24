@@ -23,9 +23,9 @@ export default async function HowItWorksPage({
 
   return (
     <div>
-      <div className="bg-navy-950 py-16">
+      <div className="border-b border-navy-100 bg-navy-950 py-16">
         <div className="container-site max-w-3xl">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             {dict.pages.howItWorks.title}
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-navy-200">
