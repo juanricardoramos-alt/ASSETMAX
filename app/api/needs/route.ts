@@ -41,7 +41,9 @@ export async function POST(req: Request) {
       slug: await uniqueSlug(d.title),
       title: d.title,
       description: d.description,
-      category: d.category,
+      // EPC tenders are, by definition, EPC-category packages.
+      category: d.kind === "EPC_TENDER" ? "epc" : d.category,
+      kind: d.kind,
       companyId: company.id,
       countryCode: d.countryCode,
       country: countryName(d.countryCode, "en"),

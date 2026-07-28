@@ -107,6 +107,11 @@ export type SupplierCategory = (typeof SUPPLIER_CATEGORIES)[number];
 export const NEED_STATUSES = ["OPEN", "CLOSED"] as const;
 export type NeedStatus = (typeof NEED_STATUSES)[number];
 
+// STANDARD needs are reviewed privately; EPC_TENDER packages (turnkey EPC)
+// show their competing bids publicly on the tender page.
+export const NEED_KINDS = ["STANDARD", "EPC_TENDER"] as const;
+export type NeedKind = (typeof NEED_KINDS)[number];
+
 // Lifecycle of a supplier's application to a need (mirrors offer statuses so
 // the same badge styles and labels apply).
 export const APPLICATION_STATUSES = [

@@ -43,6 +43,10 @@ export async function PATCH(
       ...(d.title !== undefined && { title: d.title }),
       ...(d.description !== undefined && { description: d.description }),
       ...(d.category !== undefined && { category: d.category }),
+      ...(d.kind !== undefined && {
+        kind: d.kind,
+        ...(d.kind === "EPC_TENDER" && { category: "epc" }),
+      }),
       ...(d.countryCode !== undefined && {
         countryCode: d.countryCode,
         country: countryName(d.countryCode, "en"),

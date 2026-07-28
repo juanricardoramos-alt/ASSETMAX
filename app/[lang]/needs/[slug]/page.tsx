@@ -5,7 +5,12 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
 import { countryName } from "@/lib/constants";
-import { formatDate, formatInvestmentRange, parseJsonArray } from "@/lib/utils";
+import {
+  formatDate,
+  formatInvestmentRange,
+  formatUsdCompact,
+  parseJsonArray,
+} from "@/lib/utils";
 import { CompanyMonogram } from "@/components/company/CompanyMonogram";
 import {
   NeedApplyCard,
@@ -74,6 +79,25 @@ export default async function NeedDetailPage({
 
   const requirements = parseJsonArray(need.requirements);
 
+  // On EPC tenders the competing bids are public.
+  const bids =
+    need.kind === "EPC_TENDER"
+      ? await prisma.supplierApplication.findMany({
+          where: { needId: need.id, status: { not: "WITHDRAWN" } },
+          include: {
+            supplier: { select: { slug: true, name: true, category: true } },
+            consortium: {
+              include: {
+                members: {
+                  include: { supplier: { select: { name: true } } },
+                },
+              },
+            },
+          },
+          orderBy: { createdAt: "asc" },
+        })
+      : [];
+
   return (
     <div className="bg-navy-50/40">
       {/* Header */}
@@ -104,6 +128,11 @@ export default async function NeedDetailPage({
                 need.category as keyof typeof dict.supplierCategories
               ] ?? need.category}
             </Badge>
+            {need.kind === "EPC_TENDER" && (
+              <Badge className="bg-white text-navy-950">
+                {dict.tenders.badge}
+              </Badge>
+            )}
             <StatusBadge
               status={need.status}
               label={
@@ -150,6 +179,91 @@ export default async function NeedDetailPage({
                   </li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {/* Public bidders (EPC tenders only) */}
+          {need.kind === "EPC_TENDER" && (
+            <section>
+              <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+                <h2 className="text-xl font-extrabold tracking-tight text-navy-950">
+                  {dict.tenders.biddersTitle} ({bids.length})
+                </h2>
+                <p className="text-xs text-navy-400">
+                  {dict.tenders.publicBidsNote}
+                </p>
+              </div>
+              {bids.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-navy-200 bg-white p-10 text-center text-sm text-navy-500">
+                  {dict.tenders.noBidders}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {bids.map((b) => (
+                    <div
+                      key={b.id}
+                      className="rounded-xl border border-navy-100 bg-white p-5 shadow-card"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <CompanyMonogram
+                            name={b.consortium ? b.consortium.name : b.supplier.name}
+                          />
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              {b.consortium ? (
+                                <>
+                                  <span className="text-sm font-bold text-navy-950">
+                                    {b.consortium.name}
+                                  </span>
+                                  <Badge className="bg-navy-950 text-gold-400 ring-1 ring-gold-500/40">
+                                    {dict.consortiums.badge} ·{" "}
+                                    {b.consortium.members.length}
+                                  </Badge>
+                                </>
+                              ) : (
+                                <Link
+                                  href={`/${lang}/suppliers/${b.supplier.slug}`}
+                                  className="text-sm font-bold text-navy-950 hover:text-gold-600"
+                                >
+                                  {b.supplier.name}
+                                </Link>
+                              )}
+                              <StatusBadge
+                                status={b.status}
+                                label={
+                                  dict.offerStatuses[
+                                    b.status as keyof typeof dict.offerStatuses
+                                  ] ?? b.status
+                                }
+                              />
+                            </div>
+                            <p className="mt-0.5 text-xs text-navy-500">
+                              {b.consortium
+                                ? b.consortium.members
+                                    .map((m) => m.supplier.name)
+                                    .join(" · ")
+                                : (dict.supplierCategories[
+                                    b.supplier.category as keyof typeof dict.supplierCategories
+                                  ] ?? b.supplier.category)}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right text-sm">
+                          <p className="font-bold text-navy-900">
+                            {b.proposedBudget
+                              ? formatUsdCompact(b.proposedBudget)
+                              : "—"}
+                          </p>
+                          {b.leadTime && (
+                            <p className="text-xs text-navy-500">{b.leadTime}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
           )}
 

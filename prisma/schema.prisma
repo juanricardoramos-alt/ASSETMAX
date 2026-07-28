@@ -125,12 +125,15 @@ model CompanyProfile {
 // qualified supplier registry applies to.
 // category: supplier category key (SUPPLIER_CATEGORIES in lib/constants.ts)
 // status: OPEN | CLOSED
+// kind: STANDARD | EPC_TENDER — tenders are turnkey EPC packages whose
+// received bids are publicly visible on the tender page.
 model Need {
   id           String    @id @default(cuid())
   slug         String    @unique
   title        String
   description  String
   category     String
+  kind         String    @default("STANDARD")
   companyId    String
   country      String
   countryCode  String

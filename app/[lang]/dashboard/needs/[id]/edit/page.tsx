@@ -36,6 +36,7 @@ export default async function EditNeedPage({
           title: need.title,
           description: need.description,
           category: need.category,
+          kind: need.kind,
           countryCode: need.countryCode,
           city: need.city ?? "",
           budgetMin: need.budgetMin ? String(need.budgetMin) : "",

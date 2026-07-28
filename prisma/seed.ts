@@ -962,6 +962,7 @@ async function main() {
     title: string;
     description: string;
     category: string;
+    kind?: string;
     country: string;
     countryCode: string;
     city?: string;
@@ -998,6 +999,7 @@ async function main() {
       description:
         "Engineering, procurement and construction of three high-head pumping stations (12 MW installed each) including electrical rooms, surge protection and SCADA integration for a concentrate pipeline in Peru. Contract under FIDIC Yellow Book with milestone-based payments.",
       category: "epc",
+      kind: "EPC_TENDER",
       country: "Peru",
       countryCode: "PE",
       city: "Arequipa",
@@ -1143,6 +1145,27 @@ async function main() {
       ],
     },
     {
+      companySlug: "andrade-gutierrez",
+      slug: "ag-epc-crushing-conveyor",
+      title: "EPC turnkey — primary crushing & overland conveyor (2,800 t/h)",
+      description:
+        "Full EPC package for a 2,800 t/h primary crushing station and a 7.4 km overland conveyor serving an iron ore expansion in Minas Gerais: engineering, procurement, civil works, structural and electromechanical erection, commissioning and performance tests. Lump-sum turnkey with liquidated damages on schedule and throughput.",
+      category: "epc",
+      kind: "EPC_TENDER",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "Belo Horizonte",
+      budgetMin: 120_000_000,
+      budgetMax: 180_000_000,
+      deadline: "2026-12-01",
+      requirements: [
+        "Turnkey EPC references above USD 100M in mining",
+        "In-house structural & electromechanical erection capacity",
+        "Performance-test guarantees (throughput and availability)",
+        "ISO 9001 / ISO 45001 certified",
+      ],
+    },
+    {
       companySlug: "tlp-pipeline",
       slug: "tlp-geotech-survey-closed",
       title: "Geotechnical survey campaign — coastal section",
@@ -1165,12 +1188,14 @@ async function main() {
     if (!needCompany) continue;
     await prisma.need.upsert({
       where: { slug: n.slug },
-      update: {},
+      // Keep `kind` in sync when reseeding an existing database.
+      update: { kind: n.kind ?? "STANDARD" },
       create: {
         slug: n.slug,
         title: n.title,
         description: n.description,
         category: n.category,
+        kind: n.kind ?? "STANDARD",
         companyId: needCompany.id,
         country: n.country,
         countryCode: n.countryCode,
@@ -1453,6 +1478,15 @@ async function main() {
         "We currently operate 520 MW of PV in the region with certified HV crews and a 24/7 NOC. Our proposal covers preventive/corrective maintenance, robotic module cleaning and CMMS reporting with guaranteed response times.",
       proposedBudget: 7_800_000,
       leadTime: "Takeover in 60 days",
+      status: "PENDING",
+    },
+    {
+      needSlug: "ag-epc-crushing-conveyor",
+      supplierSlug: "skanor-epc",
+      message:
+        "Skanor proposes a lump-sum turnkey execution with engineering from our Madrid center, local civil and erection subcontracting under our direct supervision, and guaranteed performance tests at 2,800 t/h. Schedule: 26 months with early procurement of long-lead crusher and conveyor drives.",
+      proposedBudget: 152_000_000,
+      leadTime: "26-month turnkey program",
       status: "PENDING",
     },
     {

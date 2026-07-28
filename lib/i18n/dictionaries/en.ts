@@ -1062,6 +1062,31 @@ const en = {
     memberView: "You are part of this consortium's joint application.",
     noCandidates: "No other qualified suppliers available.",
   },
+  tenders: {
+    navLabel: "EPC Tenders",
+    title: "EPC Tenders",
+    subtitle:
+      "Turnkey Engineering, Procurement & Construction packages published by project owners. Major contractors — and consortia — compete to execute them.",
+    badge: "EPC Tender",
+    biddersTitle: "Bidders",
+    bidders: "bidders",
+    bidder: "bidder",
+    noBidders: "No bids submitted yet — be the first.",
+    scope: "Scope",
+    deadline: "Bid deadline",
+    budget: "Reference budget",
+    requirementsCount: "requirements",
+    viewTender: "View Tender",
+    empty: "No open EPC tenders at the moment.",
+    openTenders: "open tenders",
+    closedTenders: "Closed tenders",
+    formToggle: "Publish as EPC tender (turnkey)",
+    formToggleHint:
+      "The category is fixed to EPC Contractors and received bids become publicly visible on the tender page.",
+    bidLabel: "Bid",
+    publicBidsNote:
+      "Competing bids on EPC tenders are publicly visible to keep the process transparent.",
+  },
   matches: {
     title: "Matches",
     subtitle:

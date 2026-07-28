@@ -27,6 +27,7 @@ export async function SiteHeader({
   // Grouped under an "Ecosystem" dropdown on desktop; flat on mobile.
   const ecosystemLinks = [
     { href: `/${lang}/needs`, label: dict.needs.navLabel },
+    { href: `/${lang}/tenders`, label: dict.tenders.navLabel },
     { href: `/${lang}/companies`, label: dict.companies.navLabel },
     { href: `/${lang}/suppliers`, label: dict.suppliers.navLabel },
     { href: `/${lang}/matching`, label: dict.liveMatching.navLabel },

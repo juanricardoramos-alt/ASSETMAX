@@ -1075,6 +1075,31 @@ const es: Dictionary = {
     memberView: "Formas parte de la postulación conjunta de este consorcio.",
     noCandidates: "No hay otros proveedores calificados disponibles.",
   },
+  tenders: {
+    navLabel: "Licitaciones EPC",
+    title: "Licitaciones EPC",
+    subtitle:
+      "Paquetes llave en mano de Ingeniería, Procura y Construcción publicados por dueños de proyectos. Los grandes contratistas — y consorcios — compiten por ejecutarlos.",
+    badge: "Licitación EPC",
+    biddersTitle: "Postulantes",
+    bidders: "postulantes",
+    bidder: "postulante",
+    noBidders: "Aún no hay propuestas — sé el primero.",
+    scope: "Alcance",
+    deadline: "Cierre de propuestas",
+    budget: "Presupuesto referencial",
+    requirementsCount: "requisitos",
+    viewTender: "Ver Licitación",
+    empty: "No hay licitaciones EPC abiertas por el momento.",
+    openTenders: "licitaciones abiertas",
+    closedTenders: "Licitaciones cerradas",
+    formToggle: "Publicar como licitación EPC (llave en mano)",
+    formToggleHint:
+      "La categoría queda fija en Contratistas EPC y las propuestas recibidas se muestran públicamente en la página de la licitación.",
+    bidLabel: "Propuesta",
+    publicBidsNote:
+      "Las propuestas que compiten en licitaciones EPC son públicamente visibles para mantener el proceso transparente.",
+  },
   matches: {
     title: "Matches",
     subtitle:

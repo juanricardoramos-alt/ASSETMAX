@@ -11,6 +11,7 @@ export type NeedCardData = {
   title: string;
   description: string;
   category: string;
+  kind?: string;
   countryCode: string;
   city: string | null;
   budgetMin: number | null;
@@ -58,6 +59,11 @@ export function NeedCard({
             need.category as keyof typeof dict.supplierCategories
           ] ?? need.category}
         </Badge>
+        {need.kind === "EPC_TENDER" && (
+          <Badge className="bg-gold-500 text-navy-950">
+            {dict.tenders.badge}
+          </Badge>
+        )}
         {need.status === "CLOSED" && (
           <Badge className="bg-navy-100 text-navy-600">
             {dict.needStatuses.CLOSED}

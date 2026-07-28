@@ -10,6 +10,7 @@ export type NeedFormData = {
   title: string;
   description: string;
   category: string;
+  kind: string;
   countryCode: string;
   city: string;
   budgetMin: string;
@@ -41,6 +42,7 @@ export function NeedForm({
       title: "",
       description: "",
       category: SUPPLIER_CATEGORIES[0],
+      kind: "STANDARD",
       countryCode: COUNTRIES[0].code,
       city: "",
       budgetMin: "",
@@ -65,7 +67,8 @@ export function NeedForm({
       body: JSON.stringify({
         title: data.title,
         description: data.description,
-        category: data.category,
+        category: data.kind === "EPC_TENDER" ? "epc" : data.category,
+        kind: data.kind,
         countryCode: data.countryCode,
         city: data.city,
         budgetMin: num(data.budgetMin),
@@ -117,12 +120,32 @@ export function NeedForm({
           />
         </div>
 
+        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-navy-200 bg-navy-50/50 p-4">
+          <input
+            type="checkbox"
+            checked={data.kind === "EPC_TENDER"}
+            onChange={(e) =>
+              set("kind")(e.target.checked ? "EPC_TENDER" : "STANDARD")
+            }
+            className="mt-0.5 h-4 w-4 rounded border-navy-300 text-navy-900 focus:ring-navy-500"
+          />
+          <span>
+            <span className="block text-sm font-semibold text-navy-900">
+              {dict.tenders.formToggle}
+            </span>
+            <span className="mt-0.5 block text-xs text-navy-500">
+              {dict.tenders.formToggleHint}
+            </span>
+          </span>
+        </label>
+
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <Label htmlFor="nd-category">{t.category}</Label>
             <Select
               id="nd-category"
-              value={data.category}
+              value={data.kind === "EPC_TENDER" ? "epc" : data.category}
+              disabled={data.kind === "EPC_TENDER"}
               onChange={(e) => set("category")(e.target.value)}
             >
               {SUPPLIER_CATEGORIES.map((c) => (
