@@ -100,6 +100,15 @@ export function PartnerBadge({ label }: { label: string }) {
   );
 }
 
+export function AnchorBadge({ label }: { label: string }) {
+  return (
+    <Badge className="bg-navy-950 text-gold-400 ring-1 ring-gold-500/40">
+      <IconStar className="h-3.5 w-3.5" />
+      {label}
+    </Badge>
+  );
+}
+
 export function StatusBadge({
   status,
   label,

@@ -844,6 +844,117 @@ async function main() {
 
   const owners = { seller1, seller2, partner };
 
+  // --- Corporate profiles & anchor companies --------------------------------
+  // Founding anchor companies: large demand-side groups whose published needs
+  // drive the supplier network. Profiles use placeholder copy and monogram
+  // logos until official brand assets are provided.
+  const anchorSeeds = [
+    {
+      email: "tlp@assetmax.global",
+      userName: "Ricardo Toledo",
+      slug: "tlp-pipeline",
+      name: "TLP Pipeline",
+      legalName: "TLP Pipeline S.A.",
+      sector: "infrastructure",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "São Paulo",
+      founded: 1987,
+      employees: 4200,
+      description:
+        "TLP Pipeline develops, builds and operates large-diameter pipeline systems and associated pumping and terminal infrastructure for water, mining concentrates and hydrocarbons across Latin America. The group manages a multi-country project pipeline and procures equipment, EPC capacity and specialized services at scale for its concession portfolio.",
+    },
+    {
+      email: "andrade@assetmax.global",
+      userName: "Mariana Lopes",
+      slug: "andrade-gutierrez",
+      name: "Andrade Gutiérrez",
+      legalName: "Andrade Gutiérrez Engenharia S.A.",
+      sector: "infrastructure",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "Belo Horizonte",
+      founded: 1948,
+      employees: 18000,
+      description:
+        "Andrade Gutiérrez is one of Latin America's largest engineering and heavy-construction groups, with seven decades of experience delivering mining, energy, sanitation and transport infrastructure across more than 40 countries. Its project teams contract equipment fleets, subcontractors and technical services for concurrent large-scale works.",
+    },
+    {
+      email: "tbea@assetmax.global",
+      userName: "Wei Zhang",
+      slug: "tbea",
+      name: "TBEA",
+      legalName: "TBEA Co., Ltd.",
+      sector: "energy",
+      country: "China",
+      countryCode: "CN",
+      city: "Changji",
+      founded: 1993,
+      employees: 26000,
+      description:
+        "TBEA is a global manufacturer of power transmission and transformation equipment and a developer of energy infrastructure, with transformer, cable and polysilicon plants supplying utility-scale projects worldwide. Its international project division sources logistics, civil works and local technical partners for turnkey energy developments.",
+    },
+  ] as const;
+
+  for (const a of anchorSeeds) {
+    const anchorUser = await prisma.user.upsert({
+      where: { email: a.email },
+      update: {},
+      create: {
+        name: a.userName,
+        email: a.email,
+        passwordHash,
+        role: "SELLER",
+        company: a.name,
+        country: a.countryCode,
+        verifiedSeller: true,
+      },
+    });
+    await prisma.companyProfile.upsert({
+      where: { slug: a.slug },
+      update: {},
+      create: {
+        slug: a.slug,
+        userId: anchorUser.id,
+        name: a.name,
+        legalName: a.legalName,
+        description: a.description,
+        sector: a.sector,
+        country: a.country,
+        countryCode: a.countryCode,
+        city: a.city,
+        founded: a.founded,
+        employees: a.employees,
+        verified: true,
+        isAnchor: true,
+      },
+    });
+    console.log(`  ✔ Anchor company: ${a.name}`);
+  }
+
+  // Corporate profile for the founding-partner demo account.
+  await prisma.companyProfile.upsert({
+    where: { slug: "aldridge-industrial-holdings" },
+    update: {},
+    create: {
+      slug: "aldridge-industrial-holdings",
+      userId: partner.id,
+      name: "Aldridge Industrial Holdings",
+      legalName: "Aldridge Industrial Holdings Ltd.",
+      description:
+        "Diversified industrial holding headquartered in the UAE, with controlling stakes in port terminals, bulk-liquids storage and manufacturing assets across the Middle East and Latin America. The group actively rotates its portfolio and develops greenfield industrial platforms alongside strategic partners.",
+      sector: "ports",
+      country: "United Arab Emirates",
+      countryCode: "AE",
+      city: "Dubai",
+      founded: 2004,
+      employees: 1350,
+      verified: true,
+      isAnchor: false,
+    },
+  });
+  console.log("  ✔ Corporate profile: Aldridge Industrial Holdings");
+
   // --- Projects --------------------------------------------------------------
   for (const p of projects) {
     const { images, documents, owner, highlights, specs, ...rest } = p;

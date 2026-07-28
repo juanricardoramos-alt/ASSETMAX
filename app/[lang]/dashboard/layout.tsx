@@ -22,6 +22,7 @@ export default async function DashboardLayout({
     { href: base, label: dict.dashboard.overview },
   ];
   if (["SELLER", "PARTNER", "ADMIN"].includes(role)) {
+    items.push({ href: `${base}/company`, label: dict.companies.panel.navLabel });
     items.push({ href: `${base}/projects`, label: dict.dashboard.myProjects });
     items.push({ href: `${base}/offers`, label: dict.dashboard.offersReceived });
   }

@@ -65,6 +65,7 @@ export const COUNTRIES: { code: string; en: string; es: string }[] = [
   { code: "BR", en: "Brazil", es: "Brasil" },
   { code: "CA", en: "Canada", es: "Canadá" },
   { code: "CL", en: "Chile", es: "Chile" },
+  { code: "CN", en: "China", es: "China" },
   { code: "CO", en: "Colombia", es: "Colombia" },
   { code: "ES", en: "Spain", es: "España" },
   { code: "MA", en: "Morocco", es: "Marruecos" },
@@ -77,6 +78,18 @@ export function countryName(code: string, lang: "en" | "es"): string {
   const c = COUNTRIES.find((c) => c.code === code);
   return c ? c[lang] : code;
 }
+
+// ---------------------------------------------------------------------------
+// Corporate ecosystem (anchor companies, needs board, supplier registry)
+// ---------------------------------------------------------------------------
+
+// Founding anchor companies shown on the corporate directory. Logos are
+// placeholder monograms until official brand assets are provided.
+export const FOUNDING_ANCHORS = [
+  { key: "tlp", name: "TLP Pipeline", monogram: "TLP", sector: "infrastructure" },
+  { key: "ag", name: "Andrade Gutiérrez", monogram: "AG", sector: "infrastructure" },
+  { key: "tbea", name: "TBEA", monogram: "TB", sector: "energy" },
+] as const;
 
 // ---------------------------------------------------------------------------
 // Commodities marketplace
