@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
 import { countryName } from "@/lib/constants";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { NeedCard } from "@/components/needs/NeedCard";
 import { CompanyMonogram } from "@/components/company/CompanyMonogram";
 import { AnchorBadge, VerifiedBadge } from "@/components/ui";
 import { IconGlobe, IconMapPin, IconUsers } from "@/components/icons";
@@ -37,14 +38,25 @@ export default async function CompanyProfilePage({
   });
   if (!company) notFound();
 
-  const projects = await prisma.project.findMany({
-    where: { ownerId: company.user.id, status: "PUBLISHED" },
-    include: {
-      images: { orderBy: { order: "asc" } },
-      owner: { select: { role: true } },
-    },
-    orderBy: [{ verified: "desc" }, { views: "desc" }],
-  });
+  const [projects, openNeeds] = await Promise.all([
+    prisma.project.findMany({
+      where: { ownerId: company.user.id, status: "PUBLISHED" },
+      include: {
+        images: { orderBy: { order: "asc" } },
+        owner: { select: { role: true } },
+      },
+      orderBy: [{ verified: "desc" }, { views: "desc" }],
+    }),
+    prisma.need.findMany({
+      where: { companyId: company.id, status: "OPEN" },
+      include: {
+        company: {
+          select: { slug: true, name: true, isAnchor: true, verified: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
 
   const facts: { label: string; value: string }[] = [
     {
@@ -137,6 +149,20 @@ export default async function CompanyProfilePage({
               </p>
             </div>
           </section>
+
+          {/* Open needs */}
+          {openNeeds.length > 0 && (
+            <section>
+              <h2 className="mb-4 text-xl font-extrabold tracking-tight text-navy-950">
+                {dict.companies.openNeedsTitle}
+              </h2>
+              <div className="grid gap-6 sm:grid-cols-2">
+                {openNeeds.map((n) => (
+                  <NeedCard key={n.id} need={n} lang={lang} dict={dict} />
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Portfolio */}
           <section>

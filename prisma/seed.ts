@@ -955,6 +955,237 @@ async function main() {
   });
   console.log("  ✔ Corporate profile: Aldridge Industrial Holdings");
 
+  // --- Needs board (anchor-company demand) -----------------------------------
+  const needSeeds: {
+    companySlug: string;
+    slug: string;
+    title: string;
+    description: string;
+    category: string;
+    country: string;
+    countryCode: string;
+    city?: string;
+    budgetMin?: number;
+    budgetMax?: number;
+    deadline?: string;
+    requirements: string[];
+    status?: string;
+  }[] = [
+    {
+      companySlug: "tlp-pipeline",
+      slug: "tlp-large-diameter-pipe-supply",
+      title: "Large-diameter steel pipe supply — 180 km water transport line",
+      description:
+        "Supply of API 5L X70 welded steel pipe (48–56 inch) with internal lining and external coating for a 180 km desalinated-water transport system in northern Chile. Staged deliveries over 22 months to two laydown yards; mill certificates and third-party inspection required for every heat.",
+      category: "equipment",
+      country: "Chile",
+      countryCode: "CL",
+      city: "Antofagasta",
+      budgetMin: 60_000_000,
+      budgetMax: 85_000_000,
+      deadline: "2026-10-15",
+      requirements: [
+        "API 5L PSL2 mill certification",
+        "Proven deliveries above 100 km of pipeline in the last 10 years",
+        "Third-party inspection (TPI) acceptance at mill",
+        "Staged delivery plan with two laydown yards",
+      ],
+    },
+    {
+      companySlug: "tlp-pipeline",
+      slug: "tlp-epc-pumping-stations",
+      title: "EPC contractor for three 12 MW pumping stations",
+      description:
+        "Engineering, procurement and construction of three high-head pumping stations (12 MW installed each) including electrical rooms, surge protection and SCADA integration for a concentrate pipeline in Peru. Contract under FIDIC Yellow Book with milestone-based payments.",
+      category: "epc",
+      country: "Peru",
+      countryCode: "PE",
+      city: "Arequipa",
+      budgetMin: 90_000_000,
+      budgetMax: 140_000_000,
+      deadline: "2026-11-30",
+      requirements: [
+        "FIDIC Yellow Book track record",
+        "At least two pumping or compression stations delivered as EPC",
+        "In-country civil works capacity (Peru)",
+        "ISO 9001 / ISO 45001 certified",
+      ],
+    },
+    {
+      companySlug: "tlp-pipeline",
+      slug: "tlp-oversize-logistics",
+      title: "Specialized logistics for oversized pipeline components",
+      description:
+        "Multi-year framework for port handling, storage and overland transport of oversized pipeline components (up to 90 t single pieces) from Brazilian and Chilean ports to Andean job sites, including route studies, permits and escorted convoys.",
+      category: "logistics",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "Santos",
+      budgetMin: 8_000_000,
+      budgetMax: 15_000_000,
+      deadline: "2026-09-30",
+      requirements: [
+        "Heavy-lift fleet above 80 t payload",
+        "Cross-border Andean transport experience",
+        "Cargo insurance up to USD 20M per shipment",
+      ],
+    },
+    {
+      companySlug: "andrade-gutierrez",
+      slug: "ag-earthworks-subcontractor-iron-ore",
+      title: "Earthworks & haulage subcontractor — iron ore mine expansion",
+      description:
+        "Mass earthworks subcontract (34 Mm³ over 30 months) for an iron ore expansion in Minas Gerais: drilling support, load & haul, haul-road maintenance and dust control. Own fleet required; fuel supplied by the main contractor at site.",
+      category: "construction",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "Belo Horizonte",
+      budgetMin: 25_000_000,
+      budgetMax: 40_000_000,
+      deadline: "2026-10-01",
+      requirements: [
+        "Own fleet of at least 30 haul units",
+        "Mining earthworks experience above 20 Mm³",
+        "Safety statistics (TRIFR) below industry benchmark",
+      ],
+    },
+    {
+      companySlug: "andrade-gutierrez",
+      slug: "ag-mining-truck-fleet",
+      title: "Fleet of 40 off-highway trucks with full maintenance contract",
+      description:
+        "Purchase or long-term lease of forty 90–100 t class off-highway trucks with a 5-year MARC (maintenance and repair contract), operator training and on-site parts warehouse for two concurrent infrastructure projects in Brazil.",
+      category: "equipment",
+      country: "Brazil",
+      countryCode: "BR",
+      budgetMin: 45_000_000,
+      budgetMax: 70_000_000,
+      deadline: "2026-12-15",
+      requirements: [
+        "OEM or certified dealer",
+        "MARC track record of 4+ years fleet availability above 88%",
+        "On-site parts and technician coverage",
+      ],
+    },
+    {
+      companySlug: "andrade-gutierrez",
+      slug: "ag-environmental-licensing-port",
+      title: "Environmental licensing consultancy for port expansion works",
+      description:
+        "Environmental impact studies, licensing management and community-engagement program for a container terminal expansion, including dredging permits and marine biota monitoring plans coordinated with state and federal agencies.",
+      category: "environmental",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "Santos",
+      budgetMin: 2_000_000,
+      budgetMax: 5_000_000,
+      deadline: "2026-09-15",
+      requirements: [
+        "Port or coastal EIA experience in Brazil",
+        "Registered with IBAMA as consultant",
+        "Marine biota monitoring capability",
+      ],
+    },
+    {
+      companySlug: "tbea",
+      slug: "tbea-epc-substation-partner",
+      title: "Local EPC partner for 500 kV substation packages in LatAm",
+      description:
+        "TBEA seeks local EPC partners in Chile and Argentina for the balance-of-plant and installation scope of 500 kV substation packages (civil works, erection, testing support) tied to transmission projects where TBEA supplies main transformers and HV equipment.",
+      category: "epc",
+      country: "Chile",
+      countryCode: "CL",
+      city: "Santiago",
+      budgetMin: 30_000_000,
+      budgetMax: 60_000_000,
+      deadline: "2026-11-15",
+      requirements: [
+        "HV substation erection references (220 kV or above)",
+        "Local electrical contractor licenses",
+        "Capacity for two concurrent sites",
+      ],
+    },
+    {
+      companySlug: "tbea",
+      slug: "tbea-transformer-logistics",
+      title: "Port-to-site logistics for power transformer deliveries",
+      description:
+        "Framework agreement for reception, port handling and inland transport of large power transformers (up to 280 t) from Manzanillo port to project sites in central Mexico, including hydraulic platform trailers, route reinforcement works and cranage.",
+      category: "logistics",
+      country: "Mexico",
+      countryCode: "MX",
+      city: "Manzanillo",
+      budgetMin: 5_000_000,
+      budgetMax: 12_000_000,
+      deadline: "2026-10-30",
+      requirements: [
+        "Hydraulic modular trailers (SPMT) above 250 t",
+        "Transformer transport references",
+        "Route survey and bridge reinforcement capability",
+      ],
+    },
+    {
+      companySlug: "tbea",
+      slug: "tbea-om-solar-services",
+      title: "O&M technical services for two utility-scale solar plants",
+      description:
+        "Multi-year operations & maintenance services for two 150 MW photovoltaic plants: preventive and corrective maintenance, module cleaning, thermographic inspections, spare-parts management and 24/7 monitoring handover.",
+      category: "maintenance",
+      country: "Argentina",
+      countryCode: "AR",
+      budgetMin: 6_000_000,
+      budgetMax: 10_000_000,
+      deadline: "2026-09-20",
+      requirements: [
+        "O&M portfolio above 300 MW PV",
+        "Certified HV switching personnel",
+        "CMMS-based maintenance reporting",
+      ],
+    },
+    {
+      companySlug: "tlp-pipeline",
+      slug: "tlp-geotech-survey-closed",
+      title: "Geotechnical survey campaign — coastal section",
+      description:
+        "Completed campaign of 240 boreholes and geophysical lines along the coastal section of the water transport system. Published for reference; applications are closed.",
+      category: "technical_services",
+      country: "Chile",
+      countryCode: "CL",
+      budgetMin: 1_500_000,
+      budgetMax: 3_000_000,
+      requirements: ["Offshore/coastal drilling experience"],
+      status: "CLOSED",
+    },
+  ];
+
+  for (const n of needSeeds) {
+    const needCompany = await prisma.companyProfile.findUnique({
+      where: { slug: n.companySlug },
+    });
+    if (!needCompany) continue;
+    await prisma.need.upsert({
+      where: { slug: n.slug },
+      update: {},
+      create: {
+        slug: n.slug,
+        title: n.title,
+        description: n.description,
+        category: n.category,
+        companyId: needCompany.id,
+        country: n.country,
+        countryCode: n.countryCode,
+        city: n.city ?? null,
+        budgetMin: n.budgetMin ?? null,
+        budgetMax: n.budgetMax ?? null,
+        deadline: n.deadline ? new Date(`${n.deadline}T00:00:00Z`) : null,
+        requirements: JSON.stringify(n.requirements),
+        status: n.status ?? "OPEN",
+        views: 40 + Math.floor(Math.random() * 400),
+      },
+    });
+    console.log(`  ✔ Need: ${n.title}`);
+  }
+
   // --- Projects --------------------------------------------------------------
   for (const p of projects) {
     const { images, documents, owner, highlights, specs, ...rest } = p;

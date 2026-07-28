@@ -91,6 +91,22 @@ export const FOUNDING_ANCHORS = [
   { key: "tbea", name: "TBEA", monogram: "TB", sector: "energy" },
 ] as const;
 
+// What companies source through the needs board / what suppliers offer.
+export const SUPPLIER_CATEGORIES = [
+  "epc",
+  "equipment",
+  "logistics",
+  "technical_services",
+  "engineering",
+  "construction",
+  "maintenance",
+  "environmental",
+] as const;
+export type SupplierCategory = (typeof SUPPLIER_CATEGORIES)[number];
+
+export const NEED_STATUSES = ["OPEN", "CLOSED"] as const;
+export type NeedStatus = (typeof NEED_STATUSES)[number];
+
 // ---------------------------------------------------------------------------
 // Commodities marketplace
 // ---------------------------------------------------------------------------
