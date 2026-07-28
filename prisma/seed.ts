@@ -2665,6 +2665,88 @@ async function main() {
     console.log(`  ✔ Commodity: ${l.title}`);
   }
 
+  // --- Data room: access requests & audit trail ------------------------------
+  const drAtacama = await prisma.project.findUnique({
+    where: { slug: "atacama-blue-desalination-plant" },
+  });
+  const drVizcachas = await prisma.project.findUnique({
+    where: { slug: "vizcachas-copper-project" },
+  });
+  const drUsers = {
+    investor: await prisma.user.findUnique({ where: { email: "investor@assetmax.global" } }),
+    fund: await prisma.user.findUnique({ where: { email: "fund@assetmax.global" } }),
+    trader: await prisma.user.findUnique({ where: { email: "trader@assetmax.global" } }),
+    supplier: await prisma.user.findUnique({ where: { email: "supplier@assetmax.global" } }),
+  };
+  const drSeeds: {
+    project: typeof drAtacama;
+    user: (typeof drUsers)[keyof typeof drUsers];
+    status: string;
+    message?: string;
+    decided?: boolean;
+  }[] = [
+    {
+      project: drAtacama,
+      user: drUsers.investor,
+      status: "GRANTED",
+      message:
+        "Reviewing the asset for our LatAm water platform; requesting contract and financial documentation.",
+      decided: true,
+    },
+    {
+      project: drAtacama,
+      user: drUsers.fund,
+      status: "REQUESTED",
+      message: "Preparing an indicative offer — need offtake contract detail.",
+    },
+    { project: drAtacama, user: drUsers.trader, status: "DENIED", decided: true },
+    {
+      project: drVizcachas,
+      user: drUsers.supplier,
+      status: "REQUESTED",
+      message:
+        "Drilling contractor on this project since 2019 — requesting technical annexes to prepare an expansion proposal.",
+    },
+  ];
+  for (const r of drSeeds) {
+    if (!r.project || !r.user) continue;
+    await prisma.dataRoomRequest.upsert({
+      where: {
+        projectId_userId: { projectId: r.project.id, userId: r.user.id },
+      },
+      update: {},
+      create: {
+        projectId: r.project.id,
+        userId: r.user.id,
+        status: r.status,
+        message: r.message ?? null,
+        decidedAt: r.decided ? new Date() : null,
+      },
+    });
+  }
+  if (drAtacama && drUsers.investor) {
+    const existingLog = await prisma.dataRoomLog.findFirst({
+      where: { projectId: drAtacama.id, userId: drUsers.investor.id },
+    });
+    if (!existingLog) {
+      await prisma.dataRoomLog.createMany({
+        data: [
+          {
+            projectId: drAtacama.id,
+            userId: drUsers.investor.id,
+            documentName: "Audited Financial Statements 2023–2025",
+          },
+          {
+            projectId: drAtacama.id,
+            userId: drUsers.investor.id,
+            documentName: "Offtake Contracts Summary",
+          },
+        ],
+      });
+    }
+  }
+  console.log("  ✔ Data room: 4 access requests + audit trail");
+
   // Run the matching engine over mandates and commodity listings.
   const { runMatchingForMandate, runMatchingForCommodity } = await import(
     "../lib/matching"

@@ -1100,6 +1100,42 @@ const es: Dictionary = {
     publicBidsNote:
       "Las propuestas que compiten en licitaciones EPC son públicamente visibles para mantener el proceso transparente.",
   },
+  dataroom: {
+    navLabel: "Data Room",
+    title: "Data Room Privado",
+    subtitle:
+      "Espacio de due diligence: solicita acceso a la documentación confidencial de cada proyecto, decide quién entra y conserva un registro completo de accesos.",
+    browseTitle: "Solicitar acceso",
+    browseHint:
+      "La documentación confidencial se libera proyecto por proyecto. Cada apertura de documento queda registrada.",
+    project: "Proyecto",
+    docsCount: "documentos confidenciales",
+    requestCta: "Solicitar Acceso",
+    requesting: "Solicitando…",
+    myRequestsTitle: "Mis solicitudes de acceso",
+    statuses: {
+      REQUESTED: "Solicitado",
+      GRANTED: "Concedido",
+      DENIED: "Denegado",
+    },
+    documentsTitle: "Documentos",
+    viewDoc: "Abrir",
+    mockNote: "Los documentos demo son archivos placeholder.",
+    noRequests: "Aún no has solicitado acceso a ningún data room.",
+    ownerTitle: "Control de acceso — tus proyectos",
+    pendingTitle: "Solicitudes pendientes",
+    grant: "Conceder",
+    deny: "Denegar",
+    noPending: "No hay solicitudes pendientes.",
+    grantedTitle: "Accesos activos",
+    noGranted: "Aún no hay accesos concedidos.",
+    logTitle: "Registro de accesos",
+    logEmpty: "Aún no hay accesos a documentos registrados.",
+    requestedOn: "Solicitado",
+    decidedOn: "Decidido",
+    openedDoc: "abrió",
+    by: "por",
+  },
   matches: {
     title: "Matches",
     subtitle:

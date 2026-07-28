@@ -1087,6 +1087,42 @@ const en = {
     publicBidsNote:
       "Competing bids on EPC tenders are publicly visible to keep the process transparent.",
   },
+  dataroom: {
+    navLabel: "Data Room",
+    title: "Private Data Room",
+    subtitle:
+      "Due-diligence workspace: request access to confidential project documentation, decide who enters, and keep a complete access trail.",
+    browseTitle: "Request access",
+    browseHint:
+      "Confidential documentation is released project by project. Every document view is recorded.",
+    project: "Project",
+    docsCount: "confidential documents",
+    requestCta: "Request Access",
+    requesting: "Requesting…",
+    myRequestsTitle: "My access requests",
+    statuses: {
+      REQUESTED: "Requested",
+      GRANTED: "Granted",
+      DENIED: "Denied",
+    },
+    documentsTitle: "Documents",
+    viewDoc: "Open",
+    mockNote: "Demo documents are placeholder files.",
+    noRequests: "You haven't requested access to any data room yet.",
+    ownerTitle: "Access control — your projects",
+    pendingTitle: "Pending requests",
+    grant: "Grant",
+    deny: "Deny",
+    noPending: "No pending requests.",
+    grantedTitle: "Active access",
+    noGranted: "No granted access yet.",
+    logTitle: "Access log",
+    logEmpty: "No document access recorded yet.",
+    requestedOn: "Requested",
+    decidedOn: "Decided",
+    openedDoc: "opened",
+    by: "by",
+  },
   matches: {
     title: "Matches",
     subtitle:

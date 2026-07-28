@@ -52,6 +52,8 @@ model User {
   notifications     Notification[]
   companyProfile    CompanyProfile?
   supplierProfile   SupplierProfile?
+  dataRoomRequests  DataRoomRequest[]
+  dataRoomLogs      DataRoomLog[]
 }
 
 model Account {
@@ -297,6 +299,8 @@ model Project {
   threads        Thread[]
   matches        ProjectMatch[]
   contracts      Contract[]
+  dataRoomRequests DataRoomRequest[]
+  dataRoomLogs     DataRoomLog[]
 }
 
 model ProjectImage {
@@ -368,6 +372,39 @@ model NdaAcceptance {
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, userId])
+}
+
+// ---------------------------------------------------------------------------
+// Private data room (due diligence with access control & audit trail)
+// ---------------------------------------------------------------------------
+
+// A counterparty's request to enter a project's confidential data room.
+// status: REQUESTED | GRANTED | DENIED — decided by the project owner.
+model DataRoomRequest {
+  id        String    @id @default(cuid())
+  projectId String
+  userId    String
+  message   String?
+  status    String    @default("REQUESTED")
+  createdAt DateTime  @default(now())
+  decidedAt DateTime?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+// Immutable audit trail: every confidential-document view is recorded.
+model DataRoomLog {
+  id           String   @id @default(cuid())
+  projectId    String
+  userId       String
+  documentName String
+  createdAt    DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // ---------------------------------------------------------------------------

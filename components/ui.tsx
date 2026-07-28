@@ -128,6 +128,9 @@ export function StatusBadge({
     WITHDRAWN: "bg-navy-100 text-navy-600",
     OPEN: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
     CLOSED: "bg-navy-100 text-navy-600",
+    REQUESTED: "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
+    GRANTED: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
+    DENIED: "bg-red-50 text-red-700 ring-1 ring-red-200",
   };
   return <Badge className={styles[status] ?? styles.DRAFT}>{label}</Badge>;
 }
