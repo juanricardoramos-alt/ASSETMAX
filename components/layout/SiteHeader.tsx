@@ -29,6 +29,7 @@ export async function SiteHeader({
     { href: `/${lang}/needs`, label: dict.needs.navLabel },
     { href: `/${lang}/companies`, label: dict.companies.navLabel },
     { href: `/${lang}/suppliers`, label: dict.suppliers.navLabel },
+    { href: `/${lang}/matching`, label: dict.liveMatching.navLabel },
   ];
 
   const secondaryLinks = [

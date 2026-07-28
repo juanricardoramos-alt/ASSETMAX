@@ -1005,6 +1005,48 @@ const es: Dictionary = {
       othersTitle: "Todos los proveedores",
     },
   },
+  liveMatching: {
+    navLabel: "Matching en Vivo",
+    title: "Motor de Matching en Vivo",
+    subtitle:
+      "Describe tu proyecto o necesidad y el motor rankea al instante inversionistas compatibles y proveedores calificados — con un score transparente y explicable.",
+    formTitle: "Tu proyecto o necesidad",
+    fields: {
+      title: "Nombre del proyecto / necesidad",
+      titlePlaceholder: "ej. Expansión de lixiviación en pilas — cobre Candelaria",
+      category: "Clase de activo / sector",
+      country: "Ubicación",
+      amount: "Monto de inversión (USD)",
+      stage: "Etapa",
+      supplierCategory: "Categoría de proveedor requerida",
+    },
+    cta: "Buscar Matches",
+    searching: "Evaluando la red…",
+    investorsTitle: "Inversionistas Compatibles",
+    suppliersTitle: "Proveedores Compatibles",
+    noInvestors:
+      "Ningún mandato supera el umbral de 40% de compatibilidad para este perfil.",
+    noSuppliers: "Aún no hay proveedores calificados en esta categoría.",
+    confidentialMandate: "Mandato confidencial",
+    viaMandate: "Mandato activo",
+    ticket: "Ticket",
+    compatibility: "Compatibilidad",
+    breakdownTitle: "Desglose del score",
+    components: {
+      sector: "Afinidad de sector",
+      geography: "Afinidad geográfica",
+      ticket: "Afinidad de ticket",
+      stage: "Afinidad de etapa",
+      category: "Afinidad de categoría",
+      trackRecord: "Track record",
+      certifications: "Certificaciones",
+    },
+    investorsFound: "inversionistas compatibles",
+    suppliersFound: "proveedores calificados",
+    topScore: "score máximo",
+    methodology:
+      "Scoring determinístico sobre mandatos publicados y el catastro de proveedores calificados. Pesos — inversionistas: sector 35 · geografía 25 · ticket 30 · etapa 10. Proveedores: categoría 50 · geografía 30 · track record 12 · certificaciones 8.",
+  },
   matches: {
     title: "Matches",
     subtitle:

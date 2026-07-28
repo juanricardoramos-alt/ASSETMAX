@@ -992,6 +992,48 @@ const en = {
       othersTitle: "All suppliers",
     },
   },
+  liveMatching: {
+    navLabel: "Live Matching",
+    title: "Live Matching Engine",
+    subtitle:
+      "Describe your project or need and the engine instantly ranks compatible investors and qualified suppliers — with a transparent, explainable score.",
+    formTitle: "Your project or need",
+    fields: {
+      title: "Project / need name",
+      titlePlaceholder: "e.g. Candelaria copper heap-leach expansion",
+      category: "Asset class / sector",
+      country: "Location",
+      amount: "Investment amount (USD)",
+      stage: "Stage",
+      supplierCategory: "Required supplier category",
+    },
+    cta: "Find Matches",
+    searching: "Scoring the network…",
+    investorsTitle: "Compatible Investors",
+    suppliersTitle: "Compatible Suppliers",
+    noInvestors:
+      "No mandates clear the 40% compatibility threshold for this profile.",
+    noSuppliers: "No qualified suppliers in this category yet.",
+    confidentialMandate: "Confidential mandate",
+    viaMandate: "Active mandate",
+    ticket: "Ticket",
+    compatibility: "Compatibility",
+    breakdownTitle: "Score breakdown",
+    components: {
+      sector: "Sector fit",
+      geography: "Geographic fit",
+      ticket: "Ticket fit",
+      stage: "Stage fit",
+      category: "Category fit",
+      trackRecord: "Track record",
+      certifications: "Certifications",
+    },
+    investorsFound: "compatible investors",
+    suppliersFound: "qualified suppliers",
+    topScore: "top score",
+    methodology:
+      "Deterministic scoring over published mandates and the qualified supplier registry. Weights — investors: sector 35 · geography 25 · ticket 30 · stage 10. Suppliers: category 50 · geography 30 · track record 12 · certifications 8.",
+  },
   matches: {
     title: "Matches",
     subtitle:
