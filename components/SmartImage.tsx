@@ -43,7 +43,7 @@ export function SmartImage({
         aria-label={alt}
       >
         <span className="select-none text-4xl font-bold tracking-widest text-white/20">
-          AMX
+          VMX
         </span>
       </div>
     );

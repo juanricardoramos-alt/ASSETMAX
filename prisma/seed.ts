@@ -769,7 +769,7 @@ const projects: SeedProject[] = [
 ];
 
 async function main() {
-  console.log("Seeding ASSETMAX Global…");
+  console.log("Seeding VORTAMAX Global…");
 
   const passwordHash = await bcrypt.hash(PASSWORD, 10);
 

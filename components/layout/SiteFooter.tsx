@@ -107,7 +107,7 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
         <div className="container-site space-y-3 py-6">
           <div className="flex flex-col gap-2 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
             <p>
-              © {year} ASSETMAX Global. {dict.footer.rights}
+              © {year} VORTAMAX Global. {dict.footer.rights}
             </p>
             <p>{dict.footer.disclaimer}</p>
           </div>

@@ -86,7 +86,7 @@ export async function POST(
     data: {
       threadId: thread.id,
       senderId: session!.user.id,
-      body: `[ASSETMAX Matching] This conversation was opened from the match between the project "${match.project.title}" and the mandate "${match.mandate.title}" (${match.score}% compatibility).`,
+      body: `[VORTAMAX Matching] This conversation was opened from the match between the project "${match.project.title}" and the mandate "${match.mandate.title}" (${match.score}% compatibility).`,
     },
   });
 

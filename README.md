@@ -1,12 +1,13 @@
-# ASSETMAX Global
+# VORTAMAX Global
 
-**The global marketplace for industrial assets, investment mandates & physical commodities.**
+**The global marketplace for mining projects, industrial assets & qualified supply.** *(Repository keeps the legacy name "AssetMax".)*
 
-ASSETMAX Global runs three connected business lines on one platform:
+VORTAMAX Global runs four connected business lines on one platform:
 
 1. **Projects** — sale and financing of industrial assets and megaprojects (mines, desalination plants, energy, agro, ports, manufacturing, infrastructure).
 2. **Investment Mandates (buy-side)** — funds and corporates publish structured search requirements that feed the matching engine.
 3. **Commodities** — physical sell offers and buy requirements (copper cathodes, concentrates, lithium, iron ore, agro-commodities…). The platform connects counterparties; payment and logistics settle through traditional channels.
+4. **Corporate ecosystem (anchor-company model)** — large **anchor companies** (TLP Pipeline, Andrade Gutiérrez, TBEA — placeholder profiles) publish their real procurement **needs**; a **qualified supplier registry** applies to them. VORTAMAX controls the demand and connects qualified supply: verified corporate profiles, a filterable needs board, and a supplier qualification workflow run by the platform team.
 
 All three are AI-powered via an internal Anthropic (Claude) service: document ingestion that pre-fills listings, automatic project↔mandate and sell↔buy matching with natural-language rationales, per-project Q&A assistants grounded strictly in listing data, and AI-drafted deal documents (NDA, LOI, MOU, SPA, Commodity SPA) with a mandatory both-parties review workflow.
 
@@ -82,6 +83,11 @@ All demo accounts use the password **`assetmax123`**:
 | `seller@assetmax.global` | Seller (verified) |
 | `seller2@assetmax.global` | Seller |
 | `investor@assetmax.global` | Investor |
+| `tlp@assetmax.global` | Anchor company — TLP Pipeline |
+| `andrade@assetmax.global` | Anchor company — Andrade Gutiérrez |
+| `tbea@assetmax.global` | Anchor company — TBEA |
+| `supplier@assetmax.global` | Qualified supplier — Andina Drilling & Geotech |
+| `baustahl@assetmax.global` | Supplier awaiting qualification (admin queue demo) |
 
 The seed creates **25 realistic projects** across 12 countries (desalination, copper, green hydrogen, lithium, solar, hydro, agro-export, data centers, ports, cold chain, industrial parks…), **6 investment mandates** (one confidential) generating 13 automatic matches, **14 commodity listings** (9 sell offers + 5 buy requirements) generating 5 matches, plus demo offers, messages, favorites, NDA acceptances and notifications. Two extra demo accounts join the originals: `fund@assetmax.global`, `strategics@assetmax.global` and `trader@assetmax.global` (same password).
 
@@ -153,6 +159,9 @@ prisma/                 # schema + seed (15 demo projects, 5 demo users)
 | **Project assistant** | Per-listing chat grounded exclusively in published data — never invents figures |
 | **Commodities desk** | Sell/buy listings with specs, Incoterms, price references, NDA-gated certificates, matching and contracts |
 | **Premium layer** | Serif/sans type system, animated counters, scroll reveals, Recently Closed, Insights (7 bilingual research articles), leadership team, global offices, market-reference ticker, global search, notifications, skeletons, branded 404/500, OG image |
+| **Corporate profiles** | Enterprise panel (`/dashboard/company`) where a company manages its public presence and portfolio; public directory (`/companies`) with a **Founding Partners** section (anchor placeholders: TLP Pipeline, Andrade Gutiérrez, TBEA); admin grants *Verified* / *Anchor* flags |
+| **Needs board** | Anchor companies publish real sourcing needs (`/needs`): category, reference budget, deadline, location, requirements — filterable by supplier category, country and company, each with an *Apply* action; managed from `/dashboard/needs` (publish, edit, close, review applications) |
+| **Supplier registry** | New SUPPLIER role: suppliers register (`/dashboard/supplier`), the admin team qualifies them (`/dashboard/admin/suppliers`), and qualified suppliers appear in `/suppliers` and can apply to open needs with proposal, budget and lead time; both sides get in-app notifications and companies decide (discuss/accept/decline) per application |
 
 ## Roadmap (post-MVP)
 

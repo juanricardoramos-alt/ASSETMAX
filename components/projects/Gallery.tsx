@@ -16,7 +16,7 @@ export function Gallery({
   if (images.length === 0) {
     return (
       <div className="flex h-80 items-center justify-center rounded-2xl bg-gradient-to-br from-navy-800 to-navy-900 text-4xl font-bold text-white/20">
-        AMX
+        VMX
       </div>
     );
   }

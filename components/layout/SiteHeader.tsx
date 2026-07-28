@@ -7,7 +7,7 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { NotificationBell } from "@/components/NotificationBell";
 import { ButtonLink } from "@/components/ui";
 import { SignOutButton } from "@/components/auth/SignOutButton";
-import { IconSearch } from "@/components/icons";
+import { IconChevronDown, IconSearch } from "@/components/icons";
 
 export async function SiteHeader({
   lang,
@@ -22,6 +22,16 @@ export async function SiteHeader({
     { href: `/${lang}/projects`, label: dict.nav.explore },
     { href: `/${lang}/commodities`, label: dict.commodities.navLabel },
     { href: `/${lang}/mandates`, label: dict.mandates.navLabel },
+  ];
+
+  // Grouped under an "Ecosystem" dropdown on desktop; flat on mobile.
+  const ecosystemLinks = [
+    { href: `/${lang}/needs`, label: dict.needs.navLabel },
+    { href: `/${lang}/companies`, label: dict.companies.navLabel },
+    { href: `/${lang}/suppliers`, label: dict.suppliers.navLabel },
+  ];
+
+  const secondaryLinks = [
     { href: `/${lang}/insights`, label: dict.insights.navLabel },
     { href: `/${lang}/for-sellers`, label: dict.nav.forSellers },
     { href: `/${lang}/for-investors`, label: dict.nav.forInvestors },
@@ -42,6 +52,37 @@ export async function SiteHeader({
 
         <nav className="hidden items-center gap-0.5 lg:flex">
           {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="rounded-md px-2.5 py-2 text-sm font-medium text-navy-700 transition hover:bg-navy-50 hover:text-navy-950"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <div className="group relative">
+            <button
+              type="button"
+              className="flex items-center gap-1 rounded-md px-2.5 py-2 text-sm font-medium text-navy-700 transition hover:bg-navy-50 hover:text-navy-950"
+            >
+              {dict.companies.ecosystemLabel}
+              <IconChevronDown className="h-3.5 w-3.5" />
+            </button>
+            <div className="invisible absolute left-0 top-full z-50 pt-1 opacity-0 transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+              <div className="w-60 rounded-xl border border-navy-100 bg-white p-1.5 shadow-card">
+                {ecosystemLinks.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className="block rounded-lg px-3 py-2.5 text-sm font-medium text-navy-700 transition hover:bg-navy-50 hover:text-navy-950"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+          {secondaryLinks.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -81,7 +122,10 @@ export async function SiteHeader({
               </>
             )}
           </div>
-          <MobileNav links={links} authLinks={authLinks} />
+          <MobileNav
+            links={[...links, ...ecosystemLinks, ...secondaryLinks]}
+            authLinks={authLinks}
+          />
         </div>
       </div>
     </header>

@@ -2,7 +2,7 @@ import type { Dictionary } from "./en";
 
 const es: Dictionary = {
   brand: {
-    name: "ASSETMAX Global",
+    name: "VORTAMAX Global",
     tagline: "El marketplace global de activos industriales y megaproyectos",
   },
   nav: {
@@ -137,7 +137,7 @@ const es: Dictionary = {
     heroKicker: "M&A Industrial · Financiamiento de Proyectos · Alcance Global",
     heroTitle: "Donde los activos industriales del mundo cambian de manos",
     heroSubtitle:
-      "ASSETMAX Global conecta a dueños de plantas, minas, proyectos de energía e infraestructura con inversionistas calificados en más de 12 países. Oportunidades verificadas desde USD 5M hasta USD 2B+.",
+      "VORTAMAX Global conecta a dueños de plantas, minas, proyectos de energía e infraestructura con inversionistas calificados en más de 12 países. Oportunidades verificadas desde USD 5M hasta USD 2B+.",
     searchPlaceholder: "Busca por activo, sector o país…",
     searchCta: "Buscar",
     heroCtaSellers: "Publica tu Proyecto",
@@ -196,7 +196,7 @@ const es: Dictionary = {
     testimonials: [
       {
         quote:
-          "ASSETMAX le dio a nuestro proyecto de desalación visibilidad ante fondos que jamás habríamos alcanzado solos. Firmamos un LOI en 90 días.",
+          "VORTAMAX le dio a nuestro proyecto de desalación visibilidad ante fondos que jamás habríamos alcanzado solos. Firmamos un LOI en 90 días.",
         author: "CFO, Desarrollador de Infraestructura Hídrica",
         location: "Antofagasta, Chile",
       },
@@ -521,9 +521,9 @@ const es: Dictionary = {
   },
   pages: {
     about: {
-      title: "Sobre ASSETMAX Global",
+      title: "Sobre VORTAMAX Global",
       intro:
-        "ASSETMAX Global es el marketplace internacional donde los activos industriales y megaproyectos se encuentran con capital calificado. Traemos la disciplina de la banca de inversión y el alcance de una red global a un mercado históricamente opaco, fragmentado y dependiente de contactos.",
+        "VORTAMAX Global es el marketplace internacional donde los activos industriales y megaproyectos se encuentran con capital calificado. Traemos la disciplina de la banca de inversión y el alcance de una red global a un mercado históricamente opaco, fragmentado y dependiente de contactos.",
       missionTitle: "Nuestra Misión",
       missionText:
         "Hacer que las transacciones de escala industrial sean transparentes, eficientes y globalmente accesibles — conectando a los dueños de activos productivos con los inversionistas que pueden llevarlos más lejos.",
@@ -553,7 +553,7 @@ const es: Dictionary = {
     forSellers: {
       title: "Para Vendedores y Desarrolladores",
       intro:
-        "Tu planta, mina, proyecto o activo de infraestructura merece una audiencia global. ASSETMAX le da presentación institucional, credibilidad verificada y acceso directo a capital calificado.",
+        "Tu planta, mina, proyecto o activo de infraestructura merece una audiencia global. VORTAMAX le da presentación institucional, credibilidad verificada y acceso directo a capital calificado.",
       benefits: [
         {
           title: "Presentación institucional",
@@ -622,7 +622,7 @@ const es: Dictionary = {
       sections: [
         {
           title: "1. La Plataforma",
-          text: "ASSETMAX Global (“la Plataforma”) es un marketplace en línea que conecta a dueños y desarrolladores de activos industriales con potenciales inversionistas y compradores. La Plataforma facilita el descubrimiento, la comunicación y la negociación preliminar; no es parte de ninguna transacción celebrada entre usuarios.",
+          text: "VORTAMAX Global (“la Plataforma”) es un marketplace en línea que conecta a dueños y desarrolladores de activos industriales con potenciales inversionistas y compradores. La Plataforma facilita el descubrimiento, la comunicación y la negociación preliminar; no es parte de ninguna transacción celebrada entre usuarios.",
         },
         {
           title: "2. No es Asesoría de Inversión",
@@ -642,7 +642,7 @@ const es: Dictionary = {
         },
         {
           title: "6. Limitación de Responsabilidad",
-          text: "La Plataforma se provee “tal cual”. En la máxima medida permitida por la ley, ASSETMAX Global no es responsable por pérdidas derivadas de transacciones entre usuarios, imprecisiones en publicaciones o indisponibilidad del servicio.",
+          text: "La Plataforma se provee “tal cual”. En la máxima medida permitida por la ley, VORTAMAX Global no es responsable por pérdidas derivadas de transacciones entre usuarios, imprecisiones en publicaciones o indisponibilidad del servicio.",
         },
       ],
     },
@@ -1008,7 +1008,7 @@ const es: Dictionary = {
   matches: {
     title: "Matches",
     subtitle:
-      "Oportunidades cruzadas por el motor ASSETMAX — criterios estandarizados más scoring de compatibilidad con IA.",
+      "Oportunidades cruzadas por el motor VORTAMAX — criterios estandarizados más scoring de compatibilidad con IA.",
     score: "Compatibilidad",
     why: "Por qué hay match",
     contact: "Iniciar Conversación",
@@ -1038,7 +1038,7 @@ const es: Dictionary = {
     },
     draftBadge: "DRAFT — Subject to legal review / BORRADOR — Sujeto a revisión legal",
     disclaimer:
-      "ASSETMAX Global no presta asesoría legal. Este documento fue generado automáticamente para facilitar la negociación. Ambas partes deben validarlo con abogados de la jurisdicción aplicable antes de firmar.",
+      "VORTAMAX Global no presta asesoría legal. Este documento fue generado automáticamente para facilitar la negociación. Ambas partes deben validarlo con abogados de la jurisdicción aplicable antes de firmar.",
     markReviewed: "Marcar como Revisado",
     reviewedTag: "Revisado",
     waitingOther: "Esperando revisión de la contraparte",
@@ -1059,9 +1059,9 @@ const es: Dictionary = {
     navLabel: "Commodities",
     title: "Commodities Físicos",
     subtitle:
-      "Ofertas de venta y requerimientos de compra de commodities industriales. ASSETMAX conecta contrapartes verificadas — el pago y la logística se cierran por canales tradicionales.",
+      "Ofertas de venta y requerimientos de compra de commodities industriales. VORTAMAX conecta contrapartes verificadas — el pago y la logística se cierran por canales tradicionales.",
     disclaimer:
-      "ASSETMAX Global es un marketplace de conexión: no procesa pagos, no custodia fondos ni intermedia instrumentos financieros regulados. Toda transacción de commodities se negocia y liquida directamente entre las partes.",
+      "VORTAMAX Global es un marketplace de conexión: no procesa pagos, no custodia fondos ni intermedia instrumentos financieros regulados. Toda transacción de commodities se negocia y liquida directamente entre las partes.",
     sell: "Oferta de Venta",
     buy: "Requerimiento de Compra",
     side: "Tipo",
@@ -1199,7 +1199,7 @@ const es: Dictionary = {
     kicker: "Inteligencia de Mercado",
     title: "Insights",
     subtitle:
-      "Análisis e inteligencia sobre activos industriales, transición energética y mercados de commodities del equipo de research de ASSETMAX.",
+      "Análisis e inteligencia sobre activos industriales, transición energética y mercados de commodities del equipo de research de VORTAMAX.",
     readMore: "Leer Análisis",
     backTo: "Todos los Insights",
     byLine: "Por",
@@ -1276,7 +1276,7 @@ const es: Dictionary = {
     offices: "Oficinas",
     followUs: "Síguenos",
     regulatory:
-      "ASSETMAX Global opera como plataforma de publicación y conexión. No es un corredor de valores, asesor de inversiones ni institución de pagos, y no custodia fondos ni valores. Las publicaciones son preparadas por sus dueños; los badges de verificación reflejan solo revisión documental. Nada en este sitio constituye una oferta de valores en jurisdicción alguna.",
+      "VORTAMAX Global opera como plataforma de publicación y conexión. No es un corredor de valores, asesor de inversiones ni institución de pagos, y no custodia fondos ni valores. Las publicaciones son preparadas por sus dueños; los badges de verificación reflejan solo revisión documental. Nada en este sitio constituye una oferta de valores en jurisdicción alguna.",
   },
   home2: {
     statDeals: "Deals facilitados",
@@ -1293,7 +1293,7 @@ const es: Dictionary = {
     rights: "Todos los derechos reservados.",
     language: "Idioma",
     disclaimer:
-      "ASSETMAX Global es un marketplace y no entrega asesoría de inversión. Todas las transacciones son entre usuarios.",
+      "VORTAMAX Global es un marketplace y no entrega asesoría de inversión. Todas las transacciones son entre usuarios.",
   },
 };
 
