@@ -47,7 +47,8 @@ export default async function SuppliersPage({
   const [suppliers, allPublished] = await Promise.all([
     prisma.supplierProfile.findMany({
       where,
-      orderBy: [{ verified: "desc" }, { createdAt: "asc" }],
+      // Featured (paid placement) first, then qualified, then seniority.
+      orderBy: [{ featured: "desc" }, { verified: "desc" }, { createdAt: "asc" }],
     }),
     prisma.supplierProfile.findMany({
       where: { status: "PUBLISHED" },

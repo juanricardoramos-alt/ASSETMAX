@@ -16,6 +16,7 @@ export type SupplierCardData = {
   certifications: string;
   capacity: string | null;
   verified: boolean;
+  featured?: boolean;
 };
 
 export function SupplierCard({
@@ -30,12 +31,23 @@ export function SupplierCard({
   const certifications = parseJsonArray(supplier.certifications);
 
   return (
-    <Card className="flex h-full min-w-0 flex-col p-6 transition hover:shadow-lg">
+    <Card
+      className={`flex h-full min-w-0 flex-col p-6 transition hover:shadow-lg ${
+        supplier.featured ? "border-gold-400 ring-1 ring-gold-300" : ""
+      }`}
+    >
       <div className="flex items-start justify-between gap-3">
         <CompanyMonogram name={supplier.name} />
-        {supplier.verified && (
-          <VerifiedBadge label={dict.suppliers.qualifiedBadge} />
-        )}
+        <div className="flex flex-wrap justify-end gap-1.5">
+          {supplier.featured && (
+            <Badge className="bg-gold-500 text-navy-950">
+              {dict.suppliers.featuredBadge}
+            </Badge>
+          )}
+          {supplier.verified && (
+            <VerifiedBadge label={dict.suppliers.qualifiedBadge} />
+          )}
+        </div>
       </div>
 
       <h3 className="mt-4 text-lg font-bold leading-snug text-navy-950">

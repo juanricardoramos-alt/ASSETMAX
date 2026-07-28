@@ -921,6 +921,7 @@ const es: Dictionary = {
     results: "proveedores calificados",
     result: "proveedor calificado",
     qualifiedBadge: "Calificado",
+    featuredBadge: "Destacado",
     certifications: "Certificaciones",
     capacity: "Capacidad",
     portfolioTitle: "Track record y portafolio",
@@ -933,6 +934,7 @@ const es: Dictionary = {
     openNeedsCta: "Ver necesidades abiertas",
     panel: {
       navLabel: "Perfil de Proveedor",
+      toolsNavLabel: "Herramientas",
       title: "Perfil de Proveedor",
       subtitle: "Tu presencia en el catastro de proveedores calificados.",
       createTitle: "Únete al catastro de proveedores",
@@ -1135,6 +1137,111 @@ const es: Dictionary = {
     decidedOn: "Decidido",
     openedDoc: "abrió",
     by: "por",
+  },
+  services: {
+    navLabel: "Gestión y Servicios",
+    title: "Capa de Gestión",
+    subtitle:
+      "De herramientas autoservicio a acompañamiento experto: todo lo que un proveedor necesita para ganar contratos grandes — y el motor comercial de la plataforma.",
+    automatedKicker: "Automatizado — incluido con toda cuenta",
+    automatedTitle: "Toolkit autoservicio",
+    automatedItems: [
+      {
+        title: "Plantillas de propuesta",
+        text: "Plantillas institucionales para necesidades, licitaciones EPC y consorcios — copia, adapta y presenta.",
+      },
+      {
+        title: "Checklist de certificaciones",
+        text: "Checklist interactivo con las certificaciones y documentos que exigen las empresas ancla.",
+      },
+      {
+        title: "Generador de propuestas en plataforma",
+        text: "Las postulaciones, consorcios y propuestas a licitaciones se generan dentro de la plataforma con formularios guiados.",
+      },
+    ],
+    toolsCta: "Abrir el toolkit",
+    premiumKicker: "Premium — asesoría de pago",
+    premiumTitle: "Asesoría de preparación de ofertas",
+    premiumText:
+      "Acompañamiento experto para preparar a tu empresa a ganar contratos grandes con las empresas ancla.",
+    premiumItems: [
+      "Análisis de brechas de calificación contra requisitos reales de empresas ancla",
+      "Hoja de ruta de certificaciones y coaching documental",
+      "Revisión de propuesta y precios por especialistas de industria",
+      "Estructuración de consorcios y apoyo en negociación",
+    ],
+    premiumPrice: "desde USD 2.500/mes",
+    premiumCta: "Habla con nuestro equipo",
+    revenueKicker: "Modelo de ingresos",
+    revenueTitle: "Cómo genera ingresos la plataforma",
+    plans: [
+      {
+        name: "Membresía de proveedores",
+        price: "USD 0 · Básica",
+        detail:
+          "Incluye presencia en el catastro, postulaciones y consorcios. La membresía Pro (USD 490/mes) suma matching prioritario y analítica.",
+      },
+      {
+        name: "Comisión por éxito",
+        price: "2–4% por contrato",
+        detail:
+          "Se cobra solo sobre contratos adjudicados a través de la plataforma — incentivos totalmente alineados.",
+      },
+      {
+        name: "Gestión premium",
+        price: "desde USD 2.500/mes",
+        detail:
+          "Retainer de asesoría que prepara a proveedores para ganar grandes licitaciones y paquetes EPC.",
+      },
+      {
+        name: "Proveedor destacado",
+        price: "USD 290/mes",
+        detail:
+          "Ubicación dorada al tope del catastro y prioridad en los resultados de matching.",
+      },
+    ],
+    checklist: {
+      title: "Checklist de certificaciones",
+      subtitle:
+        "Los documentos que las empresas ancla piden primero. El avance se guarda en tu navegador.",
+      progress: "listo",
+      items: [
+        "Certificado de gestión de calidad ISO 9001",
+        "Certificado ambiental ISO 14001",
+        "Certificado de seguridad ocupacional ISO 45001",
+        "Estados financieros auditados (últimos 3 años)",
+        "Carta de estadísticas de seguridad (TRIFR / LTIFR)",
+        "Pólizas de seguro vigentes (responsabilidad y equipos)",
+        "Dossier de track record con referencias de clientes",
+        "CVs de personal clave y organigrama",
+        "Registro de equipos y capacidad",
+        "Política de compliance y anticorrupción",
+      ],
+    },
+    templates: {
+      title: "Plantillas de propuesta",
+      copy: "Copiar",
+      copied: "Copiado ✓",
+      bodies: [
+        {
+          name: "Postulación a necesidad",
+          body: "1. Resumen ejecutivo — quiénes somos y por qué calzamos con esta necesidad.\n2. Track record relevante — 3 contratos comparables con volúmenes y clientes.\n3. Enfoque técnico — metodología, equipos y equipo asignado.\n4. Capacidad y disponibilidad — plazo de movilización y compromisos simultáneos.\n5. Certificaciones — credenciales de calidad, ambientales y de seguridad.\n6. Propuesta comercial — presupuesto referencial, validez e hitos de pago.\n7. Contactos — punto único de responsabilidad para esta postulación.",
+        },
+        {
+          name: "Propuesta a licitación EPC",
+          body: "1. Confirmación de alcance llave en mano — ingeniería, procura, construcción, puesta en marcha.\n2. Estrategia de ejecución — cronograma con ruta crítica y equipos de largo plazo de entrega.\n3. Referencias EPC comparables sobre el umbral de la licitación.\n4. Garantías de desempeño — throughput, disponibilidad y multas aceptadas.\n5. Plan HSE alineado con los estándares del mandante.\n6. Desglose de precio suma alzada y curva de pagos.\n7. Marco contractual propuesto (ej. FIDIC Yellow/Silver Book).",
+        },
+        {
+          name: "Propuesta conjunta en consorcio",
+          body: "1. Composición del consorcio — integrantes, roles y liderazgo con punto único.\n2. Matriz de alcance — qué integrante ejecuta cada paquete.\n3. Track record y certificaciones combinadas por alcance.\n4. Gobernanza — toma de decisiones, garantías y responsabilidad solidaria.\n5. Cronograma integrado y gestión de interfaces.\n6. Propuesta comercial consolidada a través del líder del consorcio.",
+        },
+      ],
+    },
+    upsell: {
+      title: "¿Necesitas ganar contratos más grandes?",
+      text: "Nuestra asesoría premium prepara a tu empresa de punta a punta para grandes licitaciones.",
+      cta: "Conocer la asesoría Premium",
+    },
   },
   matches: {
     title: "Matches",

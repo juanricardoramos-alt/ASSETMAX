@@ -46,10 +46,18 @@ export async function POST(req: Request) {
     .sort((a, b) => b.score - a.score)
     .slice(0, 8);
 
+  // Featured suppliers (paid placement) break score ties in their favor.
+  const featuredIds = new Set(
+    suppliers.filter((s) => s.featured).map((s) => s.id)
+  );
   const supplierMatches = suppliers
     .map((s) => scoreSupplier(input, s))
     .filter((s) => s.category === input.supplierCategory) // hard requirement
-    .sort((a, b) => b.score - a.score)
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        Number(featuredIds.has(b.id)) - Number(featuredIds.has(a.id))
+    )
     .slice(0, 8);
 
   return NextResponse.json({ investors, suppliers: supplierMatches });

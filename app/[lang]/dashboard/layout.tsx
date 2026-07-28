@@ -39,6 +39,10 @@ export default async function DashboardLayout({
       href: `${base}/applications`,
       label: dict.suppliers.applications.navLabel,
     });
+    items.push({
+      href: `${base}/tools`,
+      label: dict.suppliers.panel.toolsNavLabel,
+    });
   }
   if (role !== "SUPPLIER") {
     items.push({ href: `${base}/commodities`, label: dict.commodities.navLabel });

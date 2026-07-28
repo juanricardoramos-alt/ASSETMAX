@@ -1394,8 +1394,10 @@ async function main() {
     });
     const created = await prisma.supplierProfile.upsert({
       where: { slug: s.slug },
-      update: {},
+      // Keep the paid-placement flag in sync when reseeding an existing DB.
+      update: { featured: s.slug === "skanor-epc" },
       create: {
+        featured: s.slug === "skanor-epc",
         slug: s.slug,
         userId: supplierUser.id,
         name: s.name,

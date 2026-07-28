@@ -909,6 +909,7 @@ const en = {
     results: "qualified suppliers",
     result: "qualified supplier",
     qualifiedBadge: "Qualified",
+    featuredBadge: "Featured",
     certifications: "Certifications",
     capacity: "Capacity",
     portfolioTitle: "Track record & portfolio",
@@ -921,6 +922,7 @@ const en = {
     openNeedsCta: "Browse open needs",
     panel: {
       navLabel: "Supplier Profile",
+      toolsNavLabel: "Toolkit",
       title: "Supplier Profile",
       subtitle: "Your presence in the qualified supplier registry.",
       createTitle: "Join the supplier registry",
@@ -1122,6 +1124,111 @@ const en = {
     decidedOn: "Decided",
     openedDoc: "opened",
     by: "by",
+  },
+  services: {
+    navLabel: "Management & Services",
+    title: "Management Layer",
+    subtitle:
+      "From self-service tools to hands-on advisory: everything a supplier needs to win large contracts — and the commercial engine of the platform.",
+    automatedKicker: "Automated — included with every account",
+    automatedTitle: "Self-service toolkit",
+    automatedItems: [
+      {
+        title: "Proposal templates",
+        text: "Institutional bid templates for needs, EPC tenders and consortium bids — copy, adapt and submit.",
+      },
+      {
+        title: "Certification checklist",
+        text: "Interactive readiness checklist covering the certifications and documents anchor companies demand.",
+      },
+      {
+        title: "In-platform proposal builder",
+        text: "Applications, joint consortium bids and tender proposals are generated inside the platform with guided forms.",
+      },
+    ],
+    toolsCta: "Open the toolkit",
+    premiumKicker: "Premium — paid advisory",
+    premiumTitle: "Bid-readiness advisory",
+    premiumText:
+      "Hands-on accompaniment to prepare your company to win large contracts with anchor companies.",
+    premiumItems: [
+      "Qualification gap analysis against real anchor-company requirements",
+      "Certification roadmap and documentation coaching",
+      "Proposal and pricing review by industry specialists",
+      "Consortium structuring and negotiation support",
+    ],
+    premiumPrice: "from USD 2,500/month",
+    premiumCta: "Talk to our team",
+    revenueKicker: "Revenue model",
+    revenueTitle: "How the platform earns",
+    plans: [
+      {
+        name: "Supplier membership",
+        price: "USD 0 · Basic",
+        detail:
+          "Registry listing, applications and consortium bids included. Pro membership (USD 490/month) adds priority matching and analytics.",
+      },
+      {
+        name: "Success fee",
+        price: "2–4% per contract",
+        detail:
+          "Charged only on contracts awarded through the platform — incentives fully aligned.",
+      },
+      {
+        name: "Premium management",
+        price: "from USD 2,500/month",
+        detail:
+          "Advisory retainer preparing suppliers to win large tenders and EPC packages.",
+      },
+      {
+        name: "Featured supplier",
+        price: "USD 290/month",
+        detail:
+          "Gold placement at the top of the registry and priority in matching results.",
+      },
+    ],
+    checklist: {
+      title: "Certification readiness checklist",
+      subtitle:
+        "The documents anchor companies ask for first. Progress is saved in your browser.",
+      progress: "ready",
+      items: [
+        "ISO 9001 quality management certificate",
+        "ISO 14001 environmental certificate",
+        "ISO 45001 occupational safety certificate",
+        "Audited financial statements (last 3 years)",
+        "Safety statistics (TRIFR / LTIFR) letter",
+        "Current insurance policies (liability & equipment)",
+        "Track-record dossier with client references",
+        "Key personnel CVs and org chart",
+        "Equipment & capacity register",
+        "Compliance and anti-corruption policy",
+      ],
+    },
+    templates: {
+      title: "Proposal templates",
+      copy: "Copy",
+      copied: "Copied ✓",
+      bodies: [
+        {
+          name: "Need application",
+          body: "1. Executive summary — who we are and why we fit this need.\n2. Relevant track record — 3 comparable contracts with volumes and clients.\n3. Technical approach — methodology, equipment and team assigned.\n4. Capacity & availability — mobilization time and concurrent commitments.\n5. Certifications — quality, environmental and safety credentials.\n6. Commercial proposal — reference budget, validity and payment milestones.\n7. Contacts — single point of accountability for this application.",
+        },
+        {
+          name: "EPC tender bid",
+          body: "1. Turnkey scope confirmation — engineering, procurement, construction, commissioning.\n2. Execution strategy — schedule with critical path and long-lead items.\n3. Comparable EPC references above the tender threshold.\n4. Performance guarantees — throughput, availability and liquidated damages accepted.\n5. HSE plan aligned with the owner's standards.\n6. Lump-sum price breakdown and payment curve.\n7. Proposed contract framework (e.g. FIDIC Yellow/Silver Book).",
+        },
+        {
+          name: "Consortium joint bid",
+          body: "1. Consortium composition — members, roles and single-point leadership.\n2. Scope matrix — which member executes which package.\n3. Combined track record and certifications per scope.\n4. Governance — decision-making, guarantees and joint & several liability.\n5. Integrated schedule and interface management.\n6. Consolidated commercial proposal through the consortium leader.",
+        },
+      ],
+    },
+    upsell: {
+      title: "Need to win bigger contracts?",
+      text: "Our premium advisory prepares your company end-to-end for large tenders.",
+      cta: "Explore Premium advisory",
+    },
   },
   matches: {
     title: "Matches",

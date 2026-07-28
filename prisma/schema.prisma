@@ -181,6 +181,8 @@ model SupplierProfile {
   capacity        String?
   status          String   @default("IN_REVIEW")
   verified        Boolean  @default(false)
+  // Paid placement ("Featured supplier" revenue line) — toggled by admins.
+  featured        Boolean  @default(false)
   rejectionReason String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

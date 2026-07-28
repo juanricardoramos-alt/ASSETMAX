@@ -6,6 +6,7 @@ import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n"
 import { countryName } from "@/lib/constants";
 import { parseJsonArray } from "@/lib/utils";
 import { SupplierReviewActions } from "@/components/dashboard/SupplierReviewActions";
+import { SupplierFeatureToggle } from "@/components/dashboard/SupplierFeatureToggle";
 import { CompanyMonogram } from "@/components/company/CompanyMonogram";
 import { Badge, Card, StatusBadge } from "@/components/ui";
 
@@ -90,16 +91,25 @@ export default async function AdminSuppliersPage({
             )}
           </div>
         </div>
-        {showActions && (
-          <SupplierReviewActions
-            supplierId={s.id}
-            labels={{
-              approve: t.approve,
-              reject: t.reject,
-              rejectReason: t.rejectReason,
-            }}
-          />
-        )}
+        <div className="flex flex-col items-end gap-2">
+          {s.status === "PUBLISHED" && (
+            <SupplierFeatureToggle
+              supplierId={s.id}
+              featured={s.featured}
+              label={dict.suppliers.featuredBadge}
+            />
+          )}
+          {showActions && (
+            <SupplierReviewActions
+              supplierId={s.id}
+              labels={{
+                approve: t.approve,
+                reject: t.reject,
+                rejectReason: t.rejectReason,
+              }}
+            />
+          )}
+        </div>
       </Card>
     );
   }
