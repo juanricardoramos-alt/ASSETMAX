@@ -54,7 +54,7 @@ export const OFFER_STATUSES = [
 ] as const;
 export type OfferStatus = (typeof OFFER_STATUSES)[number];
 
-export const ROLES = ["SELLER", "INVESTOR", "PARTNER", "ADMIN"] as const;
+export const ROLES = ["SELLER", "INVESTOR", "PARTNER", "ADMIN", "SUPPLIER"] as const;
 export type Role = (typeof ROLES)[number];
 
 // Countries currently represented on the platform (ISO 3166-1 alpha-2).
@@ -106,6 +106,17 @@ export type SupplierCategory = (typeof SUPPLIER_CATEGORIES)[number];
 
 export const NEED_STATUSES = ["OPEN", "CLOSED"] as const;
 export type NeedStatus = (typeof NEED_STATUSES)[number];
+
+// Lifecycle of a supplier's application to a need (mirrors offer statuses so
+// the same badge styles and labels apply).
+export const APPLICATION_STATUSES = [
+  "PENDING",
+  "IN_DISCUSSION",
+  "ACCEPTED",
+  "DECLINED",
+  "WITHDRAWN",
+] as const;
+export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number];
 
 // ---------------------------------------------------------------------------
 // Commodities marketplace

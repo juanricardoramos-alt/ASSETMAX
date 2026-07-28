@@ -71,6 +71,7 @@ export function RegisterForm({
           <Select id="rg-role" name="role" required defaultValue="INVESTOR">
             <option value="INVESTOR">{dict.auth.roleInvestor}</option>
             <option value="SELLER">{dict.auth.roleSeller}</option>
+            <option value="SUPPLIER">{dict.auth.roleSupplier}</option>
           </Select>
         </div>
         <div>

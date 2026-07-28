@@ -514,7 +514,7 @@ model Contract {
 // In-app notifications
 // ---------------------------------------------------------------------------
 
-// type: MATCH | OFFER | MESSAGE | CONTRACT | REVIEW
+// type: MATCH | OFFER | MESSAGE | CONTRACT | REVIEW | APPLICATION
 model Notification {
   id        String    @id @default(cuid())
   userId    String

@@ -47,6 +47,13 @@ export default async function AdminPage({ params }: { params: { lang: string } }
       title: dict.companies.admin.title,
       badge: await prisma.companyProfile.count(),
     },
+    {
+      href: `/${lang}/dashboard/admin/suppliers`,
+      title: dict.suppliers.admin.title,
+      badge: await prisma.supplierProfile.count({
+        where: { status: "IN_REVIEW" },
+      }),
+    },
   ];
 
   return (

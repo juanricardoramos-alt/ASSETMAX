@@ -7,7 +7,7 @@ const schema = z.object({
   name: z.string().min(2).max(120),
   email: z.string().email(),
   password: z.string().min(8).max(200),
-  role: z.enum(["SELLER", "INVESTOR"]),
+  role: z.enum(["SELLER", "INVESTOR", "SUPPLIER"]),
   company: z.string().max(160).optional().or(z.literal("")),
   country: z.string().max(2).optional().or(z.literal("")),
 });

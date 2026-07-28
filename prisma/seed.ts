@@ -1186,6 +1186,307 @@ async function main() {
     console.log(`  ✔ Need: ${n.title}`);
   }
 
+  // --- Supplier registry -----------------------------------------------------
+  const supplierSeeds: {
+    email: string;
+    userName: string;
+    slug: string;
+    name: string;
+    category: string;
+    country: string;
+    countryCode: string;
+    city?: string;
+    employees?: number;
+    yearsActive?: number;
+    certifications: string[];
+    portfolio: string[];
+    capacity?: string;
+    description: string;
+    status?: string;
+  }[] = [
+    {
+      email: "supplier@assetmax.global",
+      userName: "Paula Contreras",
+      slug: "andina-drilling-geotech",
+      name: "Andina Drilling & Geotech",
+      category: "technical_services",
+      country: "Chile",
+      countryCode: "CL",
+      city: "Santiago",
+      employees: 380,
+      yearsActive: 21,
+      certifications: ["ISO 9001", "ISO 14001", "ISO 45001"],
+      portfolio: [
+        "68,000 m diamond & RC drilling — Vizcachas Copper Project (2019–2024)",
+        "Geotechnical campaign, 240 boreholes — coastal water pipeline (2023)",
+        "Dewatering wells program — Salar de Atacama (2021)",
+      ],
+      capacity: "14 drill rigs · 3 concurrent remote camps",
+      description:
+        "Chilean drilling and geotechnical services contractor specialized in high-altitude and remote mining environments. Full-service offering from exploration drilling to geotechnical instrumentation, with an owned fleet of 14 rigs and permanent QA/QC and safety teams.",
+    },
+    {
+      email: "skanor@assetmax.global",
+      userName: "Ingrid Halvorsen",
+      slug: "skanor-epc",
+      name: "Skanor EPC",
+      category: "epc",
+      country: "Spain",
+      countryCode: "ES",
+      city: "Madrid",
+      employees: 2100,
+      yearsActive: 34,
+      certifications: ["ISO 9001", "ISO 45001", "FIDIC-experienced"],
+      portfolio: [
+        "4 pumping stations delivered EPC — Iberia & North Africa",
+        "220/500 kV substations, 11 projects across LatAm",
+        "Desalination balance-of-plant, 2 plants in Morocco",
+      ],
+      capacity: "3 concurrent EPC sites · 120 engineers in-house",
+      description:
+        "European EPC contractor for water, energy and industrial infrastructure with three decades of international delivery. Strong track record in pumping and compression stations, HV substations and balance-of-plant packages under FIDIC frameworks.",
+    },
+    {
+      email: "transandes@assetmax.global",
+      userName: "Álvaro Muñoz",
+      slug: "transandes-heavy-logistics",
+      name: "TransAndes Heavy Logistics",
+      category: "logistics",
+      country: "Chile",
+      countryCode: "CL",
+      city: "Valparaíso",
+      employees: 640,
+      yearsActive: 18,
+      certifications: ["ISO 9001", "ISO 39001", "BASC"],
+      portfolio: [
+        "Transport of 12 transformers up to 260 t — Andean transmission line",
+        "Port-to-mine oversized cargo framework — 3 mining operations",
+        "SPMT operations for modular plant relocation (2022)",
+      ],
+      capacity: "SPMT up to 320 t · 60-truck heavy fleet · route engineering team",
+      description:
+        "Heavy-lift and project-cargo specialist covering the Pacific coast and Andean corridors. Integrated route studies, bridge reinforcement, escorted convoys and port handling for out-of-gauge industrial cargo.",
+    },
+    {
+      email: "maquisur@assetmax.global",
+      userName: "Rosa Quispe",
+      slug: "maquisur-equipment",
+      name: "MaquiSur Equipment",
+      category: "equipment",
+      country: "Peru",
+      countryCode: "PE",
+      city: "Lima",
+      employees: 890,
+      yearsActive: 26,
+      certifications: ["ISO 9001", "OEM-certified dealer", "MARC-experienced"],
+      portfolio: [
+        "MARC contracts on 4 mining fleets (availability > 89%)",
+        "Supply of 55 off-highway trucks to Andean copper operations",
+        "On-site parts warehouses at 6 remote operations",
+      ],
+      capacity: "5-year MARC programs · on-site technician coverage nationwide",
+      description:
+        "Andean heavy-equipment distributor and maintenance contractor. Sales, leasing and full maintenance-and-repair contracts (MARC) for off-highway fleets, with factory-certified workshops and on-site parts logistics.",
+    },
+    {
+      email: "verdant@assetmax.global",
+      userName: "Camila Duarte",
+      slug: "verdant-environmental",
+      name: "Verdant Environmental",
+      category: "environmental",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "Rio de Janeiro",
+      employees: 210,
+      yearsActive: 15,
+      certifications: ["IBAMA-registered", "ISO 14001"],
+      portfolio: [
+        "EIA and licensing — 2 container terminal expansions (Santos, Itajaí)",
+        "Marine biota monitoring, 5-year program — port dredging",
+        "Community engagement programs for 8 infrastructure projects",
+      ],
+      capacity: "40 licensed specialists · marine monitoring vessels on retainer",
+      description:
+        "Brazilian environmental consultancy focused on ports, coastal works and heavy infrastructure: impact studies, licensing management before state and federal agencies, marine monitoring and community engagement.",
+    },
+    {
+      email: "omnigrid@assetmax.global",
+      userName: "Diego Ferrer",
+      slug: "omnigrid-om",
+      name: "OmniGrid O&M",
+      category: "maintenance",
+      country: "Mexico",
+      countryCode: "MX",
+      city: "Monterrey",
+      employees: 460,
+      yearsActive: 12,
+      certifications: ["ISO 55001", "NFPA 70E", "Certified HV switching crews"],
+      portfolio: [
+        "O&M of 520 MW PV portfolio across Mexico and Argentina",
+        "HV substation maintenance framework — 14 substations",
+        "24/7 monitoring center with CMMS reporting",
+      ],
+      capacity: "520 MW under management · 24/7 NOC · thermography drones",
+      description:
+        "Independent operations & maintenance provider for utility-scale solar plants and HV infrastructure. Preventive and corrective programs, certified switching personnel and CMMS-based performance reporting.",
+    },
+    {
+      email: "baustahl@assetmax.global",
+      userName: "Otto Krenz",
+      slug: "baustahl-civil-works",
+      name: "Baustahl Civil Works",
+      category: "construction",
+      country: "Brazil",
+      countryCode: "BR",
+      city: "São Paulo",
+      employees: 1500,
+      yearsActive: 22,
+      certifications: ["ISO 9001", "ISO 45001"],
+      portfolio: [
+        "38 Mm³ mass earthworks — iron ore expansion (2018–2021)",
+        "Haul road network, 60 km — Carajás corridor",
+      ],
+      capacity: "Fleet of 45 haul units · 2 concurrent mine sites",
+      description:
+        "Heavy civil-works and mining earthworks contractor with own fleet and experienced high-volume load & haul teams. Currently completing registry qualification.",
+      status: "IN_REVIEW",
+    },
+  ];
+
+  const suppliersBySlug: Record<string, { id: string }> = {};
+  for (const s of supplierSeeds) {
+    const supplierUser = await prisma.user.upsert({
+      where: { email: s.email },
+      update: {},
+      create: {
+        name: s.userName,
+        email: s.email,
+        passwordHash,
+        role: "SUPPLIER",
+        company: s.name,
+        country: s.countryCode,
+      },
+    });
+    const created = await prisma.supplierProfile.upsert({
+      where: { slug: s.slug },
+      update: {},
+      create: {
+        slug: s.slug,
+        userId: supplierUser.id,
+        name: s.name,
+        description: s.description,
+        category: s.category,
+        country: s.country,
+        countryCode: s.countryCode,
+        city: s.city ?? null,
+        employees: s.employees ?? null,
+        yearsActive: s.yearsActive ?? null,
+        certifications: JSON.stringify(s.certifications),
+        portfolio: JSON.stringify(s.portfolio),
+        capacity: s.capacity ?? null,
+        status: s.status ?? "PUBLISHED",
+        verified: (s.status ?? "PUBLISHED") === "PUBLISHED",
+      },
+    });
+    suppliersBySlug[s.slug] = created;
+    console.log(`  ✔ Supplier: ${s.name}`);
+  }
+
+  // --- Supplier applications to anchor needs ---------------------------------
+  const applicationSeeds: {
+    needSlug: string;
+    supplierSlug: string;
+    message: string;
+    proposedBudget?: number;
+    leadTime?: string;
+    status?: string;
+  }[] = [
+    {
+      needSlug: "tlp-oversize-logistics",
+      supplierSlug: "transandes-heavy-logistics",
+      message:
+        "We operate SPMT capacity up to 320 t and maintain permanent route-engineering teams on the Chile–Argentina corridors. We propose a dedicated framework crew with port handling at Santos and Antofagasta, including escorted convoys and insurance to USD 25M per shipment.",
+      proposedBudget: 11_500_000,
+      leadTime: "Mobilization 45 days from award",
+      status: "PENDING",
+    },
+    {
+      needSlug: "tbea-transformer-logistics",
+      supplierSlug: "transandes-heavy-logistics",
+      message:
+        "Our transformer transport record includes twelve units up to 260 t delivered in the Andes. For Manzanillo–central Mexico we would partner with our Mexican JV fleet, providing SPMT, route reinforcement design and cranage under a single contract.",
+      proposedBudget: 8_900_000,
+      leadTime: "First delivery window within 90 days",
+      status: "IN_DISCUSSION",
+    },
+    {
+      needSlug: "tlp-epc-pumping-stations",
+      supplierSlug: "skanor-epc",
+      message:
+        "Skanor has delivered four high-head pumping stations under FIDIC Yellow Book, including SCADA integration and surge analysis. We propose a Peru-based consortium with local civil capacity and our Madrid engineering center leading process design.",
+      proposedBudget: 118_000_000,
+      leadTime: "32-month program",
+      status: "PENDING",
+    },
+    {
+      needSlug: "ag-mining-truck-fleet",
+      supplierSlug: "maquisur-equipment",
+      message:
+        "We can supply forty 96 t class trucks with a 5-year MARC guaranteeing 88% availability, on-site parts warehouse and operator training. Structured as lease-to-own with quarterly performance reviews.",
+      proposedBudget: 62_000_000,
+      leadTime: "First 10 units in 120 days",
+      status: "PENDING",
+    },
+    {
+      needSlug: "ag-environmental-licensing-port",
+      supplierSlug: "verdant-environmental",
+      message:
+        "Verdant led the EIA and licensing for two container-terminal expansions including dredging permits and marine biota programs. We propose a full scope: baseline studies, agency management, and a 36-month monitoring plan.",
+      proposedBudget: 3_400_000,
+      leadTime: "Licensing package in 14 months",
+      status: "ACCEPTED",
+    },
+    {
+      needSlug: "tbea-om-solar-services",
+      supplierSlug: "omnigrid-om",
+      message:
+        "We currently operate 520 MW of PV in the region with certified HV crews and a 24/7 NOC. Our proposal covers preventive/corrective maintenance, robotic module cleaning and CMMS reporting with guaranteed response times.",
+      proposedBudget: 7_800_000,
+      leadTime: "Takeover in 60 days",
+      status: "PENDING",
+    },
+    {
+      needSlug: "ag-earthworks-subcontractor-iron-ore",
+      supplierSlug: "andina-drilling-geotech",
+      message:
+        "Andina can provide the drilling-support scope of the earthworks package: production drilling, geotechnical instrumentation and slope monitoring with three rigs dedicated to the site for the full 30-month program.",
+      proposedBudget: 9_200_000,
+      leadTime: "Rigs on site 30 days from award",
+      status: "IN_DISCUSSION",
+    },
+  ];
+
+  for (const a of applicationSeeds) {
+    const need = await prisma.need.findUnique({ where: { slug: a.needSlug } });
+    const supplier = suppliersBySlug[a.supplierSlug];
+    if (!need || !supplier) continue;
+    await prisma.supplierApplication.upsert({
+      where: {
+        needId_supplierId: { needId: need.id, supplierId: supplier.id },
+      },
+      update: {},
+      create: {
+        needId: need.id,
+        supplierId: supplier.id,
+        message: a.message,
+        proposedBudget: a.proposedBudget ?? null,
+        leadTime: a.leadTime ?? null,
+        status: a.status ?? "PENDING",
+      },
+    });
+  }
+  console.log(`  ✔ Supplier applications: ${applicationSeeds.length}`);
+
   // --- Projects --------------------------------------------------------------
   for (const p of projects) {
     const { images, documents, owner, highlights, specs, ...rest } = p;

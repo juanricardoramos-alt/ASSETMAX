@@ -8,7 +8,7 @@ export async function notify({
   href,
 }: {
   userId: string;
-  type: "MATCH" | "OFFER" | "MESSAGE" | "CONTRACT" | "REVIEW";
+  type: "MATCH" | "OFFER" | "MESSAGE" | "CONTRACT" | "REVIEW" | "APPLICATION";
   title: string;
   body?: string;
   href?: string;
