@@ -1034,6 +1034,34 @@ const en = {
     methodology:
       "Deterministic scoring over published mandates and the qualified supplier registry. Weights — investors: sector 35 · geography 25 · ticket 30 · stage 10. Suppliers: category 50 · geography 30 · track record 12 · certifications 8.",
   },
+  consortiums: {
+    badge: "Consortium",
+    title: "Consortium Builder",
+    subtitle:
+      "When a need is too large for a single supplier, group complementary qualified suppliers into one joint candidacy.",
+    applyCta: "Apply as a Consortium",
+    newTitle: "New Consortium Application",
+    forNeed: "Applying to",
+    nameLabel: "Consortium name",
+    namePlaceholder: "e.g. Consorcio Andino EPC",
+    yourRole: "Your role (leader)",
+    rolePlaceholder: "e.g. Overall coordination & engineering",
+    pickTitle: "Complementary suppliers",
+    pickHint:
+      "Select qualified suppliers from the registry — filter by category to cover the full scope. You lead the consortium and file the application.",
+    searchPlaceholder: "Search suppliers…",
+    memberRolePlaceholder: "Role — e.g. Heavy logistics",
+    membersSelected: "members selected (plus you as leader)",
+    leaderTag: "Leader",
+    proposalTitle: "Joint proposal",
+    submit: "Submit Consortium Application",
+    needProfileFirst:
+      "You need a qualified supplier profile to lead a consortium.",
+    membersTitle: "Consortium members",
+    ledBy: "Led by",
+    memberView: "You are part of this consortium's joint application.",
+    noCandidates: "No other qualified suppliers available.",
+  },
   matches: {
     title: "Matches",
     subtitle:

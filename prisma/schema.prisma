@@ -147,6 +147,7 @@ model Need {
 
   company      CompanyProfile        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   applications SupplierApplication[]
+  consortiums  Consortium[]
 }
 
 // ---------------------------------------------------------------------------
@@ -179,16 +180,21 @@ model SupplierProfile {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  user         User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  applications SupplierApplication[]
+  user           User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications   SupplierApplication[]
+  ledConsortiums Consortium[]          @relation("ConsortiumLeader")
+  memberships    ConsortiumMember[]
 }
 
-// A qualified supplier's application to a published need.
+// A qualified supplier's application to a published need. When filed on
+// behalf of a consortium, `consortiumId` links the joint bid and `supplierId`
+// is the consortium leader.
 // status: PENDING | IN_DISCUSSION | ACCEPTED | DECLINED | WITHDRAWN
 model SupplierApplication {
   id             String   @id @default(cuid())
   needId         String
   supplierId     String
+  consortiumId   String?
   message        String
   proposedBudget Float?
   leadTime       String?
@@ -196,10 +202,41 @@ model SupplierApplication {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  need     Need            @relation(fields: [needId], references: [id], onDelete: Cascade)
-  supplier SupplierProfile @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  need       Need            @relation(fields: [needId], references: [id], onDelete: Cascade)
+  supplier   SupplierProfile @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  consortium Consortium?     @relation(fields: [consortiumId], references: [id], onDelete: SetNull)
 
   @@unique([needId, supplierId])
+}
+
+// A joint-bid vehicle: complementary qualified suppliers grouped to apply
+// together to a large need. The anchor company sees one candidacy with the
+// member detail; the leader files and manages the application.
+model Consortium {
+  id          String   @id @default(cuid())
+  name        String
+  needId      String
+  leaderId    String
+  createdAt   DateTime @default(now())
+
+  need    Need            @relation(fields: [needId], references: [id], onDelete: Cascade)
+  leader  SupplierProfile @relation("ConsortiumLeader", fields: [leaderId], references: [id], onDelete: Cascade)
+  members      ConsortiumMember[]
+  applications SupplierApplication[]
+}
+
+// role: free text describing the member's scope inside the consortium
+// (e.g. "Civil works", "Heavy logistics").
+model ConsortiumMember {
+  id           String  @id @default(cuid())
+  consortiumId String
+  supplierId   String
+  role         String?
+
+  consortium Consortium      @relation(fields: [consortiumId], references: [id], onDelete: Cascade)
+  supplier   SupplierProfile @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  @@unique([consortiumId, supplierId])
 }
 
 // ---------------------------------------------------------------------------

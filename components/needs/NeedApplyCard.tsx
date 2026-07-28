@@ -149,6 +149,13 @@ export function NeedApplyCard({
             >
               {t.cta}
             </Button>
+            <ButtonLink
+              href={`/${lang}/dashboard/consortiums/new?need=${needId}`}
+              variant="outline"
+              className="mt-2 w-full"
+            >
+              {dict.consortiums.applyCta}
+            </ButtonLink>
           </>
         )
       ) : (

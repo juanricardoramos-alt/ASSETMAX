@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
 import { formatDate, formatUsdCompact } from "@/lib/utils";
 import { ApplicationWithdrawButton } from "@/components/suppliers/ApplicationActions";
-import { ButtonLink, Card, StatusBadge } from "@/components/ui";
+import { Badge, ButtonLink, Card, StatusBadge } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -28,9 +28,15 @@ export default async function MyApplicationsPage({
     where: { userId: session.user.id },
   });
 
+  // Own applications plus joint bids where this supplier is a consortium member.
   const applications = supplier
     ? await prisma.supplierApplication.findMany({
-        where: { supplierId: supplier.id },
+        where: {
+          OR: [
+            { supplierId: supplier.id },
+            { consortium: { members: { some: { supplierId: supplier.id } } } },
+          ],
+        },
         include: {
           need: {
             select: {
@@ -40,6 +46,8 @@ export default async function MyApplicationsPage({
               company: { select: { slug: true, name: true } },
             },
           },
+          supplier: { select: { name: true } },
+          consortium: { select: { name: true, leaderId: true } },
         },
         orderBy: { createdAt: "desc" },
       })
@@ -84,7 +92,18 @@ export default async function MyApplicationsPage({
                       ] ?? a.status
                     }
                   />
+                  {a.consortium && (
+                    <Badge className="bg-navy-950 text-gold-400 ring-1 ring-gold-500/40">
+                      {dict.consortiums.badge}: {a.consortium.name}
+                    </Badge>
+                  )}
                 </div>
+                {a.consortium && supplier && a.supplierId !== supplier.id && (
+                  <p className="mt-1 text-xs font-medium text-navy-500">
+                    {dict.consortiums.memberView} {dict.consortiums.ledBy}:{" "}
+                    {a.supplier.name}
+                  </p>
+                )}
                 <p className="mt-1 text-xs text-navy-500">
                   {dict.needs.postedBy}:{" "}
                   <Link
@@ -112,12 +131,14 @@ export default async function MyApplicationsPage({
                   )}
                 </p>
               </div>
-              {["PENDING", "IN_DISCUSSION"].includes(a.status) && (
-                <ApplicationWithdrawButton
-                  applicationId={a.id}
-                  labels={{ withdraw: t.withdraw, confirm: t.confirmWithdraw }}
-                />
-              )}
+              {supplier &&
+                a.supplierId === supplier.id &&
+                ["PENDING", "IN_DISCUSSION"].includes(a.status) && (
+                  <ApplicationWithdrawButton
+                    applicationId={a.id}
+                    labels={{ withdraw: t.withdraw, confirm: t.confirmWithdraw }}
+                  />
+                )}
             </Card>
           ))}
         </div>

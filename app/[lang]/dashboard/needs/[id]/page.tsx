@@ -26,7 +26,20 @@ export default async function NeedApplicationsPage({
     include: {
       company: { select: { userId: true } },
       applications: {
-        include: { supplier: true },
+        include: {
+          supplier: true,
+          consortium: {
+            include: {
+              members: {
+                include: {
+                  supplier: {
+                    select: { id: true, slug: true, name: true, category: true },
+                  },
+                },
+              },
+            },
+          },
+        },
         orderBy: { createdAt: "desc" },
       },
     },
@@ -64,15 +77,29 @@ export default async function NeedApplicationsPage({
               <Card key={a.id} className="p-5">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="flex min-w-0 items-start gap-3">
-                    <CompanyMonogram name={a.supplier.name} />
+                    <CompanyMonogram
+                      name={a.consortium ? a.consortium.name : a.supplier.name}
+                    />
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <Link
-                          href={`/${lang}/suppliers/${a.supplier.slug}`}
-                          className="font-bold text-navy-950 hover:text-gold-600"
-                        >
-                          {a.supplier.name}
-                        </Link>
+                        {a.consortium ? (
+                          <>
+                            <span className="font-bold text-navy-950">
+                              {a.consortium.name}
+                            </span>
+                            <Badge className="bg-navy-950 text-gold-400 ring-1 ring-gold-500/40">
+                              {dict.consortiums.badge} ·{" "}
+                              {a.consortium.members.length}
+                            </Badge>
+                          </>
+                        ) : (
+                          <Link
+                            href={`/${lang}/suppliers/${a.supplier.slug}`}
+                            className="font-bold text-navy-950 hover:text-gold-600"
+                          >
+                            {a.supplier.name}
+                          </Link>
+                        )}
                         <StatusBadge
                           status={a.status}
                           label={
@@ -83,13 +110,60 @@ export default async function NeedApplicationsPage({
                         />
                       </div>
                       <p className="mt-0.5 text-xs text-navy-500">
-                        {dict.supplierCategories[
-                          a.supplier.category as keyof typeof dict.supplierCategories
-                        ] ?? a.supplier.category}{" "}
-                        · {countryName(a.supplier.countryCode, lang)} ·{" "}
-                        {formatDate(a.createdAt, lang)}
+                        {a.consortium ? (
+                          <>
+                            {dict.consortiums.ledBy}:{" "}
+                            <Link
+                              href={`/${lang}/suppliers/${a.supplier.slug}`}
+                              className="font-semibold hover:text-gold-600"
+                            >
+                              {a.supplier.name}
+                            </Link>{" "}
+                            · {formatDate(a.createdAt, lang)}
+                          </>
+                        ) : (
+                          <>
+                            {dict.supplierCategories[
+                              a.supplier.category as keyof typeof dict.supplierCategories
+                            ] ?? a.supplier.category}{" "}
+                            · {countryName(a.supplier.countryCode, lang)} ·{" "}
+                            {formatDate(a.createdAt, lang)}
+                          </>
+                        )}
                       </p>
-                      {certifications.length > 0 && (
+                      {a.consortium && (
+                        <div className="mt-2">
+                          <p className="text-[10px] font-bold uppercase tracking-wider text-navy-400">
+                            {dict.consortiums.membersTitle}
+                          </p>
+                          <div className="mt-1 flex flex-wrap gap-1.5">
+                            {a.consortium.members.map((m) => (
+                              <Badge
+                                key={m.id}
+                                className="bg-navy-50 text-navy-700 ring-1 ring-navy-200"
+                              >
+                                <Link
+                                  href={`/${lang}/suppliers/${m.supplier.slug}`}
+                                  className="hover:text-gold-600"
+                                >
+                                  {m.supplier.name}
+                                </Link>
+                                {m.supplier.id === a.consortium!.leaderId && (
+                                  <span className="text-gold-600">
+                                    · {dict.consortiums.leaderTag}
+                                  </span>
+                                )}
+                                {m.role && (
+                                  <span className="text-navy-400">
+                                    — {m.role}
+                                  </span>
+                                )}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {!a.consortium && certifications.length > 0 && (
                         <div className="mt-1.5 flex flex-wrap gap-1.5">
                           {certifications.slice(0, 4).map((c) => (
                             <Badge

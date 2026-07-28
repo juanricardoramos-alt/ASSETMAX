@@ -1047,6 +1047,34 @@ const es: Dictionary = {
     methodology:
       "Scoring determinístico sobre mandatos publicados y el catastro de proveedores calificados. Pesos — inversionistas: sector 35 · geografía 25 · ticket 30 · etapa 10. Proveedores: categoría 50 · geografía 30 · track record 12 · certificaciones 8.",
   },
+  consortiums: {
+    badge: "Consorcio",
+    title: "Constructor de Consorcios",
+    subtitle:
+      "Cuando una necesidad es demasiado grande para un solo proveedor, agrupa proveedores calificados complementarios en una sola candidatura conjunta.",
+    applyCta: "Postular en Consorcio",
+    newTitle: "Nueva Postulación en Consorcio",
+    forNeed: "Postulando a",
+    nameLabel: "Nombre del consorcio",
+    namePlaceholder: "ej. Consorcio Andino EPC",
+    yourRole: "Tu rol (líder)",
+    rolePlaceholder: "ej. Coordinación general e ingeniería",
+    pickTitle: "Proveedores complementarios",
+    pickHint:
+      "Selecciona proveedores calificados del catastro — filtra por categoría para cubrir el alcance completo. Tú lideras el consorcio y presentas la postulación.",
+    searchPlaceholder: "Buscar proveedores…",
+    memberRolePlaceholder: "Rol — ej. Logística pesada",
+    membersSelected: "integrantes seleccionados (más tú como líder)",
+    leaderTag: "Líder",
+    proposalTitle: "Propuesta conjunta",
+    submit: "Enviar Postulación en Consorcio",
+    needProfileFirst:
+      "Necesitas un perfil de proveedor calificado para liderar un consorcio.",
+    membersTitle: "Integrantes del consorcio",
+    ledBy: "Liderado por",
+    memberView: "Formas parte de la postulación conjunta de este consorcio.",
+    noCandidates: "No hay otros proveedores calificados disponibles.",
+  },
   matches: {
     title: "Matches",
     subtitle:

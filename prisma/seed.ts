@@ -1487,6 +1487,55 @@ async function main() {
   }
   console.log(`  ✔ Supplier applications: ${applicationSeeds.length}`);
 
+  // --- Demo consortium (joint bid on TLP's pipe-supply need) -----------------
+  const pipeNeed = await prisma.need.findUnique({
+    where: { slug: "tlp-large-diameter-pipe-supply" },
+  });
+  const consLeader = suppliersBySlug["maquisur-equipment"];
+  const consMember1 = suppliersBySlug["transandes-heavy-logistics"];
+  const consMember2 = suppliersBySlug["skanor-epc"];
+  if (pipeNeed && consLeader && consMember1 && consMember2) {
+    const existingCons = await prisma.consortium.findFirst({
+      where: { needId: pipeNeed.id, leaderId: consLeader.id },
+    });
+    if (!existingCons) {
+      const consortium = await prisma.consortium.create({
+        data: {
+          name: "Consorcio Pacífico Tuberías",
+          needId: pipeNeed.id,
+          leaderId: consLeader.id,
+          members: {
+            create: [
+              { supplierId: consLeader.id, role: "Pipe supply & QA (leader)" },
+              { supplierId: consMember1.id, role: "Port handling & overland transport" },
+              { supplierId: consMember2.id, role: "Field welding & installation supervision" },
+            ],
+          },
+        },
+      });
+      await prisma.supplierApplication.upsert({
+        where: {
+          needId_supplierId: {
+            needId: pipeNeed.id,
+            supplierId: consLeader.id,
+          },
+        },
+        update: { consortiumId: consortium.id },
+        create: {
+          needId: pipeNeed.id,
+          supplierId: consLeader.id,
+          consortiumId: consortium.id,
+          message:
+            "Joint bid covering the full scope: MaquiSur sources API 5L X70 pipe through its certified mill network with third-party inspection at origin; TransAndes executes port handling and staged overland deliveries to both laydown yards; Skanor provides field welding procedures and installation supervision. Single point of accountability through the consortium leader.",
+          proposedBudget: 72_000_000,
+          leadTime: "First deliveries 5 months from award, 22-month program",
+          status: "PENDING",
+        },
+      });
+      console.log("  ✔ Consortium: Consorcio Pacífico Tuberías (3 members)");
+    }
+  }
+
   // --- Projects --------------------------------------------------------------
   for (const p of projects) {
     const { images, documents, owner, highlights, specs, ...rest } = p;
