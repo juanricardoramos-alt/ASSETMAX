@@ -42,11 +42,11 @@ export default async function NeedsPage({
   if (searchParams.company) where.company = { slug: searchParams.company };
   if (searchParams.q) {
     where.OR = [
-      { title: { contains: searchParams.q } },
-      { description: { contains: searchParams.q } },
-      { country: { contains: searchParams.q } },
-      { city: { contains: searchParams.q } },
-      { company: { name: { contains: searchParams.q } } },
+      { title: { contains: searchParams.q, mode: "insensitive" } },
+      { description: { contains: searchParams.q, mode: "insensitive" } },
+      { country: { contains: searchParams.q, mode: "insensitive" } },
+      { city: { contains: searchParams.q, mode: "insensitive" } },
+      { company: { name: { contains: searchParams.q, mode: "insensitive" } } },
     ];
   }
 

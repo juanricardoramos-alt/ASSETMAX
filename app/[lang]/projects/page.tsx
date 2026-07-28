@@ -45,11 +45,11 @@ export default async function ProjectsPage({
   if (searchParams.verified === "1") where.verified = true;
   if (searchParams.q) {
     where.OR = [
-      { title: { contains: searchParams.q } },
-      { summary: { contains: searchParams.q } },
-      { description: { contains: searchParams.q } },
-      { country: { contains: searchParams.q } },
-      { city: { contains: searchParams.q } },
+      { title: { contains: searchParams.q, mode: "insensitive" } },
+      { summary: { contains: searchParams.q, mode: "insensitive" } },
+      { description: { contains: searchParams.q, mode: "insensitive" } },
+      { country: { contains: searchParams.q, mode: "insensitive" } },
+      { city: { contains: searchParams.q, mode: "insensitive" } },
     ];
   }
   const range = INVESTMENT_RANGES.find((r) => r.key === searchParams.range);

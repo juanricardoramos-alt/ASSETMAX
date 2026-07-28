@@ -21,7 +21,7 @@ Bilingual (English default / Spanish), fully responsive, and built with an insti
 | --- | --- |
 | Framework | Next.js 14 (App Router) + TypeScript |
 | Styling | Tailwind CSS (custom navy/gold design system, Playfair Display + Inter) |
-| Database | Prisma ORM — SQLite in development, PostgreSQL-ready for production |
+| Database | Prisma ORM — PostgreSQL (Supabase in production; any local Postgres for development) |
 | Auth | NextAuth (email/password + optional Google OAuth), JWT sessions with roles |
 | AI | Anthropic API via internal service (`lib/ai.ts`) — ingestion, matching rationale, assistant, contract drafting |
 | Charts | Recharts (palette validated for CVD safety and contrast) |
@@ -62,10 +62,11 @@ Set `ANTHROPIC_API_KEY` (console.anthropic.com) to activate all AI features; `AI
 npm install
 
 # 2. Configure environment
-cp .env.example .env        # defaults work out of the box for SQLite
+cp .env.example .env        # set DATABASE_URL to a PostgreSQL instance
+                            # e.g. postgresql://postgres:postgres@localhost:5432/vortamax
 
-# 3. Create the database and seed demo data
-npm run db:push
+# 3. Create the schema (Prisma migrations) and seed demo data
+npm run db:deploy
 npm run db:seed
 
 # 4. Run
@@ -97,36 +98,30 @@ The seed creates **25 realistic projects** across 12 countries (desalination, co
 | --- | --- |
 | `npm run dev` | Development server |
 | `npm run build` | Production build (runs `prisma generate` first) |
-| `npm run db:push` | Sync Prisma schema to the database |
+| `npm run db:deploy` | Apply Prisma migrations (`prisma migrate deploy`) |
+| `npm run db:push` | Sync schema without migrations (quick prototyping) |
 | `npm run db:seed` | Seed demo data (idempotent) |
-| `npm run db:reset` | Drop, recreate and reseed the database |
+| `npm run db:reset` | Drop, re-migrate and reseed the database |
 
 ---
 
-## Deploying to Vercel (with PostgreSQL)
+## Deploying to Vercel (PostgreSQL / Supabase)
 
-1. **Provision Postgres** (Vercel Postgres, Neon, Supabase…).
-2. **Switch the Prisma provider** in `prisma/schema.prisma`:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-   The schema deliberately uses portable types (String enums, no JSON columns), so no other changes are needed.
-3. **Set environment variables** in the Vercel project:
-   - `DATABASE_URL` — your Postgres connection string
+The datasource provider is already `postgresql` and the initial migration lives in `prisma/migrations/`. The schema deliberately uses portable types (String enums, no JSON columns), so the same migration runs on any PostgreSQL 14+.
+
+1. **Set environment variables** in the Vercel project:
+   - `DATABASE_URL` — your Supabase/Postgres connection string. With Supabase's transaction pooler (port 6543) append `?pgbouncer=true&connection_limit=1`; the direct connection (port 5432) needs no extra params.
    - `NEXTAUTH_SECRET` — `openssl rand -base64 32`
    - `NEXTAUTH_URL` — `https://your-domain.com`
    - `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — optional, enables Google sign-in
-4. **Push the schema & seed** (once, from your machine):
+2. **Create the tables & seed** (once, from your machine, using the **direct** connection):
    ```bash
-   DATABASE_URL="postgresql://…" npx prisma db push
-   DATABASE_URL="postgresql://…" npx tsx prisma/seed.ts
+   # .env (gitignored) with the Supabase URL, or pull it from Vercel:
+   #   npx vercel env pull .env
+   npm run db:deploy    # prisma migrate deploy — applies prisma/migrations
+   npm run db:seed      # demo data (idempotent)
    ```
-5. **Deploy** — `vercel` or connect the Git repository. The build command is the default `npm run build`.
-
-> For production-grade migrations, switch from `db push` to `prisma migrate dev` / `prisma migrate deploy` once the schema stabilizes.
+3. **Deploy** — `vercel` or connect the Git repository. The build command is the default `npm run build`; the build never touches the database (all DB-backed routes, including the sitemap, render on demand).
 
 ---
 

@@ -1,16 +1,17 @@
-// ASSETMAX Global — data model
+// VORTAMAX Global — data model
 //
-// NOTE ON PORTABILITY: the schema uses String columns (with typed constants in
-// lib/constants.ts) instead of Prisma enums so the exact same schema runs on
-// SQLite in development and PostgreSQL in production. To migrate, switch the
-// datasource provider to "postgresql" and set DATABASE_URL.
+// NOTE ON PORTABILITY: the schema deliberately uses String columns (with
+// typed constants in lib/constants.ts) instead of Prisma enums. This kept it
+// runnable on SQLite during early development and keeps it portable today on
+// PostgreSQL (Supabase in production): every column maps to plain
+// text/double precision/timestamp types with no engine-specific features.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

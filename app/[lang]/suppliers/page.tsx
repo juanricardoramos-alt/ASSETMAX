@@ -37,10 +37,10 @@ export default async function SuppliersPage({
   if (searchParams.country) where.countryCode = searchParams.country;
   if (searchParams.q) {
     where.OR = [
-      { name: { contains: searchParams.q } },
-      { description: { contains: searchParams.q } },
-      { country: { contains: searchParams.q } },
-      { city: { contains: searchParams.q } },
+      { name: { contains: searchParams.q, mode: "insensitive" } },
+      { description: { contains: searchParams.q, mode: "insensitive" } },
+      { country: { contains: searchParams.q, mode: "insensitive" } },
+      { city: { contains: searchParams.q, mode: "insensitive" } },
     ];
   }
 

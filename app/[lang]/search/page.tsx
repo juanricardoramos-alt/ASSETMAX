@@ -37,10 +37,10 @@ export default async function SearchPage({
           where: {
             status: "PUBLISHED",
             OR: [
-              { title: { contains: q } },
-              { summary: { contains: q } },
-              { country: { contains: q } },
-              { city: { contains: q } },
+              { title: { contains: q, mode: "insensitive" } },
+              { summary: { contains: q, mode: "insensitive" } },
+              { country: { contains: q, mode: "insensitive" } },
+              { city: { contains: q, mode: "insensitive" } },
             ],
           },
           include: {
@@ -53,9 +53,14 @@ export default async function SearchPage({
           where: {
             status: "PUBLISHED",
             OR: [
-              { title: { contains: q } },
-              { description: { contains: q } },
-              { commodity: { contains: q.toLowerCase().replace(/ /g, "_") } },
+              { title: { contains: q, mode: "insensitive" } },
+              { description: { contains: q, mode: "insensitive" } },
+              {
+                commodity: {
+                  contains: q.toLowerCase().replace(/ /g, "_"),
+                  mode: "insensitive",
+                },
+              },
             ],
           },
           take: 6,
@@ -64,7 +69,7 @@ export default async function SearchPage({
           where: {
             status: "PUBLISHED",
             isPublic: true,
-            OR: [{ title: { contains: q } }, { description: { contains: q } }],
+            OR: [{ title: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }],
           },
           include: { investor: { select: { name: true, company: true } } },
           take: 6,

@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
 import { locales } from "@/lib/i18n";
 
+// Served per-request so `next build` never needs a reachable database
+// (the project list comes from PostgreSQL at runtime).
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
