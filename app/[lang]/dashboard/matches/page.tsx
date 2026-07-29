@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized } from "@/lib/l10n";
 import { formatDate } from "@/lib/utils";
 import { Card, Badge, StatusBadge } from "@/components/ui";
 import { MatchActions } from "@/components/matches/MatchActions";
@@ -35,7 +36,7 @@ export default async function MatchesPage({
   const userId = session.user.id;
   const isAdmin = session.user.role === "ADMIN";
 
-  const [projectMatches, commodityMatches] = await Promise.all([
+  const [projectMatchesRaw, commodityMatchesRaw] = await Promise.all([
     prisma.projectMatch.findMany({
       where: isAdmin
         ? {}
@@ -52,6 +53,7 @@ export default async function MatchesPage({
         mandate: {
           select: {
             title: true,
+            translations: true,
             investorId: true,
             investor: { select: { company: true, name: true } },
           },
@@ -66,12 +68,22 @@ export default async function MatchesPage({
             OR: [{ sell: { ownerId: userId } }, { buy: { ownerId: userId } }],
           },
       include: {
-        sell: { select: { title: true, slug: true, ownerId: true } },
-        buy: { select: { title: true, slug: true, ownerId: true } },
+        sell: { select: { title: true, translations: true, slug: true, ownerId: true } },
+        buy: { select: { title: true, translations: true, slug: true, ownerId: true } },
       },
       orderBy: [{ status: "asc" }, { score: "desc" }],
     }),
   ]);
+
+  const projectMatches = projectMatchesRaw.map((m) => ({
+    ...m,
+    mandate: localized(m.mandate, lang),
+  }));
+  const commodityMatches = commodityMatchesRaw.map((m) => ({
+    ...m,
+    sell: localized(m.sell, lang),
+    buy: localized(m.buy, lang),
+  }));
 
   const t = dict.matches;
   const statusLabel = (s: string) =>

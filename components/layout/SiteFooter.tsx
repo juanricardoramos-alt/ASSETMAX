@@ -23,6 +23,7 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
     { href: `/${lang}/projects`, label: dict.nav.explore },
     { href: `/${lang}/commodities`, label: dict.commodities.navLabel },
     { href: `/${lang}/mandates`, label: dict.mandates.navLabel },
+    { href: `/${lang}/markets`, label: dict.markets.navLabel },
     { href: `/${lang}/how-it-works`, label: dict.nav.howItWorks },
   ];
   const resources = [

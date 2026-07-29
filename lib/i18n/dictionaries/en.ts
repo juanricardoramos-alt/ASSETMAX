@@ -3,8 +3,194 @@ const en = {
     name: "VORTAMAX Global",
     tagline: "The global marketplace for industrial assets & megaprojects",
   },
+  pwa: {
+    installTitle: "Install VORTAMAX",
+    installText: "Add the app to your home screen for fast, full-screen access.",
+    installCta: "Install",
+    later: "Not now",
+    iosHint: "In Safari, tap Share and choose “Add to Home Screen”.",
+  },
+  vorta: {
+    name: "VORTA",
+    title: "VORTA — Your VORTAMAX guide",
+    open: "Chat with VORTA, your guide",
+    welcome:
+      "Hi! I'm VORTA 👋 — your guide here at VORTAMAX. I can walk you through listing a project, investing, mandates, contracts and more. What would you like to do?",
+    faqNote:
+      "I'm answering from my quick guide right now. For anything deeper, the team is one message away.",
+    chips: [
+      "I want to list my project",
+      "I want to invest",
+      "What is a mandate?",
+      "See contract templates",
+      "Talk to the founder",
+    ],
+    inputPlaceholder: "Ask VORTA…",
+    send: "Send",
+    thinking: "VORTA is thinking…",
+    limitReached:
+      "We've chatted a lot today! 😊 I need a short break — come back tomorrow, or write to the team and they'll pick it right up.",
+    contactTeam: "Write to the team",
+    tipDismiss: "Got it",
+    tips: {
+      wizard: [
+        "In this step you give your project a name and tell its story. Plain language works best — investors read hundreds of these.",
+        "Here you place your project on the map: sector, country and what kind of deal you're looking for.",
+        "Technical details build trust. Fill in what you have — you can always come back and add more.",
+        "Money talk: an investment range is enough to start. You can keep exact figures for the data room.",
+        "Photos and documents. Upload what's public here — confidential files go behind the NDA wall automatically.",
+        "Last check! Review everything and submit. Our team verifies your listing before it goes live.",
+      ],
+      wizardUpload:
+        "Shortcut: upload your PDF or presentation and I'll read it and fill the form for you.",
+      commodity:
+        "Describe your commodity as you would to a trader: product, volume, delivery terms. I'll help match you with the right counterparties.",
+      mandate:
+        "A mandate tells sellers what you're looking to buy or fund. The clearer your criteria, the better the matches I can find for you.",
+      templates: [
+        "Pick the document that fits your situation — the one-line description under each card tells you when to use it.",
+        "Fill in the basics: who signs, which asset, and the key numbers. Anything you leave blank stays as an open point to negotiate.",
+        "Done! Your draft is ready to download. Remember: it's a starting point — have your lawyer review it before signing.",
+      ],
+    },
+  },
+  templates: {
+    navLabel: "Contract Templates",
+    navDesc: "Ready-to-use draft agreements",
+    title: "Contract Templates",
+    subtitle:
+      "A professional draft in minutes: pick a template, fill in the basics, download your PDF. Every document is marked DRAFT — validate with your lawyer before signing.",
+    disclaimer:
+      "VORTAMAX Global does not provide legal advice. Documents are negotiation drafts and must be reviewed by qualified counsel in the applicable jurisdiction before signature.",
+    useCta: "Use This Template",
+    steps: ["Template", "Details", "Draft"],
+    kinds: {
+      INTERMEDIATION: {
+        name: "Intermediation Mandate",
+        when: "Authorizes VORTAMAX to present your project to investors.",
+      },
+      INTERMEDIATION_EXCLUSIVE: {
+        name: "Exclusive Intermediation Mandate",
+        when: "Same as above, but VORTAMAX is your only channel for a set period.",
+      },
+      NDA: {
+        name: "NDA / Confidentiality Agreement",
+        when: "Before sharing sensitive information with an interested party.",
+      },
+      LOI: {
+        name: "LOI / Letter of Intent",
+        when: "To put a serious offer on paper before due diligence.",
+      },
+      MOU: {
+        name: "MOU / Memorandum of Understanding",
+        when: "When both sides agree on the big picture and want it in writing.",
+      },
+      SPA: {
+        name: "Asset Purchase Agreement",
+        when: "The draft for actually buying or selling the asset.",
+      },
+      JV: {
+        name: "Joint Venture Agreement",
+        when: "When you'll develop or operate a project together with a partner.",
+      },
+      COMMODITY_SPA: {
+        name: "Commodity Sale Contract (Spot)",
+        when: "For a one-off shipment of a physical commodity.",
+      },
+      COMMODITY_SUPPLY: {
+        name: "Commodity Supply Contract",
+        when: "For recurring deliveries over months or years.",
+      },
+    },
+    form: {
+      language: "Document language",
+      languageEn: "English",
+      languageEs: "Spanish",
+      partyA: "Your side",
+      partyB: "Counterparty",
+      name: "Full name",
+      company: "Company",
+      project: "Related project",
+      projectNone: "— No listed project / type the asset below —",
+      assetTitle: "Asset / project name",
+      assetLocation: "Location (city, country)",
+      jurisdiction: "Governing law (country)",
+      amount: "Amount (USD)",
+      equityPct: "Stake (%)",
+      termMonths: "Term (months)",
+      exclusivityMonths: "Exclusivity (months)",
+      commodity: "Commodity",
+      commodityPlaceholder: "e.g. Copper cathodes Grade A",
+      volume: "Volume",
+      incoterm: "Incoterm",
+      priceDetails: "Price terms",
+      priceDetailsPlaceholder: "e.g. LME basis minus 45 USD/t",
+      generate: "Generate Draft",
+      generating: "Generating your draft…",
+      intermediaryNote:
+        "On this template the counterparty is VORTAMAX Global (the platform).",
+      signInFirst: "Sign in to generate documents",
+    },
+    viewer: {
+      download: "Download PDF",
+      back: "All templates",
+      generatedNote: "Generated with the VORTAMAX template library",
+    },
+    myTitle: "My generated documents",
+    newCta: "New Document",
+    empty: "You haven't generated any documents yet.",
+    adminTitle: "Generated documents",
+    adminEmpty: "No documents have been generated yet.",
+  },
+  markets: {
+    "navLabel": "Markets",
+    "title": "Market Intelligence",
+    "subtitle": "Reference prices and sector context for the metals, mining and digital-asset markets that shape our industry.",
+    "kicker": "Market Intelligence",
+    "delayedBadge": "Reference — delayed data",
+    "referenceBadge": "Static reference",
+    "updatedAt": "Updated",
+    "baseMetalsTitle": "Base Metals",
+    "baseMetalsNote": "LME-style reference prices compiled from public market data for orientation purposes.",
+    "preciousTitle": "Precious Metals",
+    "preciousNote": "LBMA-style reference levels drawn from public sources, shown for general context.",
+    "indicesTitle": "Indices & Mining Majors",
+    "indicesNote": "Benchmark indices and flagship mining companies, shown as context for the broader resources sector.",
+    "cryptoTitle": "Digital Assets",
+    "cryptoNote": "Reference prices for the principal digital assets, presented for informational context only.",
+    "change24h": "24h",
+    "trend30d": "30-day trend",
+    "rwa": {
+      "kicker": "Perspective",
+      "title": "Real-World Asset Tokenization",
+      "paragraphs": [
+        "Tokenization of real-world assets (RWA) means representing ownership of a physical or financial asset — a mineral concession, a warehouse of refined metal, an invoice, a share in an industrial project — as a digital token recorded on a distributed ledger. The token does not replace the asset; it is a registry entry designed to make ownership easier to record, divide and transfer.",
+        "For mining and industrial assets, the potential relevance is concrete. Fractional ownership could lower the ticket size needed to participate in capital-intensive projects. Secondary transfers could bring a measure of liquidity to assets that today change hands slowly and privately. And a well-designed token registry can improve traceability — of provenance, of custody, of who holds what — in sectors where documentation is often fragmented.",
+        "The honest picture, however, is one of a market still maturing. Regulatory frameworks for tokenized assets are evolving at different speeds across jurisdictions, custody and settlement standards are still consolidating, and the legal enforceability of token ownership depends on structures that remain under construction in much of the world. Serious institutions are experimenting; few are operating at scale.",
+        "Our position at VORTAMAX is deliberate: we follow this evolution closely, and we are prepared to integrate asset tokenization when the regulatory framework allows it. Until then, our role is to understand the technology, watch the standards mature, and keep our platform ready — not to anticipate the rules."
+      ],
+      "note": "This section is informational content only and does not constitute an offer of tokenized products or securities."
+    },
+    "disclaimer": "Reference information based on delayed data from public sources. It does not constitute financial advice or an investment recommendation. Official LME and LBMA prices are licensed products of their respective institutions.",
+    "sourcesNote": "Sources: public market data (CoinGecko, Stooq and others), cached server-side."
+  },
   nav: {
-    explore: "Explore Opportunities",
+    explore: "Projects",
+    solutions: "Solutions",
+    solutionsMenu: {
+      sellersDesc: "List and sell industrial assets",
+      investorsDesc: "Source vetted opportunities",
+      howDesc: "The process, step by step",
+      aboutDesc: "The team behind the platform",
+    },
+    ecosystemMenu: {
+      needsDesc: "What anchor companies are sourcing now",
+      tendersDesc: "Turnkey EPC packages in open competition",
+      companiesDesc: "Verified corporate profiles & founding partners",
+      suppliersDesc: "The qualified supplier registry",
+      matchingDesc: "Instant investor & supplier matching",
+      servicesDesc: "Toolkit, premium advisory & pricing",
+    },
     forSellers: "For Sellers",
     forInvestors: "For Investors",
     howItWorks: "How It Works",
@@ -185,12 +371,12 @@ const en = {
         text: "Send expressions of interest or binding offers directly to asset owners — acquisitions, stakes, debt or JVs.",
       },
     ],
-    statsTitle: "The platform in numbers",
+    statsTitle: "The Platform in Numbers",
     statProjects: "Listed projects",
     statCountries: "Countries",
     statPipeline: "Combined pipeline",
     statCategories: "Asset classes",
-    testimonialsTitle: "What our clients say",
+    testimonialsTitle: "What Our Clients Say",
     testimonials: [
       {
         quote:
@@ -211,7 +397,7 @@ const en = {
         location: "Perth, Australia",
       },
     ],
-    partnersTitle: "Trusted by industry leaders",
+    partnersTitle: "Trusted by Industry Leaders",
     ctaTitle: "Ready to move your asset — or your capital?",
     ctaSubtitle:
       "Join a global network of asset owners, developers and institutional investors.",
@@ -237,9 +423,9 @@ const en = {
     searchPlaceholder: "Search projects…",
     investmentRanges: {
       u10: "Under $10M",
-      "10-50": "$10M – $50M",
-      "50-100": "$50M – $100M",
-      "100-500": "$100M – $500M",
+      "10-50": "$10M–$50M",
+      "50-100": "$50M–$100M",
+      "100-500": "$100M–$500M",
       "500p": "$500M+",
     },
   },
@@ -276,7 +462,7 @@ const en = {
     keyFacts: "Key Facts",
     similar: "Similar Opportunities",
     signInToAct: "Sign in as an investor to request information or submit offers.",
-    downloadNote: "Sample document — placeholder for demo purposes",
+    downloadNote: "Sample document for demonstration purposes",
     nda: {
       title: "Non-Disclosure Agreement",
       intro:
@@ -377,7 +563,7 @@ const en = {
     emptyProjectsCta: "Create your first listing",
     emptyFavorites: "You haven't saved any projects yet.",
     emptyFavoritesCta: "Explore opportunities",
-    emptyOffers: "No offers yet.",
+    emptyOffers: "No offers yet. They will appear here when investors respond to your listings.",
     emptyAlerts: "No saved alerts. Create one to get notified about new matching projects.",
     emptyMessages: "No conversations yet.",
     viewsLabel: "views",
@@ -391,7 +577,7 @@ const en = {
     amount: "Amount",
     accept: "Accept",
     decline: "Decline",
-    markInDiscussion: "Move to discussion",
+    markInDiscussion: "Move to Discussion",
     withdraw: "Withdraw",
     reply: "Reply",
     newAlert: {
@@ -443,9 +629,17 @@ const en = {
       summary: "Executive summary",
       summaryPlaceholder:
         "One or two sentences that will appear on the project card…",
-      description: "Full description",
+      description: "Full description (English)",
       descriptionPlaceholder:
         "Describe the asset, its history, market position and the rationale for the transaction…",
+      descriptionEs: "Full description (Spanish)",
+      descriptionEsPlaceholder:
+        "Spanish version shown to Spanish-speaking investors. Write it yourself or generate it with AI from the English text…",
+      translateCta: "Translate with AI",
+      translating: "Translating…",
+      translateNote: "AI translation — review and edit before publishing.",
+      translateError: "Translation failed. Please try again or write it manually.",
+      optionalTag: "optional",
     },
     catLoc: {
       category: "Category",
@@ -656,7 +850,7 @@ const en = {
         },
         {
           title: "5. Your Rights",
-          text: "You may access, correct or delete your personal data, and export your account information, by contacting privacy@assetmax.global.",
+          text: "You may access, correct or delete your personal data, and export your account information, by contacting privacy@vortamax.global.",
         },
       ],
     },
@@ -664,7 +858,7 @@ const en = {
   ai: {
     poweredBy: "AI-powered",
     disabledNote:
-      "AI features are not configured on this deployment (ANTHROPIC_API_KEY missing). The manual flow remains fully available.",
+      "AI features are not available on this deployment. The manual flow remains fully available.",
     wizard: {
       chooseTitle: "How would you like to create your listing?",
       manualTitle: "Fill in the form manually",
@@ -677,7 +871,7 @@ const en = {
       processing: "Analyzing document… this can take up to a minute.",
       extractedTitle: "Document processed",
       extractedText:
-        "The wizard was pre-filled from your document. Review and correct every field before submitting — nothing is published without admin verification.",
+        "The wizard was pre-filled from your document. Review and correct every field before submitting — nothing is published without our team's verification.",
       missingTitle: "Not found in the document",
       publicSuggestTitle: "Suggested as public documents",
       confidentialSuggestTitle: "Suggested for the NDA data room",
@@ -1331,7 +1525,8 @@ const en = {
       commodity: "Commodity",
       title: "Listing title",
       titlePlaceholder: "e.g. Grade A Copper Cathodes — 2,000 t/month, FOB Antofagasta",
-      description: "Description",
+      description: "Description (English)",
+      descriptionEs: "Description (Spanish)",
       volume: "Volume & frequency",
       volumePlaceholder: "e.g. 2,000 t/month",
       periodicity: "Periodicity",
@@ -1470,7 +1665,7 @@ const en = {
       {
         name: "Carolina Fuentes",
         role: "Head of Mining & Energy Assets",
-        bio: "Mining engineer and project financier. Led sell-side processes totalling over USD 2B in copper, lithium and renewables.",
+        bio: "Mining engineer and project financier. Led sell-side processes totaling over USD 2B in copper, lithium and renewables.",
       },
       {
         name: "James Whitmore",

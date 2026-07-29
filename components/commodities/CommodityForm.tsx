@@ -7,12 +7,14 @@ import { COMMODITIES, INCOTERMS, COUNTRIES, PERIODICITIES, PRICE_TYPES } from "@
 import type { IngestResult } from "@/app/api/ai/ingest/route";
 import { Button, Card, Input, Label, Select, Textarea } from "@/components/ui";
 import { IconCheck } from "@/components/icons";
+import { VortaTip } from "@/components/vorta/VortaTip";
 
 export type CommodityFormData = {
   side: string;
   commodity: string;
   title: string;
   description: string;
+  descriptionEs: string;
   specs: { label: string; value: string }[];
   volume: string;
   periodicity: string;
@@ -31,6 +33,7 @@ export const emptyCommodity: CommodityFormData = {
   commodity: "copper_cathodes",
   title: "",
   description: "",
+  descriptionEs: "",
   specs: [],
   volume: "",
   periodicity: "spot",
@@ -63,10 +66,41 @@ export function CommodityForm({
   const [submitted, setSubmitted] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [ingesting, setIngesting] = useState(false);
+  const [translating, setTranslating] = useState<"en" | "es" | null>(null);
+  const [autoTranslated, setAutoTranslated] = useState<{ en: boolean; es: boolean }>({
+    en: false,
+    es: false,
+  });
+  const [translateFailed, setTranslateFailed] = useState(false);
 
   const c = dict.commodities;
   const f = c.form;
   const set = (patch: Partial<CommodityFormData>) => setData((d) => ({ ...d, ...patch }));
+
+  // Fill one description language from the other via AI, marked as editable.
+  async function translateDescription(target: "en" | "es") {
+    const source = target === "es" ? data.description : data.descriptionEs;
+    if (!source.trim() || translating) return;
+    setTranslating(target);
+    setTranslateFailed(false);
+    try {
+      const res = await fetch("/api/ai/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: source, target }),
+      });
+      if (!res.ok) throw new Error();
+      const { translation } = (await res.json()) as { translation: string };
+      setData((d) =>
+        target === "es" ? { ...d, descriptionEs: translation } : { ...d, description: translation }
+      );
+      setAutoTranslated((t) => ({ ...t, [target]: true }));
+    } catch {
+      setTranslateFailed(true);
+    } finally {
+      setTranslating(null);
+    }
+  }
 
   async function runIngest() {
     if (!file) return;
@@ -81,10 +115,8 @@ export function CommodityForm({
       const { result } = (await res.json()) as { result: IngestResult };
       set({
         title: result.title ?? data.title,
-        description:
-          [result.description_en, result.description_es ? `— Versión en español —\n\n${result.description_es}` : null]
-            .filter(Boolean)
-            .join("\n\n") || data.description,
+        description: result.description_en ?? data.description,
+        descriptionEs: result.description_es ?? data.descriptionEs,
         commodity:
           result.commodity && (COMMODITIES as readonly string[]).includes(result.commodity)
             ? result.commodity
@@ -117,6 +149,7 @@ export function CommodityForm({
       commodity: data.commodity,
       title: data.title.trim(),
       description: data.description.trim(),
+      descriptionEs: data.descriptionEs.trim(),
       specs: data.specs.filter((s) => s.label.trim() && s.value.trim()),
       volume: data.volume.trim(),
       periodicity: data.periodicity,
@@ -135,7 +168,10 @@ export function CommodityForm({
       body: JSON.stringify(payload),
     });
     setBusy(false);
-    if (res.ok) setSubmitted(true);
+    if (res.ok) {
+      setSubmitted(true);
+      window.dispatchEvent(new Event("vorta:celebrate"));
+    }
     else setError(true);
   }
 
@@ -167,6 +203,12 @@ export function CommodityForm({
       <h1 className="text-2xl font-extrabold text-navy-950">
         {listingId ? c.editListing : c.newListing}
       </h1>
+
+      <VortaTip
+        id="commodity-form"
+        text={dict.vorta.tips.commodity}
+        dismissLabel={dict.vorta.tipDismiss}
+      />
 
       {/* AI ingestion */}
       {!listingId && (
@@ -235,13 +277,77 @@ export function CommodityForm({
           />
         </div>
         <div>
-          <Label htmlFor="cf-desc">{f.description} *</Label>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <Label htmlFor="cf-desc" className="mb-0">
+              {f.description} *
+            </Label>
+            {aiIngestEnabled && data.descriptionEs.trim().length >= 20 && (
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!!translating}
+                onClick={() => translateDescription("en")}
+              >
+                ✦ {translating === "en" ? dict.wizard.basics.translating : dict.wizard.basics.translateCta}
+              </Button>
+            )}
+          </div>
           <Textarea
             id="cf-desc"
             rows={6}
+            className="mt-1.5"
             value={data.description}
-            onChange={(e) => set({ description: e.target.value })}
+            onChange={(e) => {
+              set({ description: e.target.value });
+              setAutoTranslated((t) => ({ ...t, en: false }));
+            }}
           />
+          {autoTranslated.en && (
+            <p className="mt-1 text-xs font-medium text-gold-700">
+              {dict.wizard.basics.translateNote}
+            </p>
+          )}
+        </div>
+        <div>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <Label htmlFor="cf-desc-es" className="mb-0">
+              {f.descriptionEs}{" "}
+              <span className="font-normal text-navy-400">
+                ({dict.wizard.basics.optionalTag})
+              </span>
+            </Label>
+            {aiIngestEnabled && data.description.trim().length >= 20 && (
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!!translating}
+                onClick={() => translateDescription("es")}
+              >
+                ✦ {translating === "es" ? dict.wizard.basics.translating : dict.wizard.basics.translateCta}
+              </Button>
+            )}
+          </div>
+          <Textarea
+            id="cf-desc-es"
+            rows={6}
+            className="mt-1.5"
+            value={data.descriptionEs}
+            onChange={(e) => {
+              set({ descriptionEs: e.target.value });
+              setAutoTranslated((t) => ({ ...t, es: false }));
+            }}
+            placeholder={dict.wizard.basics.descriptionEsPlaceholder}
+          />
+          {autoTranslated.es && (
+            <p className="mt-1 text-xs font-medium text-gold-700">
+              {dict.wizard.basics.translateNote}
+            </p>
+          )}
+          {translateFailed && (
+            <p className="mt-1 text-xs font-medium text-red-600">
+              {dict.wizard.basics.translateError}
+            </p>
+          )}
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

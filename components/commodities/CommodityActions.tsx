@@ -112,7 +112,7 @@ export function CommodityActions({
                       rel="noopener noreferrer"
                       className="flex items-center gap-2.5 rounded-lg border border-navy-100 px-3.5 py-2.5 text-sm font-medium text-navy-800 transition hover:border-gold-300 hover:bg-gold-50/40"
                     >
-                      <IconDoc className="h-4 w-4 shrink-0 text-navy-400" />
+                      <IconDoc className="h-5 w-5 shrink-0 text-navy-400" />
                       {d.name}
                     </a>
                   </li>

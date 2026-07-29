@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized } from "@/lib/l10n";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Card, ButtonLink } from "@/components/ui";
 
@@ -26,7 +27,7 @@ export default async function FavoritesPage({
       },
     },
     orderBy: { createdAt: "desc" },
-  });
+  }).then((rows) => rows.map((f) => ({ ...f, project: localized(f.project, lang) })));
 
   const published = favorites.filter((f) => f.project.status === "PUBLISHED");
 

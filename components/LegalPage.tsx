@@ -9,7 +9,7 @@ export function LegalPage({
 }) {
   return (
     <div className="container-site max-w-3xl py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight text-navy-950">{title}</h1>
+      <h1 className="text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">{title}</h1>
       <p className="mt-2 text-sm text-navy-400">{updatedLabel}: 2026-07-01</p>
       <div className="mt-10 space-y-8">
         {sections.map((s) => (

@@ -20,9 +20,9 @@ export default async function ContactPage({ params }: { params: { lang: string }
 
   return (
     <div>
-      <div className="bg-navy-950 py-16">
+      <div className="border-b border-navy-100 bg-navy-950 py-16">
         <div className="container-site max-w-3xl">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white">{t.title}</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{t.title}</h1>
           <p className="mt-4 text-lg text-navy-200">{t.intro}</p>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default async function ContactPage({ params }: { params: { lang: string }
           ))}
           <Card className="p-5 text-sm text-navy-600">
             <p className="font-bold text-navy-900">Email</p>
-            <p className="mt-1">contact@assetmax.global</p>
+            <p className="mt-1">contact@vortamax.global</p>
           </Card>
         </div>
       </div>

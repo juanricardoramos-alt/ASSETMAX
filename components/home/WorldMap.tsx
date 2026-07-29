@@ -2,6 +2,14 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import {
+  MAP_W,
+  MAP_H,
+  PROJ_K,
+  PROJ_TX,
+  PROJ_TY,
+  WORLD_LAND_PATH,
+} from "@/components/home/world-land";
 
 export type MapPin = {
   slug: string;
@@ -12,13 +20,15 @@ export type MapPin = {
   lng: number;
 };
 
-const W = 1000;
-const H = 460;
+const W = MAP_W;
+const H = MAP_H;
+const RAD = Math.PI / 180;
 
-// Equirectangular projection onto the SVG canvas (with light padding).
+// Same equirectangular projection the land silhouette was generated with,
+// so pins land exactly on their real geography.
 function project(lat: number, lng: number): [number, number] {
-  const x = ((lng + 180) / 360) * (W - 80) + 40;
-  const y = ((90 - lat) / 180) * (H + 120) - 60;
+  const x = PROJ_TX + PROJ_K * (lng * RAD);
+  const y = PROJ_TY - PROJ_K * (lat * RAD);
   return [Math.round(x * 10) / 10, Math.round(y * 10) / 10];
 }
 
@@ -57,7 +67,7 @@ export function WorldMap({
       >
         <defs>
           <radialGradient id="mapGlow" cx="50%" cy="42%" r="65%">
-            <stop offset="0%" stopColor="#16305F" stopOpacity="0.9" />
+            <stop offset="0%" stopColor="#1B2D4C" stopOpacity="0.9" />
             <stop offset="100%" stopColor="#0A1426" stopOpacity="0" />
           </radialGradient>
           <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="0">
@@ -68,6 +78,15 @@ export function WorldMap({
         </defs>
 
         <rect width={W} height={H} fill="url(#mapGlow)" />
+
+        {/* World land silhouette — Natural Earth simplified, Antarctica omitted */}
+        <path
+          d={WORLD_LAND_PATH}
+          fill="#182A4D"
+          stroke="#31486F"
+          strokeOpacity={0.55}
+          strokeWidth={0.5}
+        />
 
         {/* Graticule */}
         {Array.from({ length: 11 }, (_, i) => (
@@ -107,13 +126,20 @@ export function WorldMap({
             onMouseEnter={() => setActive(pin)}
             onMouseLeave={() => setActive(null)}
           >
+            <title>{`${pin.title} · ${pin.country}`}</title>
             <circle r={16} fill="transparent" />
             <circle r={5} fill="#DFC26A" opacity={0.35} className="animate-pin-pulse" />
-            <circle r={4} fill="#DFC26A" stroke="#0A1426" strokeWidth={1.5} />
+            <circle
+              r={active?.slug === pin.slug ? 5.5 : 4}
+              fill="#DFC26A"
+              stroke="#0A1426"
+              strokeWidth={1.5}
+              className="transition-all duration-200"
+            />
             <text
               y={-12}
               textAnchor="middle"
-              className="select-none"
+              className="hidden select-none sm:block"
               fill="#C5D2E4"
               fontSize={11}
               fontWeight={600}

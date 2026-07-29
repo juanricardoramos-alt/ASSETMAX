@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/api-helpers";
 import { projectInputSchema } from "@/lib/project-schema";
+import { withTranslation } from "@/lib/l10n";
 import { COUNTRIES } from "@/lib/constants";
 
 export async function PATCH(
@@ -75,6 +76,9 @@ export async function PATCH(
         areaHectares: d.areaHectares ?? null,
         highlights: JSON.stringify(d.highlights),
         specs: JSON.stringify(d.specs),
+        translations: withTranslation(project.translations, "es", {
+          description: d.descriptionEs,
+        }),
         images: {
           create: d.images.map((url, i) => ({ url, alt: d.title, order: i })),
         },

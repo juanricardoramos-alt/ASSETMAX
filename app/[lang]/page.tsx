@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { CATEGORIES, countryName } from "@/lib/constants";
 import { INSIGHTS } from "@/lib/insights";
 import { formatDate } from "@/lib/utils";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { HeroVideo } from "@/components/home/HeroVideo";
 import { WorldMap } from "@/components/home/WorldMap";
 import { MarketRefsBar } from "@/components/commodities/MarketRefsBar";
 import { SmartImage } from "@/components/SmartImage";
@@ -31,7 +33,7 @@ export default async function HomePage({
   const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
   const dict = await getDictionary(lang);
 
-  const [featured, published, categoryCounts] = await Promise.all([
+  const [featuredRaw, published, categoryCounts] = await Promise.all([
     prisma.project.findMany({
       where: { status: "PUBLISHED", featured: true },
       include: { images: { orderBy: { order: "asc" } }, owner: { select: { role: true } } },
@@ -57,6 +59,8 @@ export default async function HomePage({
       _count: true,
     }),
   ]);
+
+  const featured = localizedAll(featuredRaw, lang);
 
   const countByCategory = Object.fromEntries(
     categoryCounts.map((c) => [c.category, c._count])
@@ -98,21 +102,33 @@ export default async function HomePage({
       <section className="relative overflow-hidden bg-navy-950">
         <div className="absolute inset-0 bg-grid-dots opacity-60" />
         <div className="absolute -top-40 left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-navy-700/40 blur-3xl" />
+        {/* Motion background — desktop only, loads after idle, static fallback */}
+        <HeroVideo
+          clips={[
+            // Slots 2-4 are drop-in: a missing file self-removes from rotation.
+            { mp4: "/videos/hero-embers.mp4", webm: "/videos/hero-embers.webm" },
+            { mp4: "/videos/hero-sweep.mp4", webm: "/videos/hero-sweep.mp4" },
+            { mp4: "/videos/hero-flow.mp4", webm: "/videos/hero-flow.mp4" },
+            { mp4: "/videos/hero-extra.mp4", webm: "/videos/hero-extra.mp4" },
+          ]}
+        />
+        {/* Radial scrim keeps the copy readable over bright footage */}
+        <div className="pointer-events-none absolute inset-0 hero-scrim" />
         <div className="container-site relative py-20 sm:py-28">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="animate-fade-up text-xs font-bold uppercase tracking-[0.25em] text-gold-400">
+            <p className="hero-text-shadow animate-fade-up text-xs font-bold uppercase tracking-[0.25em] text-gold-400">
               {dict.home.heroKicker}
             </p>
-            <h1 className="mt-5 animate-fade-up font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="hero-text-shadow mt-5 animate-fade-up font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
               {dict.home.heroTitle}
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-base leading-relaxed text-navy-200 sm:text-lg">
+            <p className="hero-text-shadow mx-auto mt-6 max-w-2xl animate-fade-up text-base leading-relaxed text-navy-100 sm:text-lg">
               {dict.home.heroSubtitle}
             </p>
 
             <form
               action={`/${lang}/projects`}
-              className="mx-auto mt-9 flex max-w-2xl overflow-hidden rounded-lg bg-white shadow-card-hover"
+              className="mx-auto mt-9 flex max-w-2xl overflow-hidden rounded-lg bg-white shadow-card-hover transition focus-within:ring-2 focus-within:ring-gold-400"
             >
               <div className="flex flex-1 items-center gap-2 pl-4">
                 <IconSearch className="h-5 w-5 shrink-0 text-navy-400" />
@@ -125,7 +141,7 @@ export default async function HomePage({
               </div>
               <button
                 type="submit"
-                className="bg-gold-500 px-6 text-sm font-bold text-navy-950 transition hover:bg-gold-400"
+                className="bg-gold-500 px-6 text-sm font-semibold text-navy-950 transition hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-navy-800"
               >
                 {dict.home.searchCta}
               </button>
@@ -143,7 +159,7 @@ export default async function HomePage({
 
             <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
               {trustBadges.map((b) => (
-                <div key={b.label} className="flex items-center gap-2 text-sm text-navy-300">
+                <div key={b.label} className="hero-text-shadow flex items-center gap-2 text-sm text-navy-200">
                   <b.icon className="h-4 w-4 text-gold-400" />
                   {b.label}
                 </div>
@@ -157,6 +173,7 @@ export default async function HomePage({
       <MarketRefsBar
         title={dict.commodities.marketRefs}
         note={dict.commodities.marketRefsNote}
+        lang={lang}
       />
 
       {/* -------------------------------------------------- Partner logos */}
@@ -398,7 +415,7 @@ export default async function HomePage({
                       </Badge>
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <h3 className="font-display text-base font-bold leading-snug text-navy-950 group-hover:text-navy-700">
+                      <h3 className="font-display text-lg font-bold leading-snug text-navy-950 group-hover:text-navy-700">
                         {article[l].title}
                       </h3>
                       <p className="mt-2 line-clamp-2 flex-1 text-sm text-navy-500">

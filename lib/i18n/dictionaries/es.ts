@@ -5,8 +5,194 @@ const es: Dictionary = {
     name: "VORTAMAX Global",
     tagline: "El marketplace global de activos industriales y megaproyectos",
   },
+  pwa: {
+    installTitle: "Instala VORTAMAX",
+    installText: "Agrega la app a tu pantalla de inicio para un acceso rápido y a pantalla completa.",
+    installCta: "Instalar",
+    later: "Ahora no",
+    iosHint: "En Safari, toca Compartir y elige “Agregar a pantalla de inicio”.",
+  },
+  vorta: {
+    name: "VORTA",
+    title: "VORTA — Tu guía en VORTAMAX",
+    open: "Conversa con VORTA, tu guía",
+    welcome:
+      "¡Hola! Soy VORTA 👋 — tu guía en VORTAMAX. Te acompaño a publicar tu proyecto, invertir, entender los mandatos, los contratos y más. ¿Qué te gustaría hacer?",
+    faqNote:
+      "Ahora mismo respondo desde mi guía rápida. Para algo más profundo, el equipo está a un mensaje de distancia.",
+    chips: [
+      "Quiero publicar mi proyecto",
+      "Quiero invertir",
+      "¿Qué es un mandato?",
+      "Ver contratos modelo",
+      "Hablar con el fundador",
+    ],
+    inputPlaceholder: "Pregúntale a VORTA…",
+    send: "Enviar",
+    thinking: "VORTA está pensando…",
+    limitReached:
+      "¡Hoy conversamos bastante! 😊 Necesito una pausa — vuelve mañana, o escríbele al equipo y ellos retoman de inmediato.",
+    contactTeam: "Escribir al equipo",
+    tipDismiss: "Entendido",
+    tips: {
+      wizard: [
+        "En este paso le pones nombre a tu proyecto y cuentas su historia. Lenguaje simple funciona mejor — los inversionistas leen cientos de estas fichas.",
+        "Aquí ubicas tu proyecto en el mapa: sector, país y qué tipo de operación buscas.",
+        "Los detalles técnicos generan confianza. Completa lo que tengas — siempre puedes volver y agregar más.",
+        "Hablemos de cifras: con un rango de inversión basta para partir. Los números exactos pueden quedar para el data room.",
+        "Fotos y documentos. Sube aquí lo público — los archivos confidenciales quedan protegidos tras el NDA automáticamente.",
+        "¡Última revisión! Chequea todo y envía. Nuestro equipo verifica tu publicación antes de que salga al aire.",
+      ],
+      wizardUpload:
+        "Atajo: sube tu PDF o presentación y yo lo leo y lleno el formulario por ti.",
+      commodity:
+        "Describe tu commodity como se lo contarías a un trader: producto, volumen, condiciones de entrega. Yo te ayudo a conectar con las contrapartes correctas.",
+      mandate:
+        "Un mandato les dice a los vendedores qué buscas comprar o financiar. Mientras más claros tus criterios, mejores matches puedo encontrarte.",
+      templates: [
+        "Elige el documento que calza con tu situación — la frase bajo cada tarjeta te dice cuándo se usa.",
+        "Completa lo básico: quién firma, qué activo y las cifras clave. Lo que dejes en blanco queda como punto abierto a negociar.",
+        "¡Listo! Tu borrador está para descargar. Recuerda: es un punto de partida — revísalo con tu abogado antes de firmar.",
+      ],
+    },
+  },
+  templates: {
+    navLabel: "Contratos Modelo",
+    navDesc: "Borradores listos para usar",
+    title: "Contratos Modelo",
+    subtitle:
+      "Un borrador profesional en minutos: elige la plantilla, completa lo básico y descarga tu PDF. Todo documento va marcado BORRADOR — valídalo con tu abogado antes de firmar.",
+    disclaimer:
+      "VORTAMAX Global no presta asesoría legal. Los documentos son borradores de negociación y deben ser revisados por abogados de la jurisdicción aplicable antes de la firma.",
+    useCta: "Usar esta Plantilla",
+    steps: ["Plantilla", "Datos", "Borrador"],
+    kinds: {
+      INTERMEDIATION: {
+        name: "Mandato de Intermediación",
+        when: "Autoriza a VORTAMAX a ofrecer tu proyecto a inversionistas.",
+      },
+      INTERMEDIATION_EXCLUSIVE: {
+        name: "Mandato con Exclusividad",
+        when: "Igual que el anterior, pero VORTAMAX es tu único canal por un período.",
+      },
+      NDA: {
+        name: "NDA / Acuerdo de Confidencialidad",
+        when: "Antes de compartir información sensible con un interesado.",
+      },
+      LOI: {
+        name: "LOI / Carta de Intención",
+        when: "Para poner una oferta seria por escrito antes del due diligence.",
+      },
+      MOU: {
+        name: "MOU / Memorándum de Entendimiento",
+        when: "Cuando ambas partes acuerdan lo grueso y quieren dejarlo por escrito.",
+      },
+      SPA: {
+        name: "Promesa de Compraventa de Activo",
+        when: "El borrador para comprar o vender el activo propiamente tal.",
+      },
+      JV: {
+        name: "Acuerdo de Participación / Joint Venture",
+        when: "Cuando desarrollarás u operarás un proyecto junto a un socio.",
+      },
+      COMMODITY_SPA: {
+        name: "Compraventa de Commodities (Spot)",
+        when: "Para un embarque único de un commodity físico.",
+      },
+      COMMODITY_SUPPLY: {
+        name: "Contrato de Suministro de Commodities",
+        when: "Para entregas recurrentes durante meses o años.",
+      },
+    },
+    form: {
+      language: "Idioma del documento",
+      languageEn: "Inglés",
+      languageEs: "Español",
+      partyA: "Tu parte",
+      partyB: "Contraparte",
+      name: "Nombre completo",
+      company: "Empresa",
+      project: "Proyecto relacionado",
+      projectNone: "— Sin proyecto publicado / escribe el activo abajo —",
+      assetTitle: "Nombre del activo / proyecto",
+      assetLocation: "Ubicación (ciudad, país)",
+      jurisdiction: "Ley aplicable (país)",
+      amount: "Monto (USD)",
+      equityPct: "Participación (%)",
+      termMonths: "Vigencia (meses)",
+      exclusivityMonths: "Exclusividad (meses)",
+      commodity: "Commodity",
+      commodityPlaceholder: "ej. Cátodos de cobre Grado A",
+      volume: "Volumen",
+      incoterm: "Incoterm",
+      priceDetails: "Condiciones de precio",
+      priceDetailsPlaceholder: "ej. Base LME menos 45 USD/t",
+      generate: "Generar Borrador",
+      generating: "Generando tu borrador…",
+      intermediaryNote:
+        "En esta plantilla la contraparte es VORTAMAX Global (la plataforma).",
+      signInFirst: "Inicia sesión para generar documentos",
+    },
+    viewer: {
+      download: "Descargar PDF",
+      back: "Todas las plantillas",
+      generatedNote: "Generado con la biblioteca de contratos de VORTAMAX",
+    },
+    myTitle: "Mis documentos generados",
+    newCta: "Nuevo Documento",
+    empty: "Aún no has generado documentos.",
+    adminTitle: "Documentos generados",
+    adminEmpty: "Todavía no se han generado documentos.",
+  },
+  markets: {
+    "navLabel": "Mercados",
+    "title": "Inteligencia de Mercado",
+    "subtitle": "Precios de referencia y contexto sectorial de los mercados de metales, minería y activos digitales que definen nuestra industria.",
+    "kicker": "Inteligencia de Mercado",
+    "delayedBadge": "Referencia — datos diferidos",
+    "referenceBadge": "Referencia estática",
+    "updatedAt": "Actualizado",
+    "baseMetalsTitle": "Metales Base",
+    "baseMetalsNote": "Precios de referencia tipo LME, compilados a partir de datos públicos de mercado con fines orientativos.",
+    "preciousTitle": "Metales Preciosos",
+    "preciousNote": "Niveles de referencia tipo LBMA, tomados de fuentes públicas y presentados como contexto general.",
+    "indicesTitle": "Índices y Mineras Emblemáticas",
+    "indicesNote": "Índices bursátiles de referencia y compañías mineras emblemáticas, como contexto del sector de recursos en su conjunto.",
+    "cryptoTitle": "Activos Digitales",
+    "cryptoNote": "Precios de referencia de los principales activos digitales, presentados únicamente como contexto informativo.",
+    "change24h": "24h",
+    "trend30d": "Tendencia 30 días",
+    "rwa": {
+      "kicker": "Perspectiva",
+      "title": "Tokenización de Activos Reales",
+      "paragraphs": [
+        "La tokenización de activos reales (RWA, por sus siglas en inglés) consiste en representar la propiedad de un activo físico o financiero — una concesión minera, un inventario de metal refinado, una factura, una participación en un proyecto industrial — como un token digital inscrito en un registro distribuido. El token no reemplaza al activo: es una anotación registral diseñada para que la propiedad sea más fácil de registrar, dividir y transferir.",
+        "Para los activos mineros e industriales, la relevancia potencial es concreta. El fraccionamiento podría reducir el monto mínimo necesario para participar en proyectos intensivos en capital. Las transferencias secundarias podrían aportar cierta liquidez a activos que hoy cambian de manos de forma lenta y privada. Y un registro tokenizado bien diseñado puede mejorar la trazabilidad — del origen, de la custodia, de quién posee qué — en sectores donde la documentación suele estar fragmentada.",
+        "El panorama honesto, sin embargo, es el de un mercado aún en maduración. Los marcos regulatorios para activos tokenizados evolucionan a ritmos distintos según la jurisdicción, los estándares de custodia y liquidación todavía se están consolidando, y la exigibilidad legal de la propiedad vía token depende de estructuras que siguen en construcción en buena parte del mundo. Las instituciones serias están experimentando; pocas operan a escala.",
+        "Nuestra posición en VORTAMAX es deliberada: seguimos la evolución de cerca y estamos preparados para integrar la tokenización de activos cuando el marco regulatorio lo permita. Hasta entonces, nuestro rol es comprender la tecnología, observar la maduración de los estándares y mantener nuestra plataforma lista — no adelantarnos a las reglas."
+      ],
+      "note": "Esta sección es únicamente contenido informativo y no constituye una oferta de productos tokenizados ni de valores."
+    },
+    "disclaimer": "Información referencial basada en datos diferidos de fuentes públicas. No constituye asesoría financiera ni recomendación de inversión. Los precios oficiales de LME y LBMA son productos licenciados de sus respectivas instituciones.",
+    "sourcesNote": "Fuentes: datos públicos de mercado (CoinGecko, Stooq y otros), almacenados en la caché del servidor."
+  },
   nav: {
-    explore: "Explorar Oportunidades",
+    explore: "Proyectos",
+    solutions: "Soluciones",
+    solutionsMenu: {
+      sellersDesc: "Publica y vende activos industriales",
+      investorsDesc: "Accede a oportunidades verificadas",
+      howDesc: "El proceso, paso a paso",
+      aboutDesc: "El equipo detrás de la plataforma",
+    },
+    ecosystemMenu: {
+      needsDesc: "Lo que las empresas ancla buscan ahora",
+      tendersDesc: "Paquetes EPC llave en mano en competencia abierta",
+      companiesDesc: "Perfiles corporativos verificados y socios fundadores",
+      suppliersDesc: "El catastro de proveedores calificados",
+      matchingDesc: "Matching instantáneo de inversionistas y proveedores",
+      servicesDesc: "Toolkit, asesoría premium y precios",
+    },
     forSellers: "Para Vendedores",
     forInvestors: "Para Inversionistas",
     howItWorks: "Cómo Funciona",
@@ -187,12 +373,12 @@ const es: Dictionary = {
         text: "Envía expresiones de interés u ofertas vinculantes directamente a los dueños — adquisiciones, participaciones, deuda o JVs.",
       },
     ],
-    statsTitle: "La plataforma en cifras",
+    statsTitle: "La Plataforma en Cifras",
     statProjects: "Proyectos publicados",
     statCountries: "Países",
     statPipeline: "Pipeline combinado",
     statCategories: "Clases de activos",
-    testimonialsTitle: "Lo que dicen nuestros clientes",
+    testimonialsTitle: "Lo que Dicen Nuestros Clientes",
     testimonials: [
       {
         quote:
@@ -202,7 +388,7 @@ const es: Dictionary = {
       },
       {
         quote:
-          "El proceso de verificación y el estándar de los data rooms fue lo que convenció a nuestro comité de inversión. Se siente institucional.",
+          "El proceso de verificación y el estándar de los data rooms fueron lo que convenció a nuestro comité de inversión. Se siente institucional.",
         author: "Managing Director, Fondo de Infraestructura",
         location: "Madrid, España",
       },
@@ -213,7 +399,7 @@ const es: Dictionary = {
         location: "Perth, Australia",
       },
     ],
-    partnersTitle: "Con la confianza de líderes de la industria",
+    partnersTitle: "Con la Confianza de Líderes de la Industria",
     ctaTitle: "¿Listo para mover tu activo — o tu capital?",
     ctaSubtitle:
       "Únete a una red global de dueños de activos, desarrolladores e inversionistas institucionales.",
@@ -238,11 +424,11 @@ const es: Dictionary = {
     noResultsHint: "Intenta ampliar los filtros o limpiarlos por completo.",
     searchPlaceholder: "Buscar proyectos…",
     investmentRanges: {
-      u10: "Menos de $10M",
-      "10-50": "$10M – $50M",
-      "50-100": "$50M – $100M",
-      "100-500": "$100M – $500M",
-      "500p": "$500M+",
+      u10: "Menos de USD 10M",
+      "10-50": "USD 10M–50M",
+      "50-100": "USD 50M–100M",
+      "100-500": "USD 100M–500M",
+      "500p": "USD 500M+",
     },
   },
   project: {
@@ -279,7 +465,7 @@ const es: Dictionary = {
     similar: "Oportunidades Similares",
     signInToAct:
       "Inicia sesión como inversionista para solicitar información o enviar ofertas.",
-    downloadNote: "Documento de muestra — placeholder para la demo",
+    downloadNote: "Documento de muestra para fines de demostración",
     nda: {
       title: "Acuerdo de Confidencialidad (NDA)",
       intro:
@@ -347,7 +533,7 @@ const es: Dictionary = {
   },
   dashboard: {
     overview: "Resumen",
-    welcome: "Bienvenido",
+    welcome: "Hola de nuevo",
     myProjects: "Mis Proyectos",
     newProject: "Nuevo Proyecto",
     favorites: "Favoritos",
@@ -355,7 +541,7 @@ const es: Dictionary = {
     offersReceived: "Ofertas Recibidas",
     offersSent: "Mis Ofertas",
     messages: "Mensajes",
-    partnerPanel: "Panel de Socio",
+    partnerPanel: "Panel de Founding Partner",
     adminPanel: "Admin",
     verificationQueue: "Cola de Verificación",
     users: "Usuarios",
@@ -380,7 +566,7 @@ const es: Dictionary = {
     emptyProjectsCta: "Crea tu primera publicación",
     emptyFavorites: "Aún no has guardado proyectos.",
     emptyFavoritesCta: "Explorar oportunidades",
-    emptyOffers: "Sin ofertas por ahora.",
+    emptyOffers: "Sin ofertas por ahora. Aparecerán aquí cuando los inversionistas respondan a tus publicaciones.",
     emptyAlerts:
       "Sin alertas guardadas. Crea una para enterarte de nuevos proyectos que coincidan.",
     emptyMessages: "Aún no hay conversaciones.",
@@ -395,7 +581,7 @@ const es: Dictionary = {
     amount: "Monto",
     accept: "Aceptar",
     decline: "Rechazar",
-    markInDiscussion: "Pasar a conversación",
+    markInDiscussion: "Pasar a Conversación",
     withdraw: "Retirar",
     reply: "Responder",
     newAlert: {
@@ -454,9 +640,17 @@ const es: Dictionary = {
       summary: "Resumen ejecutivo",
       summaryPlaceholder:
         "Una o dos frases que aparecerán en la tarjeta del proyecto…",
-      description: "Descripción completa",
+      description: "Descripción completa (Inglés)",
       descriptionPlaceholder:
         "Describe el activo, su historia, posición de mercado y la razón de la transacción…",
+      descriptionEs: "Descripción completa (Español)",
+      descriptionEsPlaceholder:
+        "Versión en español que verán los inversionistas hispanohablantes. Escríbela tú o genérala con IA desde el texto en inglés…",
+      translateCta: "Traducir con IA",
+      translating: "Traduciendo…",
+      translateNote: "Traducción con IA — revísala y edítala antes de publicar.",
+      translateError: "La traducción falló. Intenta de nuevo o escríbela manualmente.",
+      optionalTag: "opcional",
     },
     catLoc: {
       category: "Categoría",
@@ -668,7 +862,7 @@ const es: Dictionary = {
         },
         {
           title: "5. Tus Derechos",
-          text: "Puedes acceder, corregir o eliminar tus datos personales, y exportar la información de tu cuenta, escribiendo a privacy@assetmax.global.",
+          text: "Puedes acceder, corregir o eliminar tus datos personales, y exportar la información de tu cuenta, escribiendo a privacy@vortamax.global.",
         },
       ],
     },
@@ -676,20 +870,20 @@ const es: Dictionary = {
   ai: {
     poweredBy: "Con IA",
     disabledNote:
-      "Las funciones de IA no están configuradas en este despliegue (falta ANTHROPIC_API_KEY). El flujo manual sigue disponible.",
+      "Las funciones de IA no están disponibles en este despliegue. El flujo manual sigue disponible.",
     wizard: {
       chooseTitle: "¿Cómo quieres crear tu publicación?",
       manualTitle: "Completar el formulario manualmente",
       manualText: "Completa tú mismo el asistente guiado paso a paso.",
       uploadTitle: "Subir documentación existente",
       uploadText:
-        "Sube un informe técnico, memorando de información o presentación (PDF, Word, Excel) y nuestra IA pre-llena la publicación para tu revisión.",
+        "Sube un informe técnico, memorando de información o presentación (PDF, Word, Excel) y nuestra IA prellena la publicación para tu revisión.",
       uploadCta: "Extraer con IA",
       fileLabel: "Documento — PDF, DOCX, XLSX o TXT, máx 8 MB",
       processing: "Analizando documento… puede tardar hasta un minuto.",
       extractedTitle: "Documento procesado",
       extractedText:
-        "El asistente fue pre-llenado desde tu documento. Revisa y corrige cada campo antes de enviar — nada se publica sin verificación del admin.",
+        "El asistente fue prellenado desde tu documento. Revisa y corrige cada campo antes de enviar — nada se publica sin la verificación de nuestro equipo.",
       missingTitle: "No encontrado en el documento",
       publicSuggestTitle: "Sugeridos como documentos públicos",
       confidentialSuggestTitle: "Sugeridos para el data room (NDA)",
@@ -714,7 +908,7 @@ const es: Dictionary = {
     navLabel: "Mandatos",
     title: "Mandatos de Inversión",
     subtitle:
-      "Requerimientos activos de fondos y empresas. Pon tu activo frente a capital que ya lo está buscando.",
+      "Requerimientos de compra activos de fondos y empresas. Pon tu activo frente a capital que ya lo está buscando.",
     postCta: "Publica tu Mandato de Inversión",
     newTitle: "Nuevo Mandato de Inversión",
     editTitle: "Editar Mandato",
@@ -1344,7 +1538,8 @@ const es: Dictionary = {
       commodity: "Commodity",
       title: "Título de la publicación",
       titlePlaceholder: "ej. Cátodos de Cobre Grado A — 2.000 t/mes, FOB Antofagasta",
-      description: "Descripción",
+      description: "Descripción (Inglés)",
+      descriptionEs: "Descripción (Español)",
       volume: "Volumen y frecuencia",
       volumePlaceholder: "ej. 2.000 t/mes",
       periodicity: "Periodicidad",

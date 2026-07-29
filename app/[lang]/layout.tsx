@@ -1,12 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Providers } from "@/components/Providers";
+import { PwaSetup } from "@/components/PwaSetup";
+import { VortaWidget } from "@/components/vorta/VortaWidget";
+import { aiEnabled } from "@/lib/ai";
 import "../globals.css";
 
 // Marketplace content is database-driven and session-aware — render at request time.
 export const dynamic = "force-dynamic";
+
+export const viewport: Viewport = {
+  themeColor: "#0A1426",
+};
 
 export async function generateMetadata({
   params,
@@ -20,6 +27,15 @@ export async function generateMetadata({
       template: `%s | ${dict.brand.name}`,
     },
     description: dict.home.heroSubtitle,
+    manifest: "/manifest.webmanifest",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: dict.brand.name,
+    },
+    icons: {
+      apple: "/apple-touch-icon.png",
+    },
     openGraph: {
       title: `${dict.brand.name} — ${dict.brand.tagline}`,
       description: dict.home.heroSubtitle,
@@ -62,6 +78,8 @@ export default async function RootLayout({
           <SiteHeader lang={lang} dict={dict} />
           <main className="flex-1">{children}</main>
           <SiteFooter lang={lang} dict={dict} />
+          <PwaSetup dict={dict} />
+          <VortaWidget dict={dict} lang={lang} aiEnabled={aiEnabled()} />
         </Providers>
       </body>
     </html>

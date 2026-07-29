@@ -5,10 +5,27 @@
 
 import { aiEnabled, askClaude } from "@/lib/ai";
 import { formatUsdFull } from "@/lib/utils";
-import type { ContractKind } from "@/lib/constants";
+import type { TemplateKind } from "@/lib/constants";
+import {
+  type Ctx as TemplateCtx,
+  ndaTemplateEs,
+  loiTemplateEs,
+  mouTemplateEs,
+  spaTemplateEs,
+  commoditySpaTemplateEs,
+  intermediationTemplateEn,
+  intermediationTemplateEs,
+  intermediationExclusiveTemplateEn,
+  intermediationExclusiveTemplateEs,
+  jvTemplateEn,
+  jvTemplateEs,
+  commoditySupplyTemplateEn,
+  commoditySupplyTemplateEs,
+} from "@/lib/contract-templates-i18n";
 
 export type ContractContext = {
-  kind: ContractKind;
+  kind: TemplateKind;
+  language?: "en" | "es";
   sellerName: string;
   sellerCompany: string;
   buyerName: string;
@@ -26,6 +43,8 @@ export type ContractContext = {
   incoterm?: string | null;
   deliveryLocation?: string | null;
   priceDetails?: string | null;
+  termMonths?: number | null;
+  exclusivityMonths?: number | null;
 };
 
 const DRAFT_HEADER = `> **DRAFT — Subject to legal review / BORRADOR — Sujeto a revisión legal**
@@ -212,22 +231,47 @@ ${partiesBlock(c)}
 ${signatureBlock(c)}`;
 }
 
-const TEMPLATES: Record<ContractKind, (c: ContractContext) => string> = {
-  NDA: ndaTemplate,
-  LOI: loiTemplate,
-  MOU: mouTemplate,
-  SPA: spaTemplate,
-  COMMODITY_SPA: commoditySpaTemplate,
+// Adapter for the i18n/extra templates, which take a pre-formatted amount and
+// return the document body without the DRAFT banner.
+const extra =
+  (fn: (c: TemplateCtx) => string) =>
+  (c: ContractContext): string =>
+    `${DRAFT_HEADER}\n${fn({ ...c, amountText: amountLine(c) })}`;
+
+type TemplateFn = (c: ContractContext) => string;
+
+// Full registry: every template kind in both languages. The original five
+// English templates are reused verbatim (Module 4 engine — single source).
+const REGISTRY: Record<TemplateKind, { en: TemplateFn; es: TemplateFn }> = {
+  NDA: { en: ndaTemplate, es: extra(ndaTemplateEs) },
+  LOI: { en: loiTemplate, es: extra(loiTemplateEs) },
+  MOU: { en: mouTemplate, es: extra(mouTemplateEs) },
+  SPA: { en: spaTemplate, es: extra(spaTemplateEs) },
+  COMMODITY_SPA: { en: commoditySpaTemplate, es: extra(commoditySpaTemplateEs) },
+  INTERMEDIATION: {
+    en: extra(intermediationTemplateEn),
+    es: extra(intermediationTemplateEs),
+  },
+  INTERMEDIATION_EXCLUSIVE: {
+    en: extra(intermediationExclusiveTemplateEn),
+    es: extra(intermediationExclusiveTemplateEs),
+  },
+  JV: { en: extra(jvTemplateEn), es: extra(jvTemplateEs) },
+  COMMODITY_SUPPLY: {
+    en: extra(commoditySupplyTemplateEn),
+    es: extra(commoditySupplyTemplateEs),
+  },
 };
 
 export async function generateContract(c: ContractContext): Promise<string> {
-  const base = TEMPLATES[c.kind](c);
+  const language = c.language ?? "en";
+  const base = REGISTRY[c.kind][language](c);
   if (!aiEnabled()) return base;
 
   try {
     const refined = await askClaude({
       system:
-        "You are the legal-drafting assistant of VORTAMAX Global. You receive a draft deal document in Markdown. Improve its drafting quality and fill obvious gaps USING ONLY the deal data already present — never invent amounts, percentages, dates or party details. Keep the exact same structure, the DRAFT banner, all bracketed [TO BE NEGOTIATED] placeholders that lack data, the platform disclaimers and the signature block. Return the full Markdown document only.",
+        `You are the legal-drafting assistant of VORTAMAX Global. You receive a draft deal document in Markdown, written in ${language === "es" ? "Spanish" : "English"} — keep that language. Improve its drafting quality and fill obvious gaps USING ONLY the deal data already present — never invent amounts, percentages, dates or party details. Keep the exact same structure, the DRAFT banner, all bracketed [TO BE NEGOTIATED] placeholders that lack data, the platform disclaimers and the signature block. Return the full Markdown document only.`,
       messages: [{ role: "user", content: base }],
       maxTokens: 4096,
       temperature: 0.2,

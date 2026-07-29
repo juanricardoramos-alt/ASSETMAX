@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { PROJECT_ES, MANDATE_ES, COMMODITY_ES } from "./seed-i18n-es";
 
 const prisma = new PrismaClient();
 
 const PASSWORD = "assetmax123";
+
+// Serialize a per-locale Spanish override for the `translations` column.
+const esTranslations = (es: unknown) => JSON.stringify(es ? { es } : {});
 
 type SeedProject = {
   slug: string;
@@ -775,24 +779,24 @@ async function main() {
 
   // --- Users -----------------------------------------------------------------
   const admin = await prisma.user.upsert({
-    where: { email: "admin@assetmax.global" },
+    where: { email: "admin@vortamax.global" },
     update: {},
     create: {
       name: "Alexandra Reyes",
-      email: "admin@assetmax.global",
+      email: "admin@vortamax.global",
       passwordHash,
       role: "ADMIN",
-      company: "ASSETMAX Global",
+      company: "VORTAMAX Global",
       country: "CL",
     },
   });
 
   const partner = await prisma.user.upsert({
-    where: { email: "partner@assetmax.global" },
+    where: { email: "partner@vortamax.global" },
     update: {},
     create: {
       name: "Marcus Aldridge",
-      email: "partner@assetmax.global",
+      email: "partner@vortamax.global",
       passwordHash,
       role: "PARTNER",
       company: "Aldridge Industrial Holdings",
@@ -802,11 +806,11 @@ async function main() {
   });
 
   const seller1 = await prisma.user.upsert({
-    where: { email: "seller@assetmax.global" },
+    where: { email: "seller@vortamax.global" },
     update: {},
     create: {
       name: "Carolina Fuentes",
-      email: "seller@assetmax.global",
+      email: "seller@vortamax.global",
       passwordHash,
       role: "SELLER",
       company: "Andes Capital Advisors",
@@ -816,11 +820,11 @@ async function main() {
   });
 
   const seller2 = await prisma.user.upsert({
-    where: { email: "seller2@assetmax.global" },
+    where: { email: "seller2@vortamax.global" },
     update: {},
     create: {
       name: "James Whitmore",
-      email: "seller2@assetmax.global",
+      email: "seller2@vortamax.global",
       passwordHash,
       role: "SELLER",
       company: "Meridian Asset Partners",
@@ -830,11 +834,11 @@ async function main() {
   });
 
   const investor = await prisma.user.upsert({
-    where: { email: "investor@assetmax.global" },
+    where: { email: "investor@vortamax.global" },
     update: {},
     create: {
       name: "Sofia Lindqvist",
-      email: "investor@assetmax.global",
+      email: "investor@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Northbridge Infrastructure Fund",
@@ -850,7 +854,7 @@ async function main() {
   // logos until official brand assets are provided.
   const anchorSeeds = [
     {
-      email: "tlp@assetmax.global",
+      email: "tlp@vortamax.global",
       userName: "Ricardo Toledo",
       slug: "tlp-pipeline",
       name: "TLP Pipeline",
@@ -865,7 +869,7 @@ async function main() {
         "TLP Pipeline develops, builds and operates large-diameter pipeline systems and associated pumping and terminal infrastructure for water, mining concentrates and hydrocarbons across Latin America. The group manages a multi-country project pipeline and procures equipment, EPC capacity and specialized services at scale for its concession portfolio.",
     },
     {
-      email: "andrade@assetmax.global",
+      email: "andrade@vortamax.global",
       userName: "Mariana Lopes",
       slug: "andrade-gutierrez",
       name: "Andrade Gutiérrez",
@@ -880,7 +884,7 @@ async function main() {
         "Andrade Gutiérrez is one of Latin America's largest engineering and heavy-construction groups, with seven decades of experience delivering mining, energy, sanitation and transport infrastructure across more than 40 countries. Its project teams contract equipment fleets, subcontractors and technical services for concurrent large-scale works.",
     },
     {
-      email: "tbea@assetmax.global",
+      email: "tbea@vortamax.global",
       userName: "Wei Zhang",
       slug: "tbea",
       name: "TBEA",
@@ -1230,7 +1234,7 @@ async function main() {
     status?: string;
   }[] = [
     {
-      email: "supplier@assetmax.global",
+      email: "supplier@vortamax.global",
       userName: "Paula Contreras",
       slug: "andina-drilling-geotech",
       name: "Andina Drilling & Geotech",
@@ -1251,7 +1255,7 @@ async function main() {
         "Chilean drilling and geotechnical services contractor specialized in high-altitude and remote mining environments. Full-service offering from exploration drilling to geotechnical instrumentation, with an owned fleet of 14 rigs and permanent QA/QC and safety teams.",
     },
     {
-      email: "skanor@assetmax.global",
+      email: "skanor@vortamax.global",
       userName: "Ingrid Halvorsen",
       slug: "skanor-epc",
       name: "Skanor EPC",
@@ -1272,7 +1276,7 @@ async function main() {
         "European EPC contractor for water, energy and industrial infrastructure with three decades of international delivery. Strong track record in pumping and compression stations, HV substations and balance-of-plant packages under FIDIC frameworks.",
     },
     {
-      email: "transandes@assetmax.global",
+      email: "transandes@vortamax.global",
       userName: "Álvaro Muñoz",
       slug: "transandes-heavy-logistics",
       name: "TransAndes Heavy Logistics",
@@ -1293,7 +1297,7 @@ async function main() {
         "Heavy-lift and project-cargo specialist covering the Pacific coast and Andean corridors. Integrated route studies, bridge reinforcement, escorted convoys and port handling for out-of-gauge industrial cargo.",
     },
     {
-      email: "maquisur@assetmax.global",
+      email: "maquisur@vortamax.global",
       userName: "Rosa Quispe",
       slug: "maquisur-equipment",
       name: "MaquiSur Equipment",
@@ -1314,7 +1318,7 @@ async function main() {
         "Andean heavy-equipment distributor and maintenance contractor. Sales, leasing and full maintenance-and-repair contracts (MARC) for off-highway fleets, with factory-certified workshops and on-site parts logistics.",
     },
     {
-      email: "verdant@assetmax.global",
+      email: "verdant@vortamax.global",
       userName: "Camila Duarte",
       slug: "verdant-environmental",
       name: "Verdant Environmental",
@@ -1335,7 +1339,7 @@ async function main() {
         "Brazilian environmental consultancy focused on ports, coastal works and heavy infrastructure: impact studies, licensing management before state and federal agencies, marine monitoring and community engagement.",
     },
     {
-      email: "omnigrid@assetmax.global",
+      email: "omnigrid@vortamax.global",
       userName: "Diego Ferrer",
       slug: "omnigrid-om",
       name: "OmniGrid O&M",
@@ -1356,7 +1360,7 @@ async function main() {
         "Independent operations & maintenance provider for utility-scale solar plants and HV infrastructure. Preventive and corrective programs, certified switching personnel and CMMS-based performance reporting.",
     },
     {
-      email: "baustahl@assetmax.global",
+      email: "baustahl@vortamax.global",
       userName: "Otto Krenz",
       slug: "baustahl-civil-works",
       name: "Baustahl Civil Works",
@@ -1577,11 +1581,12 @@ async function main() {
     const { images, documents, owner, highlights, specs, ...rest } = p;
     const created = await prisma.project.upsert({
       where: { slug: p.slug },
-      update: {},
+      update: { translations: esTranslations(PROJECT_ES[p.slug]) },
       create: {
         ...rest,
         highlights: JSON.stringify(highlights),
         specs: JSON.stringify(specs),
+        translations: esTranslations(PROJECT_ES[p.slug]),
         status: "PUBLISHED",
         publishedAt: new Date(Date.now() - Math.floor(Math.random() * 90) * 86_400_000),
         ownerId: owners[owner].id,
@@ -1597,9 +1602,12 @@ async function main() {
   // One project pending review (for the admin queue demo)
   await prisma.project.upsert({
     where: { slug: "patagonia-wind-farm-repowering" },
-    update: {},
+    update: {
+      translations: esTranslations(PROJECT_ES["patagonia-wind-farm-repowering"]),
+    },
     create: {
       slug: "patagonia-wind-farm-repowering",
+      translations: esTranslations(PROJECT_ES["patagonia-wind-farm-repowering"]),
       title: "Patagonia Wind Farm Repowering",
       summary:
         "Repowering of an existing 48 MW wind farm in Argentine Patagonia to 120 MW with new-generation turbines.",
@@ -2145,11 +2153,12 @@ async function main() {
     const { images, documents, owner, highlights, specs, ...rest } = p;
     await prisma.project.upsert({
       where: { slug: p.slug },
-      update: {},
+      update: { translations: esTranslations(PROJECT_ES[p.slug]) },
       create: {
         ...rest,
         highlights: JSON.stringify(highlights),
         specs: JSON.stringify(specs),
+        translations: esTranslations(PROJECT_ES[p.slug]),
         status: "PUBLISHED",
         publishedAt: new Date(Date.now() - Math.floor(Math.random() * 90) * 86_400_000),
         ownerId: owners[owner].id,
@@ -2164,11 +2173,11 @@ async function main() {
 
   // --- Buy-side mandates + matching ------------------------------------------
   const investor2 = await prisma.user.upsert({
-    where: { email: "fund@assetmax.global" },
+    where: { email: "fund@vortamax.global" },
     update: {},
     create: {
       name: "Henrik Osterberg",
-      email: "fund@assetmax.global",
+      email: "fund@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Baltica Infrastructure Partners",
@@ -2176,11 +2185,11 @@ async function main() {
     },
   });
   const investor3 = await prisma.user.upsert({
-    where: { email: "strategics@assetmax.global" },
+    where: { email: "strategics@vortamax.global" },
     update: {},
     create: {
       name: "Mei-Ling Chen",
-      email: "strategics@assetmax.global",
+      email: "strategics@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Pacific Rim Strategic Holdings",
@@ -2279,13 +2288,14 @@ async function main() {
     const { categories, countries, stages, dealTypes, ...rest } = m;
     await prisma.mandate.upsert({
       where: { slug: m.slug },
-      update: {},
+      update: { translations: esTranslations(MANDATE_ES[m.slug]) },
       create: {
         ...rest,
         categories: JSON.stringify(categories),
         countries: JSON.stringify(countries),
         stages: JSON.stringify(stages),
         dealTypes: JSON.stringify(dealTypes),
+        translations: esTranslations(MANDATE_ES[m.slug]),
         status: "PUBLISHED",
       },
     });
@@ -2294,11 +2304,11 @@ async function main() {
 
   // --- Commodities marketplace ----------------------------------------------
   const trader = await prisma.user.upsert({
-    where: { email: "trader@assetmax.global" },
+    where: { email: "trader@vortamax.global" },
     update: {},
     create: {
       name: "Rashid Al Maktoum",
-      email: "trader@assetmax.global",
+      email: "trader@vortamax.global",
       passwordHash,
       role: "INVESTOR",
       company: "Gulf Metals Trading FZE",
@@ -2656,11 +2666,12 @@ async function main() {
     const { specs, documents, ...rest } = l;
     await prisma.commodityListing.upsert({
       where: { slug: l.slug },
-      update: {},
+      update: { translations: esTranslations(COMMODITY_ES[l.slug]) },
       create: {
         ...rest,
         specs: JSON.stringify(specs),
         documents: JSON.stringify(documents),
+        translations: esTranslations(COMMODITY_ES[l.slug]),
         status: "PUBLISHED",
       },
     });
@@ -2675,10 +2686,10 @@ async function main() {
     where: { slug: "vizcachas-copper-project" },
   });
   const drUsers = {
-    investor: await prisma.user.findUnique({ where: { email: "investor@assetmax.global" } }),
-    fund: await prisma.user.findUnique({ where: { email: "fund@assetmax.global" } }),
-    trader: await prisma.user.findUnique({ where: { email: "trader@assetmax.global" } }),
-    supplier: await prisma.user.findUnique({ where: { email: "supplier@assetmax.global" } }),
+    investor: await prisma.user.findUnique({ where: { email: "investor@vortamax.global" } }),
+    fund: await prisma.user.findUnique({ where: { email: "fund@vortamax.global" } }),
+    trader: await prisma.user.findUnique({ where: { email: "trader@vortamax.global" } }),
+    supplier: await prisma.user.findUnique({ where: { email: "supplier@vortamax.global" } }),
   };
   const drSeeds: {
     project: typeof drAtacama;

@@ -1,10 +1,9 @@
 // VORTAMAX Global — data model
 //
-// NOTE ON PORTABILITY: the schema deliberately uses String columns (with
-// typed constants in lib/constants.ts) instead of Prisma enums. This kept it
-// runnable on SQLite during early development and keeps it portable today on
-// PostgreSQL (Supabase in production): every column maps to plain
-// text/double precision/timestamp types with no engine-specific features.
+// NOTE ON PORTABILITY: the schema uses String columns (with typed constants in
+// lib/constants.ts) instead of Prisma enums so the exact same schema runs on
+// any SQL backend. Production runs on PostgreSQL (Supabase); migrations live
+// in prisma/migrations and are applied on deploy by scripts/deploy-db.mjs.
 
 generator client {
   provider = "prisma-client-js"
@@ -55,6 +54,7 @@ model User {
   supplierProfile   SupplierProfile?
   dataRoomRequests  DataRoomRequest[]
   dataRoomLogs      DataRoomLog[]
+  generatedDocuments GeneratedDocument[]
 }
 
 model Account {
@@ -285,6 +285,9 @@ model Project {
   // JSON-encoded string arrays / objects (portable across SQLite & Postgres)
   highlights      String    @default("[]")
   specs           String    @default("[]")
+  // Per-locale content overrides, JSON keyed by locale (e.g. {"es": {"summary": …}}).
+  // Missing keys fall back to the base (English) columns at render time.
+  translations    String    @default("{}")
   views           Int       @default(0)
   rejectionReason String?
   publishedAt     DateTime?
@@ -467,6 +470,8 @@ model Mandate {
   equityMin       Float?
   equityMax       Float?
   conditions      String?
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations    String   @default("{}")
   isPublic        Boolean  @default(true)
   status          String   @default("IN_REVIEW")
   rejectionReason String?
@@ -516,6 +521,8 @@ model CommodityListing {
   priceDetails     String?
   validUntil       DateTime?
   documents        String    @default("[]")
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations     String    @default("{}")
   status           String    @default("IN_REVIEW")
   verified         Boolean   @default(false)
   rejectionReason  String?
@@ -588,6 +595,30 @@ model Contract {
   commodityListing CommodityListing? @relation(fields: [commodityListingId], references: [id], onDelete: Cascade)
   seller           User              @relation("ContractSeller", fields: [sellerId], references: [id], onDelete: Cascade)
   buyer            User              @relation("ContractBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Standalone template documents (Contract Templates library)
+// ---------------------------------------------------------------------------
+
+// kind: NDA | LOI | MOU | SPA | COMMODITY_SPA | INTERMEDIATION |
+//       INTERMEDIATION_EXCLUSIVE | JV | COMMODITY_SUPPLY
+// language: en | es
+// Drafts generated from the template library. Unlike Contract, these are not
+// tied to a counterparty account — the creator fills both parties manually.
+model GeneratedDocument {
+  id          String   @id @default(cuid())
+  kind        String
+  language    String   @default("en")
+  title       String
+  content     String
+  partyA      String
+  partyB      String
+  projectId   String?
+  createdById String
+  createdAt   DateTime @default(now())
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
 }
 
 // ---------------------------------------------------------------------------

@@ -9,6 +9,8 @@ export const commodityInputSchema = z.object({
   commodity: z.enum(COMMODITIES),
   title: z.string().min(5).max(200),
   description: z.string().min(20).max(10000),
+  // Optional Spanish version of the description (stored under translations.es)
+  descriptionEs: z.string().max(10000).optional().or(z.literal("")),
   specs: z
     .array(z.object({ label: z.string().min(1).max(120), value: z.string().min(1).max(240) }))
     .max(24)

@@ -6,6 +6,8 @@ export const projectInputSchema = z.object({
   title: z.string().min(5).max(160),
   summary: z.string().min(20).max(400),
   description: z.string().min(50).max(20000),
+  // Optional Spanish version of the description (stored under translations.es)
+  descriptionEs: z.string().max(20000).optional().or(z.literal("")),
   category: z.enum(CATEGORIES),
   countryCode: z.string().length(2),
   region: z.string().max(120).optional().or(z.literal("")),

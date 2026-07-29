@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { CommodityCard } from "@/components/commodities/CommodityCard";
 import { CommodityFilters } from "@/components/commodities/CommodityFilters";
 import { MarketRefsBar } from "@/components/commodities/MarketRefsBar";
@@ -47,14 +48,17 @@ export default async function CommoditiesPage({
     ];
   }
 
-  const listings = await prisma.commodityListing.findMany({
-    where,
-    orderBy: [{ verified: "desc" }, { createdAt: "desc" }],
-  });
+  const listings = localizedAll(
+    await prisma.commodityListing.findMany({
+      where,
+      orderBy: [{ verified: "desc" }, { createdAt: "desc" }],
+    }),
+    lang
+  );
 
   return (
     <div className="bg-navy-50/40">
-      <MarketRefsBar title={c.marketRefs} note={c.marketRefsNote} />
+      <MarketRefsBar title={c.marketRefs} note={c.marketRefsNote} lang={lang} />
       <div className="border-b border-navy-100 bg-navy-950">
         <div className="container-site flex flex-wrap items-end justify-between gap-6 py-12">
           <div className="max-w-2xl">
@@ -94,7 +98,7 @@ export default async function CommoditiesPage({
             </div>
           )}
 
-          <p className="mt-8 rounded-xl border border-navy-200 bg-white px-5 py-4 text-xs leading-relaxed text-navy-500">
+          <p className="mt-8 rounded-xl border border-navy-100 bg-white px-5 py-4 text-xs leading-relaxed text-navy-500">
             {c.disclaimer}
           </p>
         </div>

@@ -21,7 +21,7 @@ Bilingual (English default / Spanish), fully responsive, and built with an insti
 | --- | --- |
 | Framework | Next.js 14 (App Router) + TypeScript |
 | Styling | Tailwind CSS (custom navy/gold design system, Playfair Display + Inter) |
-| Database | Prisma ORM — PostgreSQL (Supabase in production; any local Postgres for development) |
+| Database | Prisma ORM — PostgreSQL (Supabase in production); migrations applied automatically on deploy |
 | Auth | NextAuth (email/password + optional Google OAuth), JWT sessions with roles |
 | AI | Anthropic API via internal service (`lib/ai.ts`) — ingestion, matching rationale, assistant, contract drafting |
 | Charts | Recharts (palette validated for CVD safety and contrast) |
@@ -79,18 +79,18 @@ All demo accounts use the password **`assetmax123`**:
 
 | Email | Role |
 | --- | --- |
-| `admin@assetmax.global` | Administrator |
-| `partner@assetmax.global` | Founding Partner |
-| `seller@assetmax.global` | Seller (verified) |
-| `seller2@assetmax.global` | Seller |
-| `investor@assetmax.global` | Investor |
-| `tlp@assetmax.global` | Anchor company — TLP Pipeline |
-| `andrade@assetmax.global` | Anchor company — Andrade Gutiérrez |
-| `tbea@assetmax.global` | Anchor company — TBEA |
-| `supplier@assetmax.global` | Qualified supplier — Andina Drilling & Geotech |
-| `baustahl@assetmax.global` | Supplier awaiting qualification (admin queue demo) |
+| `admin@vortamax.global` | Administrator |
+| `partner@vortamax.global` | Founding Partner |
+| `seller@vortamax.global` | Seller (verified) |
+| `seller2@vortamax.global` | Seller |
+| `investor@vortamax.global` | Investor |
+| `tlp@vortamax.global` | Anchor company — TLP Pipeline |
+| `andrade@vortamax.global` | Anchor company — Andrade Gutiérrez |
+| `tbea@vortamax.global` | Anchor company — TBEA |
+| `supplier@vortamax.global` | Qualified supplier — Andina Drilling & Geotech |
+| `baustahl@vortamax.global` | Supplier awaiting qualification (admin queue demo) |
 
-The seed creates **25 realistic projects** across 12 countries (desalination, copper, green hydrogen, lithium, solar, hydro, agro-export, data centers, ports, cold chain, industrial parks…), **6 investment mandates** (one confidential) generating 13 automatic matches, **14 commodity listings** (9 sell offers + 5 buy requirements) generating 5 matches, plus demo offers, messages, favorites, NDA acceptances and notifications. Two extra demo accounts join the originals: `fund@assetmax.global`, `strategics@assetmax.global` and `trader@assetmax.global` (same password).
+The seed creates **25 realistic projects** across 12 countries (desalination, copper, green hydrogen, lithium, solar, hydro, agro-export, data centers, ports, cold chain, industrial parks…), **6 investment mandates** (one confidential) generating 13 automatic matches, **14 commodity listings** (9 sell offers + 5 buy requirements) generating 5 matches, plus demo offers, messages, favorites, NDA acceptances and notifications. Two extra demo accounts join the originals: `fund@vortamax.global`, `strategics@vortamax.global` and `trader@vortamax.global` (same password).
 
 ### Useful scripts
 
@@ -107,21 +107,24 @@ The seed creates **25 realistic projects** across 12 countries (desalination, co
 
 ## Deploying to Vercel (PostgreSQL / Supabase)
 
-The datasource provider is already `postgresql` and the initial migration lives in `prisma/migrations/`. The schema deliberately uses portable types (String enums, no JSON columns), so the same migration runs on any PostgreSQL 14+.
-
 1. **Set environment variables** in the Vercel project:
-   - `DATABASE_URL` — your Supabase/Postgres connection string. With Supabase's transaction pooler (port 6543) append `?pgbouncer=true&connection_limit=1`; the direct connection (port 5432) needs no extra params.
+   - `DATABASE_URL` — your Supabase/Postgres connection string. With Supabase's transaction pooler (port 6543) append `?pgbouncer=true&connection_limit=1`; migrations derive the direct connection automatically, or set `DIRECT_DATABASE_URL` explicitly (port 5432).
    - `NEXTAUTH_SECRET` — `openssl rand -base64 32`
    - `NEXTAUTH_URL` — `https://your-domain.com`
    - `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — optional, enables Google sign-in
-2. **Create the tables & seed** (once, from your machine, using the **direct** connection):
-   ```bash
-   # .env (gitignored) with the Supabase URL, or pull it from Vercel:
-   #   npx vercel env pull .env
-   npm run db:deploy    # prisma migrate deploy — applies prisma/migrations
-   npm run db:seed      # demo data (idempotent)
-   ```
-3. **Deploy** — `vercel` or connect the Git repository. The build command is the default `npm run build`; the build never touches the database (all DB-backed routes, including the sitemap, render on demand).
+   - `ANTHROPIC_API_KEY` — optional, activates the AI modules (everything degrades gracefully without it)
+2. **Deploy** — connect the Git repository. Vercel runs `npm run vercel-build`,
+   which applies pending Prisma migrations (`scripts/deploy-db.mjs`) and seeds
+   the demo data automatically when the database is empty. Subsequent deploys
+   never touch existing data. The build itself never requires the database
+   (all DB-backed routes, including the sitemap, render on demand).
+3. **Database migrated by hand?** If the schema was created by pasting SQL in
+   an editor (no `_prisma_migrations` table), run the one-time baseline script
+   (`prisma/supabase-01-baseline.sql`) so automatic migrations can take over.
+
+> Schema changes: add a migration with `npx prisma migrate dev --name <change>`
+> (or generate SQL offline via `prisma migrate diff`) and push — it is applied
+> on the next deploy.
 
 ---
 

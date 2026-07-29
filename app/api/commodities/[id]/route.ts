@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/api-helpers";
 import { commodityInputSchema } from "@/lib/commodity-schema";
+import { withTranslation } from "@/lib/l10n";
 
 export async function PATCH(
   req: Request,
@@ -48,6 +49,9 @@ export async function PATCH(
       priceDetails: d.priceDetails || null,
       validUntil: d.validUntil ? new Date(d.validUntil) : null,
       documents: JSON.stringify(d.documents),
+      translations: withTranslation(listing.translations, "es", {
+        description: d.descriptionEs,
+      }),
       status: nextStatus,
       verified: nextStatus === "IN_REVIEW" ? false : listing.verified,
       rejectionReason: null,

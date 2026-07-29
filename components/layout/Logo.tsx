@@ -14,7 +14,7 @@ export function Logo({
     <Link
       href={`/${lang}`}
       className={cn("flex items-baseline gap-0.5 select-none", className)}
-      aria-label="VORTAMAX Global — Home"
+      aria-label={lang === "es" ? "VORTAMAX Global — Inicio" : "VORTAMAX Global — Home"}
     >
       <span
         className={cn(

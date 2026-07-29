@@ -2,6 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { translationField } from "@/lib/l10n";
+import { aiEnabled } from "@/lib/ai";
 import { parseJsonArray, parseSpecs } from "@/lib/utils";
 import {
   ProjectWizard,
@@ -31,6 +33,7 @@ export default async function EditProjectPage({
     title: project.title,
     summary: project.summary,
     description: project.description,
+    descriptionEs: translationField(project.translations, "es", "description"),
     category: project.category,
     countryCode: project.countryCode,
     region: project.region ?? "",
@@ -64,6 +67,7 @@ export default async function EditProjectPage({
       dict={dict}
       projectId={project.id}
       initialData={initialData}
+      aiIngestEnabled={aiEnabled()}
     />
   );
 }

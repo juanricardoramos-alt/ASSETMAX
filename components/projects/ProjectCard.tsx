@@ -71,7 +71,7 @@ export function ProjectCard({
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-1.5 text-xs font-medium text-navy-500">
-          <IconMapPin className="h-3.5 w-3.5" />
+          <IconMapPin className="h-4 w-4" />
           {project.city ? `${project.city}, ` : ""}
           {countryName(project.countryCode, lang)}
         </div>

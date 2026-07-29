@@ -7,6 +7,7 @@ import { CATEGORIES, STAGES, DEAL_TYPES, COUNTRIES } from "@/lib/constants";
 import type { StructuredMandate } from "@/app/api/ai/structure-mandate/route";
 import { Button, Card, Input, Label, Textarea } from "@/components/ui";
 import { IconCheck } from "@/components/icons";
+import { VortaTip } from "@/components/vorta/VortaTip";
 import { cn } from "@/lib/utils";
 
 export type MandateFormData = {
@@ -173,7 +174,10 @@ export function MandateForm({
       body: JSON.stringify(payload),
     });
     setBusy(false);
-    if (res.ok) setSubmitted(true);
+    if (res.ok) {
+      setSubmitted(true);
+      window.dispatchEvent(new Event("vorta:celebrate"));
+    }
     else setError(true);
   }
 
@@ -202,6 +206,12 @@ export function MandateForm({
       <h1 className="text-2xl font-extrabold text-navy-950">
         {mandateId ? dict.mandates.editTitle : dict.mandates.newTitle}
       </h1>
+
+      <VortaTip
+        id="mandate-form"
+        text={dict.vorta.tips.mandate}
+        dismissLabel={dict.vorta.tipDismiss}
+      />
 
       {/* Free-text AI structuring */}
       {!mandateId && (

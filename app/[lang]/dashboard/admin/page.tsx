@@ -54,6 +54,7 @@ export default async function AdminPage({ params }: { params: { lang: string } }
         where: { status: "IN_REVIEW" },
       }),
     },
+    { href: `/${lang}/dashboard/admin/documents`, title: dict.templates.adminTitle, badge: null },
   ];
 
   return (

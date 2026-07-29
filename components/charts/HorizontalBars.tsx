@@ -13,9 +13,9 @@ import {
 import { formatUsdCompact } from "@/lib/utils";
 
 // Chart palette validated with the dataviz six-checks script (light surface):
-// data blue #2E5FA3, data gold #A17E25 — both pass lightness band, chroma
+// data blue #35517C, data gold #A17E25 — both pass lightness band, chroma
 // floor, CVD separation and 3:1 contrast.
-const DATA_BLUE = "#2E5FA3";
+const DATA_BLUE = "#35517C";
 
 export type BarRow = { label: string; value: number };
 

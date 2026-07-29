@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { countryName, INVESTMENT_RANGES } from "@/lib/constants";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { FiltersPanel } from "@/components/projects/FiltersPanel";
@@ -50,6 +51,8 @@ export default async function ProjectsPage({
       { description: { contains: searchParams.q, mode: "insensitive" } },
       { country: { contains: searchParams.q, mode: "insensitive" } },
       { city: { contains: searchParams.q, mode: "insensitive" } },
+      // Plain-text match inside the per-locale JSON overrides (e.g. Spanish copy)
+      { translations: { contains: searchParams.q, mode: "insensitive" } },
     ];
   }
   const range = INVESTMENT_RANGES.find((r) => r.key === searchParams.range);
@@ -69,7 +72,7 @@ export default async function ProjectsPage({
     where.AND = overlaps;
   }
 
-  const [projects, availableCountries] = await Promise.all([
+  const [projectsRaw, availableCountries] = await Promise.all([
     prisma.project.findMany({
       where,
       include: {
@@ -84,6 +87,8 @@ export default async function ProjectsPage({
       distinct: ["countryCode"],
     }),
   ]);
+
+  const projects = localizedAll(projectsRaw, lang);
 
   const countries = availableCountries
     .map((c) => ({ code: c.countryCode, name: countryName(c.countryCode, lang) }))

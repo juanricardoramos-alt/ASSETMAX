@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
+  const dict = await getDictionary(params.lang);
+  return { title: dict.nav.dashboard };
+}
 
 export default async function DashboardLayout({
   children,
@@ -48,6 +58,7 @@ export default async function DashboardLayout({
     items.push({ href: `${base}/commodities`, label: dict.commodities.navLabel });
     items.push({ href: `${base}/matches`, label: dict.matches.title });
     items.push({ href: `${base}/contracts`, label: dict.contracts.title });
+    items.push({ href: `${base}/templates`, label: dict.templates.navLabel });
   }
   items.push({ href: `${base}/dataroom`, label: dict.dataroom.navLabel });
   items.push({ href: `${base}/messages`, label: dict.dashboard.messages });
@@ -60,8 +71,8 @@ export default async function DashboardLayout({
 
   return (
     <div className="bg-navy-50/50">
-      <div className="container-site grid gap-8 py-10 lg:grid-cols-[230px_1fr]">
-        <aside>
+      <div className="container-site grid grid-cols-1 gap-8 py-10 lg:grid-cols-[230px_1fr]">
+        <aside className="min-w-0">
           <div className="rounded-xl border border-navy-100 bg-white p-3 shadow-card lg:sticky lg:top-24">
             <div className="border-b border-navy-100 px-3 pb-3 pt-1">
               <p className="truncate text-sm font-bold text-navy-950">

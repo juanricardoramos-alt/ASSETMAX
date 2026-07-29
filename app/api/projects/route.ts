@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/api-helpers";
 import { projectInputSchema } from "@/lib/project-schema";
+import { withTranslation } from "@/lib/l10n";
 import { COUNTRIES } from "@/lib/constants";
 import { slugify } from "@/lib/utils";
 
@@ -62,6 +63,7 @@ export async function POST(req: Request) {
       areaHectares: d.areaHectares ?? null,
       highlights: JSON.stringify(d.highlights),
       specs: JSON.stringify(d.specs),
+      translations: withTranslation(null, "es", { description: d.descriptionEs }),
       ownerId: session!.user.id,
       images: {
         create: d.images.map((url, i) => ({ url, alt: d.title, order: i })),
