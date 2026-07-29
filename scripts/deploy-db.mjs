@@ -48,7 +48,22 @@ const directUrl =
 const env = { ...process.env, DATABASE_URL: directUrl };
 
 console.log("[deploy-db] Applying migrations…");
-execSync("npx prisma migrate deploy", { stdio: "inherit", env });
+try {
+  execSync("npx prisma migrate deploy", { stdio: "inherit", env });
+} catch {
+  // P3005: the schema is not empty but has no _prisma_migrations table —
+  // this happens when the database was created by pasting the initial
+  // migration SQL by hand (e.g. in the Supabase SQL Editor). Baseline the
+  // hand-applied init migration and retry so later migrations apply normally.
+  console.log(
+    "[deploy-db] migrate deploy failed — attempting baseline of the hand-applied init migration…"
+  );
+  execSync("npx prisma migrate resolve --applied 20260728233421_init", {
+    stdio: "inherit",
+    env,
+  });
+  execSync("npx prisma migrate deploy", { stdio: "inherit", env });
+}
 
 const { PrismaClient } = await import("@prisma/client");
 const prisma = new PrismaClient({ datasources: { db: { url: directUrl } } });
