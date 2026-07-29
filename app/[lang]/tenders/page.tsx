@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import { formatDate, formatInvestmentRange, parseJsonArray } from "@/lib/utils";
 import { CompanyMonogram } from "@/components/company/CompanyMonogram";
@@ -28,7 +29,7 @@ export default async function TendersPage({
   const dict = await getDictionary(lang);
   const t = dict.tenders;
 
-  const tenders = await prisma.need.findMany({
+  const tendersRaw = await prisma.need.findMany({
     where: { kind: "EPC_TENDER" },
     include: {
       company: {
@@ -46,6 +47,8 @@ export default async function TendersPage({
     },
     orderBy: [{ status: "asc" }, { createdAt: "desc" }],
   });
+
+  const tenders = localizedAll(tendersRaw, lang);
 
   const open = tenders.filter((n) => n.status === "OPEN");
   const closed = tenders.filter((n) => n.status !== "OPEN");

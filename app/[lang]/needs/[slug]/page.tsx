@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import {
   formatDate,
@@ -43,11 +44,17 @@ export default async function NeedDetailPage({
   const dict = await getDictionary(lang);
   const session = await auth();
 
-  const need = await prisma.need.findUnique({
+  const needRaw = await prisma.need.findUnique({
     where: { slug: params.slug },
     include: { company: true },
   });
-  if (!need) notFound();
+  if (!needRaw) notFound();
+
+  // Overlay the active locale's content (title, description, requirements…).
+  const need = {
+    ...localized(needRaw, lang),
+    company: localized(needRaw.company, lang),
+  };
 
   await prisma.need
     .update({ where: { id: need.id }, data: { views: { increment: 1 } } })

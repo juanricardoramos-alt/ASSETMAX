@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import { parseJsonArray } from "@/lib/utils";
 import { CompanyMonogram } from "@/components/company/CompanyMonogram";
@@ -34,10 +35,11 @@ export default async function SupplierProfilePage({
   const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
   const dict = await getDictionary(lang);
 
-  const supplier = await prisma.supplierProfile.findUnique({
+  const supplierRaw = await prisma.supplierProfile.findUnique({
     where: { slug: params.slug },
   });
-  if (!supplier || supplier.status !== "PUBLISHED") notFound();
+  if (!supplierRaw || supplierRaw.status !== "PUBLISHED") notFound();
+  const supplier = localized(supplierRaw, lang);
 
   const certifications = parseJsonArray(supplier.certifications);
   const portfolio = parseJsonArray(supplier.portfolio);

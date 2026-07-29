@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import { NeedCard } from "@/components/needs/NeedCard";
 import { NeedsFilters } from "@/components/needs/NeedsFilters";
@@ -50,7 +51,7 @@ export default async function NeedsPage({
     ];
   }
 
-  const [needs, openNeeds] = await Promise.all([
+  const [needsRaw, openNeeds] = await Promise.all([
     prisma.need.findMany({
       where,
       include: {
@@ -68,6 +69,8 @@ export default async function NeedsPage({
       },
     }),
   ]);
+
+  const needs = localizedAll(needsRaw, lang);
 
   const countries = Array.from(
     new Set(openNeeds.map((n) => n.countryCode))

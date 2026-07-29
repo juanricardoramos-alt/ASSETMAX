@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { FOUNDING_ANCHORS } from "@/lib/constants";
 import { CompanyCard } from "@/components/company/CompanyCard";
 import { CompanyMonogram } from "@/components/company/CompanyMonogram";
@@ -26,9 +27,12 @@ export default async function CompaniesPage({
   const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
   const dict = await getDictionary(lang);
 
-  const companies = await prisma.companyProfile.findMany({
-    orderBy: [{ isAnchor: "desc" }, { verified: "desc" }, { createdAt: "asc" }],
-  });
+  const companies = localizedAll(
+    await prisma.companyProfile.findMany({
+      orderBy: [{ isAnchor: "desc" }, { verified: "desc" }, { createdAt: "asc" }],
+    }),
+    lang
+  );
 
   // Link founding-partner tiles to their live profiles when they exist.
   const bySlugName = new Map(companies.map((c) => [c.name.toLowerCase(), c.slug]));

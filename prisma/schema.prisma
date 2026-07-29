@@ -117,6 +117,8 @@ model CompanyProfile {
   logoUrl     String?
   verified    Boolean  @default(false)
   isAnchor    Boolean  @default(false)
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations String  @default("{}")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -146,6 +148,8 @@ model Need {
   deadline     DateTime?
   // JSON-encoded string array (portable across SQLite & Postgres)
   requirements String    @default("[]")
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations String    @default("{}")
   status       String    @default("OPEN")
   views        Int       @default(0)
   createdAt    DateTime  @default(now())
@@ -180,6 +184,8 @@ model SupplierProfile {
   certifications  String   @default("[]")
   portfolio       String   @default("[]")
   capacity        String?
+  // Per-locale content overrides, JSON keyed by locale — see Project.translations.
+  translations    String   @default("{}")
   status          String   @default("IN_REVIEW")
   verified        Boolean  @default(false)
   // Paid placement ("Featured supplier" revenue line) — toggled by admins.

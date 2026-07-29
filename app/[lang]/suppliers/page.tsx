@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localizedAll } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import { SupplierCard } from "@/components/suppliers/SupplierCard";
 import { SuppliersFilters } from "@/components/suppliers/SuppliersFilters";
@@ -44,7 +45,7 @@ export default async function SuppliersPage({
     ];
   }
 
-  const [suppliers, allPublished] = await Promise.all([
+  const [suppliersRaw, allPublished] = await Promise.all([
     prisma.supplierProfile.findMany({
       where,
       // Featured (paid placement) first, then qualified, then seniority.
@@ -56,6 +57,8 @@ export default async function SuppliersPage({
       distinct: ["countryCode"],
     }),
   ]);
+
+  const suppliers = localizedAll(suppliersRaw, lang);
 
   const countries = allPublished
     .map((s) => ({ code: s.countryCode, name: countryName(s.countryCode, lang) }))

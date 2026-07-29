@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getDictionary, isLocale, defaultLocale, type Locale } from "@/lib/i18n";
+import { localized, localizedAll } from "@/lib/l10n";
 import { countryName } from "@/lib/constants";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { NeedCard } from "@/components/needs/NeedCard";
@@ -32,13 +33,14 @@ export default async function CompanyProfilePage({
   const lang: Locale = isLocale(params.lang) ? params.lang : defaultLocale;
   const dict = await getDictionary(lang);
 
-  const company = await prisma.companyProfile.findUnique({
+  const companyRaw = await prisma.companyProfile.findUnique({
     where: { slug: params.slug },
     include: { user: { select: { id: true, role: true } } },
   });
-  if (!company) notFound();
+  if (!companyRaw) notFound();
+  const company = localized(companyRaw, lang);
 
-  const [projects, openNeeds] = await Promise.all([
+  const [projectsRaw, openNeedsRaw] = await Promise.all([
     prisma.project.findMany({
       where: { ownerId: company.user.id, status: "PUBLISHED" },
       include: {
@@ -57,6 +59,9 @@ export default async function CompanyProfilePage({
       orderBy: { createdAt: "desc" },
     }),
   ]);
+
+  const projects = localizedAll(projectsRaw, lang);
+  const openNeeds = localizedAll(openNeedsRaw, lang);
 
   const facts: { label: string; value: string }[] = [
     {

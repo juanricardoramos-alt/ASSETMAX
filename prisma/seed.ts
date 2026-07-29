@@ -2,6 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { PROJECT_ES, MANDATE_ES, COMMODITY_ES } from "./seed-i18n-es";
+import { NEED_ES, COMPANY_ES, SUPPLIER_ES } from "./seed-i18n-ecosystem";
 
 const prisma = new PrismaClient();
 
@@ -916,11 +917,12 @@ async function main() {
     });
     await prisma.companyProfile.upsert({
       where: { slug: a.slug },
-      update: {},
+      update: { translations: esTranslations(COMPANY_ES[a.slug]) },
       create: {
         slug: a.slug,
         userId: anchorUser.id,
         name: a.name,
+        translations: esTranslations(COMPANY_ES[a.slug]),
         legalName: a.legalName,
         description: a.description,
         sector: a.sector,
@@ -939,9 +941,12 @@ async function main() {
   // Corporate profile for the founding-partner demo account.
   await prisma.companyProfile.upsert({
     where: { slug: "aldridge-industrial-holdings" },
-    update: {},
+    update: {
+      translations: esTranslations(COMPANY_ES["aldridge-industrial-holdings"]),
+    },
     create: {
       slug: "aldridge-industrial-holdings",
+      translations: esTranslations(COMPANY_ES["aldridge-industrial-holdings"]),
       userId: partner.id,
       name: "Aldridge Industrial Holdings",
       legalName: "Aldridge Industrial Holdings Ltd.",
@@ -1192,10 +1197,14 @@ async function main() {
     if (!needCompany) continue;
     await prisma.need.upsert({
       where: { slug: n.slug },
-      // Keep `kind` in sync when reseeding an existing database.
-      update: { kind: n.kind ?? "STANDARD" },
+      // Keep `kind` and translations in sync when reseeding an existing DB.
+      update: {
+        kind: n.kind ?? "STANDARD",
+        translations: esTranslations(NEED_ES[n.slug]),
+      },
       create: {
         slug: n.slug,
+        translations: esTranslations(NEED_ES[n.slug]),
         title: n.title,
         description: n.description,
         category: n.category,
@@ -1398,10 +1407,14 @@ async function main() {
     });
     const created = await prisma.supplierProfile.upsert({
       where: { slug: s.slug },
-      // Keep the paid-placement flag in sync when reseeding an existing DB.
-      update: { featured: s.slug === "skanor-epc" },
+      // Keep the paid-placement flag and translations in sync on reseed.
+      update: {
+        featured: s.slug === "skanor-epc",
+        translations: esTranslations(SUPPLIER_ES[s.slug]),
+      },
       create: {
         featured: s.slug === "skanor-epc",
+        translations: esTranslations(SUPPLIER_ES[s.slug]),
         slug: s.slug,
         userId: supplierUser.id,
         name: s.name,
