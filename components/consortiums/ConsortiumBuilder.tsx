@@ -93,6 +93,7 @@ export function ConsortiumBuilder({
       setError(true);
       return;
     }
+    window.dispatchEvent(new Event("vorta:celebrate"));
     router.push(`/${lang}/dashboard/applications`);
     router.refresh();
   }

@@ -52,7 +52,10 @@ export function RequestDecisionButtons({
       body: JSON.stringify({ action }),
     });
     setBusy(false);
-    if (res.ok) router.refresh();
+    if (res.ok) {
+      if (action === "grant") window.dispatchEvent(new Event("vorta:celebrate"));
+      router.refresh();
+    }
   }
 
   return (

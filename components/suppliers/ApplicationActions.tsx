@@ -29,7 +29,10 @@ export function ApplicationDecisionActions({
     setBusy(true);
     const res = await patchStatus(applicationId, next);
     setBusy(false);
-    if (res.ok) router.refresh();
+    if (res.ok) {
+      if (next === "ACCEPTED") window.dispatchEvent(new Event("vorta:celebrate"));
+      router.refresh();
+    }
   }
 
   if (["ACCEPTED", "DECLINED", "WITHDRAWN"].includes(status)) return null;

@@ -34,6 +34,131 @@ const es: Dictionary = {
       "¡Hoy conversamos bastante! 😊 Necesito una pausa — vuelve mañana, o escríbele al equipo y ellos retoman de inmediato.",
     contactTeam: "Escribir al equipo",
     tipDismiss: "Entendido",
+    stage: {
+      minimize: "Minimizar VORTA",
+      restore: "Reactivar burbujas",
+      hide: "Ocultar VORTA",
+      presentation: "Modo presentación",
+      tourStart: "Tour de esta página",
+      tourPrev: "Anterior",
+      tourNext: "Siguiente",
+      tourDone: "Finalizar",
+      tourSkip: "Saltar tour",
+      stepOf: "de",
+      dragHint: "Clic para ayuda · arrastra para reposicionar",
+    },
+    react: {
+      alert: "Hay algo pendiente que merece tu atención.",
+    },
+    context: {
+      home: "Bienvenido. Puedo guiarte por la plataforma — haz clic para ayuda contextual, o toma el tour de esta página.",
+      projects: "Estas son oportunidades de inversión verificadas. Filtra por sector, país y ticket — cada publicación fue revisada por nuestro equipo.",
+      needs: "Esta es la vitrina de necesidades: lo que las empresas ancla están buscando ahora. Los proveedores calificados postulan directamente.",
+      tenders: "Paquetes EPC llave en mano en competencia abierta. Aquí las propuestas son públicas — la transparencia es el punto.",
+      companies: "Perfiles corporativos verificados, incluidos nuestros socios ancla fundadores.",
+      suppliers: "El catastro de proveedores calificados. Cada empresa listada fue evaluada por nuestro equipo.",
+      matching: "Describe un proyecto o necesidad y rankeo al instante inversionistas y proveedores compatibles, con el score explicado.",
+      services: "Del toolkit autoservicio a la asesoría premium — así ayudamos a los proveedores a ganar contratos más grandes.",
+      dataroom: "Tu espacio de due diligence: solicita acceso, concédelo, y cada apertura de documento queda registrada.",
+      dashboard: "Tu panel de control. Todo lo que gestionas en la plataforma empieza aquí.",
+      dashboardSeller: "Tu panel: perfil corporativo, portafolio, las necesidades que publicas y las postulaciones que recibes.",
+      dashboardSupplier: "Tu panel: mantén tu perfil de proveedor al día, sigue tus postulaciones y usa el toolkit para preparar mejores ofertas.",
+      dashboardInvestor: "Tu panel: favoritos, mandatos, ofertas y tus accesos a data rooms, todo en un lugar.",
+    },
+    tours: {
+      home: {
+        title: "Vista general de la plataforma",
+        stops: [
+          {
+            key: "search",
+            title: "Búsqueda global",
+            text: "Busca en todo el marketplace desde aquí — activos, sectores o países.",
+          },
+          {
+            key: "cta",
+            title: "Dos puertas de entrada",
+            text: "Publica un activo o explora oportunidades como inversionista: ambos caminos parten aquí.",
+          },
+          {
+            key: "ecosystem",
+            title: "El ecosistema",
+            text: "Vitrina de necesidades, licitaciones EPC, perfiles corporativos, catastro de proveedores y matching en vivo — el modelo de empresas ancla vive en este menú.",
+          },
+        ],
+      },
+      needs: {
+        title: "Tour de la vitrina",
+        stops: [
+          {
+            key: "filters",
+            title: "Filtros",
+            text: "Acota la vitrina por categoría de proveedor, país o empresa solicitante.",
+          },
+          {
+            key: "results",
+            title: "Las necesidades",
+            text: "Cada tarjeta muestra la empresa solicitante, el presupuesto referencial y el plazo. Abre una para ver requisitos y postular.",
+          },
+          {
+            key: "publish",
+            title: "Publica la tuya",
+            text: "Las empresas con perfil corporativo publican lo que buscan desde aquí.",
+          },
+        ],
+      },
+      matching: {
+        title: "Tour del matching en vivo",
+        stops: [
+          {
+            key: "form",
+            title: "Describe tu proyecto",
+            text: "Sector, ubicación, monto, etapa y la categoría de proveedor que necesitas — es todo lo que requiere el motor.",
+          },
+          {
+            key: "investors",
+            title: "Inversionistas rankeados",
+            text: "Los mandatos compatibles aparecen aquí con el desglose transparente del score.",
+          },
+          {
+            key: "suppliers",
+            title: "Proveedores rankeados",
+            text: "Y aquí, los proveedores calificados de la categoría que pediste.",
+          },
+        ],
+      },
+    },
+    studio: {
+      title: "VORTA Studio",
+      subtitle:
+        "Pantalla interna de revisión: cada estado de animación, la burbuja, el tour y los controles de usuario — uno por uno.",
+      moodsTitle: "Estados de animación",
+      moods: {
+        idle: "Reposo / respiración",
+        greet: "Saludo",
+        think: "Pensando",
+        celebrate: "Éxito",
+        point: "Señalando",
+        alert: "Alerta",
+        minimized: "Reposo minimizado",
+      },
+      actionsTitle: "Acciones en vivo (mueven a la mascota real)",
+      actionSay: "Mostrar una burbuja",
+      actionAlert: "Disparar una alerta",
+      actionCelebrate: "Disparar éxito",
+      actionPoint: "Señalar esta tarjeta",
+      pointTargetNote: "VORTA se desplazará hasta esta tarjeta y la señalará.",
+      controlsTitle: "Controles de usuario",
+      controlHide: "Ocultar VORTA",
+      controlShow: "Mostrar VORTA",
+      controlPresentationOn: "Modo presentación ON (todo apagado)",
+      controlPresentationOff: "Modo presentación OFF",
+      controlResetPos: "Restablecer posición",
+      controlsNote:
+        "Las preferencias de ocultar y presentación persisten. Reactívala aquí o visitando cualquier página con ?vorta=on.",
+      sayDemo: "Hola — este es un mensaje contextual de VORTA.",
+      alertDemo: "Tienes una postulación esperando revisión.",
+      reloadNote: "Los cambios aplican al recargar la página.",
+    },
     tips: {
       wizard: [
         "En este paso le pones nombre a tu proyecto y cuentas su historia. Lenguaje simple funciona mejor — los inversionistas leen cientos de estas fichas.",

@@ -25,6 +25,7 @@ export function SupplierReviewActions({
     });
     setBusy(false);
     if (res.ok) {
+      if (action === "approve") window.dispatchEvent(new Event("vorta:celebrate"));
       setRejecting(false);
       router.refresh();
     }

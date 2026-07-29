@@ -32,6 +32,131 @@ const en = {
       "We've chatted a lot today! 😊 I need a short break — come back tomorrow, or write to the team and they'll pick it right up.",
     contactTeam: "Write to the team",
     tipDismiss: "Got it",
+    stage: {
+      minimize: "Minimize VORTA",
+      restore: "Reactivate bubbles",
+      hide: "Hide VORTA",
+      presentation: "Presentation mode",
+      tourStart: "Tour of this page",
+      tourPrev: "Previous",
+      tourNext: "Next",
+      tourDone: "Finish",
+      tourSkip: "Skip tour",
+      stepOf: "of",
+      dragHint: "Click for help · drag to reposition",
+    },
+    react: {
+      alert: "There is something pending that deserves your attention.",
+    },
+    context: {
+      home: "Welcome. I can walk you through the platform — click me for contextual help, or take the tour of this page.",
+      projects: "These are verified investment opportunities. Filter by sector, country and ticket — every listing was reviewed by our team.",
+      needs: "This is the needs board: what anchor companies are sourcing right now. Qualified suppliers can apply directly.",
+      tenders: "Turnkey EPC packages in open competition. Bids are public here — transparency is the point.",
+      companies: "Verified corporate profiles, including our founding anchor partners.",
+      suppliers: "The qualified supplier registry. Every listed company was vetted by our team.",
+      matching: "Describe a project or need and I'll rank compatible investors and suppliers instantly, with the score explained.",
+      services: "From the self-service toolkit to premium advisory — this is how we help suppliers win larger contracts.",
+      dataroom: "Your due-diligence workspace: request access, grant it, and every document view is recorded.",
+      dashboard: "Your control panel. Everything you manage on the platform starts here.",
+      dashboardSeller: "Your panel: corporate profile, portfolio, needs you publish and the applications you receive.",
+      dashboardSupplier: "Your panel: keep your supplier profile sharp, track your applications and use the toolkit to prepare stronger bids.",
+      dashboardInvestor: "Your panel: favorites, mandates, offers and your data-room access, all in one place.",
+    },
+    tours: {
+      home: {
+        title: "Platform overview",
+        stops: [
+          {
+            key: "search",
+            title: "Global search",
+            text: "Search the whole marketplace from here — assets, sectors or countries.",
+          },
+          {
+            key: "cta",
+            title: "Two ways in",
+            text: "List an asset or explore opportunities as an investor: both journeys start here.",
+          },
+          {
+            key: "ecosystem",
+            title: "The ecosystem",
+            text: "Needs board, EPC tenders, corporate profiles, supplier registry and live matching — the anchor-company model lives in this menu.",
+          },
+        ],
+      },
+      needs: {
+        title: "Needs board tour",
+        stops: [
+          {
+            key: "filters",
+            title: "Filters",
+            text: "Narrow the board by supplier category, country or requesting company.",
+          },
+          {
+            key: "results",
+            title: "The needs",
+            text: "Each card shows the requesting company, reference budget and deadline. Open one to see requirements and apply.",
+          },
+          {
+            key: "publish",
+            title: "Publish yours",
+            text: "Companies with a corporate profile publish what they are sourcing from here.",
+          },
+        ],
+      },
+      matching: {
+        title: "Live matching tour",
+        stops: [
+          {
+            key: "form",
+            title: "Describe your project",
+            text: "Sector, location, amount, stage and the supplier category you need — that's all the engine requires.",
+          },
+          {
+            key: "investors",
+            title: "Ranked investors",
+            text: "Compatible mandates appear here with a transparent score breakdown.",
+          },
+          {
+            key: "suppliers",
+            title: "Ranked suppliers",
+            text: "And here, qualified suppliers for the category you requested.",
+          },
+        ],
+      },
+    },
+    studio: {
+      title: "VORTA Studio",
+      subtitle:
+        "Internal review screen: every animation state, the speech bubble, the tour and the user controls — one by one.",
+      moodsTitle: "Animation states",
+      moods: {
+        idle: "Idle / breathing",
+        greet: "Greeting",
+        think: "Thinking",
+        celebrate: "Success",
+        point: "Pointing",
+        alert: "Alert",
+        minimized: "Minimized rest",
+      },
+      actionsTitle: "Live actions (drive the real mascot)",
+      actionSay: "Show a bubble",
+      actionAlert: "Trigger an alert",
+      actionCelebrate: "Trigger success",
+      actionPoint: "Point at this card",
+      pointTargetNote: "VORTA will walk to this card and point at it.",
+      controlsTitle: "User controls",
+      controlHide: "Hide VORTA",
+      controlShow: "Show VORTA",
+      controlPresentationOn: "Presentation mode ON (everything off)",
+      controlPresentationOff: "Presentation mode OFF",
+      controlResetPos: "Reset position",
+      controlsNote:
+        "Hidden and presentation preferences persist. Re-enable here or by visiting any page with ?vorta=on.",
+      sayDemo: "Hello — this is a contextual message from VORTA.",
+      alertDemo: "You have an application awaiting review.",
+      reloadNote: "Changes apply on the next page load.",
+    },
     tips: {
       wizard: [
         "In this step you give your project a name and tell its story. Plain language works best — investors read hundreds of these.",

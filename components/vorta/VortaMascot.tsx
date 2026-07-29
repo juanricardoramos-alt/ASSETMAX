@@ -1,19 +1,30 @@
 import { cn } from "@/lib/utils";
 
-export type VortaMood = "idle" | "greet" | "think" | "celebrate";
+export type VortaMood =
+  | "idle"
+  | "greet"
+  | "think"
+  | "celebrate"
+  | "point"
+  | "alert";
+
+export type VortaPointDir = "left" | "right" | "up";
 
 /**
  * VORTA — the platform's assistant mascot. A refined geometric character
  * built from the brand's gold "V" (no cartoon styling): the V is the body,
  * two simple eyes give it expression. Moods drive subtle CSS animations:
  * idle (float + blink), greet (gentle wave tilt), think (typing dots,
- * eyes up), celebrate (bounce + gold sparkles).
+ * eyes up), celebrate (bounce + gold sparkles), point (restrained chevron
+ * toward the element being explained), alert (soft pulsing gold dot).
  */
 export function VortaMascot({
   mood = "idle",
+  pointDir = "left",
   className,
 }: {
   mood?: VortaMood;
+  pointDir?: VortaPointDir;
   className?: string;
 }) {
   const happy = mood === "greet" || mood === "celebrate";
@@ -24,8 +35,42 @@ export function VortaMascot({
         ? "vorta-wave"
         : "vorta-float";
 
+  // Pupil offset follows the pointing direction (subtle: 1.4px).
+  const px = mood === "point" ? (pointDir === "left" ? -1.4 : pointDir === "right" ? 1.4 : 0) : 0;
+  const py = mood === "point" && pointDir === "up" ? -1.4 : mood === "alert" ? -0.8 : 0;
+
   return (
     <svg viewBox="0 0 64 64" className={cn("block", className)} aria-hidden="true">
+      {/* pointing chevron — restrained, nudges 3px toward the target */}
+      {mood === "point" && (
+        <g
+          stroke="#DFC26A"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          className={
+            pointDir === "left"
+              ? "vorta-nudge-l"
+              : pointDir === "right"
+                ? "vorta-nudge-r"
+                : "vorta-nudge-u"
+          }
+        >
+          {pointDir === "left" && <path d="M11 25 L4 32 L11 39" />}
+          {pointDir === "right" && <path d="M53 25 L60 32 L53 39" />}
+          {pointDir === "up" && <path d="M25 11 L32 4 L39 11" />}
+        </g>
+      )}
+
+      {/* alert accent — soft gold pulse, no shaking */}
+      {mood === "alert" && (
+        <g className="vorta-pulse">
+          <circle cx="52" cy="11" r="6.5" fill="none" stroke="#DFC26A" strokeWidth="1.4" opacity="0.5" />
+          <circle cx="52" cy="11" r="3.4" fill="#DFC26A" />
+        </g>
+      )}
+
       {/* thinking dots */}
       {mood === "think" && (
         <g fill="#DFC26A">
@@ -83,14 +128,14 @@ export function VortaMascot({
               <circle cx="21.2" cy="22.5" r="3.4" fill="#0A1426" />
               <circle cx="42.8" cy="22.5" r="3.4" fill="#0A1426" />
               <circle
-                cx={mood === "think" ? 22.4 : 22.2}
-                cy={mood === "think" ? 21.2 : 21.6}
+                cx={(mood === "think" ? 22.4 : 22.2) + px}
+                cy={(mood === "think" ? 21.2 : 21.6) + py}
                 r="1.1"
                 fill="#F5ECCF"
               />
               <circle
-                cx={mood === "think" ? 44 : 43.8}
-                cy={mood === "think" ? 21.2 : 21.6}
+                cx={(mood === "think" ? 44 : 43.8) + px}
+                cy={(mood === "think" ? 21.2 : 21.6) + py}
                 r="1.1"
                 fill="#F5ECCF"
               />

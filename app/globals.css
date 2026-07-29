@@ -87,6 +87,49 @@
 .vorta-dot { animation: vorta-dot 1.2s ease-in-out infinite; }
 .vorta-sparkle { animation: vorta-sparkle 1.4s ease-out infinite; }
 
+/* Point & alert moods — restrained, GPU-composited micro-motion only */
+@keyframes vorta-nudge-l {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-3px); }
+}
+@keyframes vorta-nudge-r {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+@keyframes vorta-nudge-u {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes vorta-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+.vorta-nudge-l { animation: vorta-nudge-l 1.5s ease-in-out infinite; }
+.vorta-nudge-r { animation: vorta-nudge-r 1.5s ease-in-out infinite; }
+.vorta-nudge-u { animation: vorta-nudge-u 1.5s ease-in-out infinite; }
+.vorta-pulse { transform-origin: 52px 11px; animation: vorta-pulse 1.6s ease-in-out infinite; }
+
+/* The stage travels with a single composited transform */
+.vorta-stage-move { transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1); }
+.vorta-bubble-in { animation: fade-up 0.22s ease-out both; }
+
+/* Subtle gold ring on the element VORTA is explaining */
+.vorta-target-ring {
+  outline: 2px solid rgba(223, 194, 106, 0.85);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Reduced motion: VORTA goes fully static, movement becomes instant */
+@media (prefers-reduced-motion: reduce) {
+  .vorta-float, .vorta-blink, .vorta-wave, .vorta-bounce, .vorta-dot,
+  .vorta-sparkle, .vorta-nudge-l, .vorta-nudge-r, .vorta-nudge-u,
+  .vorta-pulse, .vorta-bubble-in {
+    animation: none !important;
+  }
+  .vorta-stage-move { transition: none !important; }
+}
+
 /* Hero-over-video legibility: deep navy text shadows + radial scrim */
 .hero-text-shadow {
   text-shadow:

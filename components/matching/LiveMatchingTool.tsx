@@ -119,7 +119,7 @@ export function LiveMatchingTool({
   return (
     <div className="space-y-8">
       {/* Input form */}
-      <Card className="p-6 sm:p-8">
+      <Card data-vorta-tour="form" className="p-6 sm:p-8">
         <h2 className="text-sm font-bold uppercase tracking-wider text-navy-900">
           {t.formTitle}
         </h2>
@@ -243,7 +243,7 @@ export function LiveMatchingTool({
 
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Investors column */}
-            <section>
+            <section data-vorta-tour="investors">
               <h2 className="mb-4 text-xl font-extrabold tracking-tight text-navy-950">
                 {t.investorsTitle}
               </h2>
@@ -305,7 +305,7 @@ export function LiveMatchingTool({
             </section>
 
             {/* Suppliers column */}
-            <section>
+            <section data-vorta-tour="suppliers">
               <h2 className="mb-4 text-xl font-extrabold tracking-tight text-navy-950">
                 {t.suppliersTitle}
               </h2>

@@ -128,6 +128,7 @@ export default async function HomePage({
 
             <form
               action={`/${lang}/projects`}
+              data-vorta-tour="search"
               className="mx-auto mt-9 flex max-w-2xl overflow-hidden rounded-lg bg-white shadow-card-hover transition focus-within:ring-2 focus-within:ring-gold-400"
             >
               <div className="flex flex-1 items-center gap-2 pl-4">
@@ -147,7 +148,10 @@ export default async function HomePage({
               </button>
             </form>
 
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div
+              data-vorta-tour="cta"
+              className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            >
               <ButtonLink href={`/${lang}/auth/register`} variant="gold" size="lg">
                 {dict.home.heroCtaSellers}
               </ButtonLink>

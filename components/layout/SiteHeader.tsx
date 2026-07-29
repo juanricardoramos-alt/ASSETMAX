@@ -200,11 +200,13 @@ export async function SiteHeader({
               {l.label}
             </Link>
           ))}
-          <DropdownMenu
-            label={dict.companies.ecosystemLabel}
-            items={ecosystemItems}
-            icons={ecosystemIcons}
-          />
+          <div data-vorta-tour="ecosystem">
+            <DropdownMenu
+              label={dict.companies.ecosystemLabel}
+              items={ecosystemItems}
+              icons={ecosystemIcons}
+            />
+          </div>
           <DropdownMenu
             label={dict.nav.solutions}
             items={solutionsItems}

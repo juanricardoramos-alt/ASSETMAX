@@ -86,6 +86,7 @@ export function NeedForm({
       setError(true);
       return;
     }
+    window.dispatchEvent(new Event("vorta:celebrate"));
     router.push(`/${lang}/dashboard/needs`);
     router.refresh();
   }

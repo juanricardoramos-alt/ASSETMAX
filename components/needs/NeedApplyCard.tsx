@@ -62,6 +62,7 @@ export function NeedApplyCard({
       return;
     }
     setDone(true);
+    window.dispatchEvent(new Event("vorta:celebrate"));
     router.refresh();
   }
 

@@ -96,6 +96,7 @@ export default async function NeedsPage({
             href={`/${lang}/dashboard/needs/new`}
             variant="gold"
             size="lg"
+            data-vorta-tour="publish"
           >
             {dict.needs.postCta}
             <IconArrowRight className="h-4 w-4" />
@@ -104,7 +105,10 @@ export default async function NeedsPage({
       </div>
 
       <div className="container-site grid gap-8 py-10 lg:grid-cols-[280px_1fr]">
-        <aside className="h-fit min-w-0 rounded-xl border border-navy-100 bg-white p-5 shadow-card lg:sticky lg:top-24">
+        <aside
+          data-vorta-tour="filters"
+          className="h-fit min-w-0 rounded-xl border border-navy-100 bg-white p-5 shadow-card lg:sticky lg:top-24"
+        >
           <Suspense>
             <NeedsFilters dict={dict} countries={countries} companies={companies} />
           </Suspense>
@@ -121,7 +125,10 @@ export default async function NeedsPage({
               {dict.needs.empty}
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <div
+              data-vorta-tour="results"
+              className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+            >
               {needs.map((n) => (
                 <NeedCard key={n.id} need={n} lang={lang} dict={dict} />
               ))}
