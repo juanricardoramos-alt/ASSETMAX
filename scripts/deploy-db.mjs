@@ -1,14 +1,21 @@
 // Database step of the Vercel build (see "vercel-build" in package.json).
 //
-// 1. Applies pending Prisma migrations against the production database.
-// 2. Seeds demo accounts + content ONLY when the database is empty (first
+// 1. Probes database connectivity. If the database is unreachable from the
+//    build environment, the step logs a warning and EXITS SUCCESSFULLY —
+//    deploys must never depend on database connectivity (the schema can
+//    always be managed via the SQL Editor scripts in prisma/supabase-*.sql,
+//    and the app connects at runtime through the pooled URL).
+// 2. Applies pending Prisma migrations against the production database.
+// 3. Seeds demo accounts + content ONLY when the database is empty (first
 //    deploy). Later deploys never touch existing data.
 //
-// Pooler note: migrations need a direct (non-pooled) connection. If
+// Pooler note: migrations need a session-capable connection. If
 // DIRECT_DATABASE_URL is not set, the pooled URL is converted automatically:
-//   - Neon:      drop the "-pooler" host segment.
-//   - Supabase:  "postgres.<ref>@aws-X-<region>.pooler.supabase.com:6543" →
-//                "postgres@db.<ref>.supabase.co:5432" (pgbouncer params dropped).
+//   - Supabase: transaction pooler (port 6543, pgbouncer=true) → SESSION
+//     pooler: same host and tenant user, port 5432, pgbouncer params dropped.
+//     (The "direct" db.<ref>.supabase.co host is IPv6-only and unreachable
+//     from IPv4 build environments like Vercel — never derive it.)
+//   - Neon: drop the "-pooler" host segment.
 // Both transformations are no-ops for URLs that are already direct.
 
 import { execSync } from "node:child_process";
@@ -26,16 +33,13 @@ function deriveDirectUrl(pooled) {
   try {
     const u = new URL(pooled);
     if (u.hostname.endsWith(".pooler.supabase.com")) {
-      // Username on the Supabase pooler is "postgres.<project-ref>".
-      const ref = u.username.split(".")[1];
-      if (ref) {
-        u.hostname = `db.${ref}.supabase.co`;
-        u.port = "5432";
-        u.username = "postgres";
-        u.searchParams.delete("pgbouncer");
-        u.searchParams.delete("connection_limit");
-        return u.toString();
-      }
+      // Supabase session pooler: same host and "postgres.<ref>" user as the
+      // transaction pooler, but port 5432 and no PgBouncer semantics — safe
+      // for prisma migrate and reachable over IPv4.
+      u.port = "5432";
+      u.searchParams.delete("pgbouncer");
+      u.searchParams.delete("connection_limit");
+      return u.toString();
     }
   } catch {
     /* fall through to the Neon-style rewrite */
@@ -47,6 +51,31 @@ const directUrl =
   process.env.DIRECT_DATABASE_URL?.trim() || deriveDirectUrl(url);
 const env = { ...process.env, DATABASE_URL: directUrl };
 
+const { PrismaClient } = await import("@prisma/client");
+const prisma = new PrismaClient({ datasources: { db: { url: directUrl } } });
+
+// --- 1. Connectivity probe -------------------------------------------------
+try {
+  await prisma.$queryRaw`SELECT 1`;
+} catch (e) {
+  const lines = (e?.message ?? "").split("\n").map((l) => l.trim());
+  const reason =
+    lines.find((l) => /P1\d{3}|Can't reach|timed? ?out|ECONN|ENOTFOUND/i.test(l)) ??
+    lines.find(Boolean) ??
+    "connection error";
+  console.warn(
+    `[deploy-db] Database unreachable from the build environment (${reason}).`
+  );
+  console.warn(
+    "[deploy-db] Skipping migrations and seed — the build continues. " +
+      "Schema state is managed via prisma/migrations (or the SQL Editor " +
+      "scripts prisma/supabase-*.sql); the app connects at runtime through DATABASE_URL."
+  );
+  await prisma.$disconnect();
+  process.exit(0);
+}
+
+// --- 2. Migrations (the database IS reachable: real failures fail the build)
 console.log("[deploy-db] Applying migrations…");
 try {
   execSync("npx prisma migrate deploy", { stdio: "inherit", env });
@@ -65,9 +94,7 @@ try {
   execSync("npx prisma migrate deploy", { stdio: "inherit", env });
 }
 
-const { PrismaClient } = await import("@prisma/client");
-const prisma = new PrismaClient({ datasources: { db: { url: directUrl } } });
-
+// --- 3. First-deploy seed (empty database only) ----------------------------
 try {
   const users = await prisma.user.count();
   if (users === 0) {

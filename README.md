@@ -108,7 +108,7 @@ The seed creates **25 realistic projects** across 12 countries (desalination, co
 ## Deploying to Vercel (PostgreSQL / Supabase)
 
 1. **Set environment variables** in the Vercel project:
-   - `DATABASE_URL` — your Supabase/Postgres connection string. With Supabase's transaction pooler (port 6543) append `?pgbouncer=true&connection_limit=1`; migrations derive the direct connection automatically, or set `DIRECT_DATABASE_URL` explicitly (port 5432).
+   - `DATABASE_URL` — your Supabase/Postgres connection string. With Supabase's transaction pooler (port 6543) append `?pgbouncer=true&connection_limit=1`; migrations automatically use the **session pooler** (same host/user, port 5432 — the `db.<ref>.supabase.co` direct host is IPv6-only and unreachable from Vercel), or set `DIRECT_DATABASE_URL` explicitly. If the database is unreachable at build time, the migration step logs a warning and the build continues — deploys never depend on database connectivity.
    - `NEXTAUTH_SECRET` — `openssl rand -base64 32`
    - `NEXTAUTH_URL` — `https://your-domain.com`
    - `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — optional, enables Google sign-in
